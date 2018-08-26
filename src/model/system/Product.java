@@ -10,7 +10,7 @@ public class Product {
 	
 	private String productName;
 	private int stockQty;
-	private long productID;
+	private String productID;
 	private double productPrice;
 	
 	// to be overwritten by methods
@@ -26,7 +26,7 @@ public class Product {
 	private int reorderQty = 0;
 	
 
-	public Product(String productName, int stockQty, long productID, double productPrice) {
+	public Product(String productName, int stockQty, String productID, double productPrice) {
 		this.productName = productName;
 		this.stockQty = stockQty;
 		this.productID = productID;
@@ -52,7 +52,7 @@ public class Product {
 		this.stockQty -= quantity;
 	}
 	
-	public long getProductId() {
+	public String getProductId() {
 		return productID;
 	}
 
