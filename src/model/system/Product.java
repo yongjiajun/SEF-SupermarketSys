@@ -26,8 +26,7 @@ public class Product {
 	private int reorderQty = 0;
 	
 
-	public Product(String productName, int stockQty, long productID, double productPrice, boolean onSale, boolean bulkSales,
-			double discount) {
+	public Product(String productName, int stockQty, long productID, double productPrice) {
 		this.productName = productName;
 		this.stockQty = stockQty;
 		this.productID = productID;
