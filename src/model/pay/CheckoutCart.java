@@ -35,7 +35,7 @@ public class CheckoutCart {
 	{
 		int pts = customer.getLoyaltyPts();
 		double totalDiscountedPrice = getTotalPrice();
-		while (pts >= 20)
+		while (pts >= 20 && totalDiscountedPrice >= 5)
 		{
 			totalDiscountedPrice -= 5;
 			pts -= 20;
@@ -49,7 +49,7 @@ public class CheckoutCart {
 		double tempPrice = getTotalPrice();
 		tempPrice -= getTotalDiscountedPrice(customer);
 		int tempPtsUsed = 0;
-		while (tempPrice != 0)
+		while (tempPrice >= 5)
 		{
 			tempPrice -= 5;
 			tempPtsUsed += 20;
