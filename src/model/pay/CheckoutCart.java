@@ -2,14 +2,15 @@ package model.pay;
 
 import java.util.*;
 
-public class Sale {
+public class CheckoutCart {
 	
 	private ArrayList<SalesLineItem> lineItems = new ArrayList<SalesLineItem>();
-	private boolean paid;
+	private boolean paid = false;
+	private long orderID; // get latest ID from array, orderID++ automatically with the constructor?
 	private double totalPrice;
 	
-	public Sale(){
-		
+	public CheckoutCart(){
+		//TODO orderID
 	}
 	
 	public ArrayList<SalesLineItem> getSalesLineItems() {
@@ -51,5 +52,25 @@ public class Sale {
 			}
 		}
 		return null; // if cant find, throws exception?
+	}
+	
+	public int getItemsInCart()
+	{
+		return lineItems.size();
+	}
+	
+	public long getOrderID()
+	{
+		return orderID;
+	}
+	
+	public boolean isPaid()
+	{
+		return paid;
+	}
+	
+	public void pay(boolean paid)
+	{
+		this.paid = paid;
 	}
 }
