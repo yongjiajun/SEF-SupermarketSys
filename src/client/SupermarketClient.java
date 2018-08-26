@@ -14,5 +14,5 @@ import view.MainMenu;
 public class SupermarketClient {
 	// TEST CASES GO HERE
 	
-	
+
 }

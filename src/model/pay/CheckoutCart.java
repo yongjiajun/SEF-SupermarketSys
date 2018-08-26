@@ -10,10 +10,8 @@ public class CheckoutCart {
 	private ArrayList<SalesLineItem> lineItems = new ArrayList<SalesLineItem>();
 	private boolean paid = false;
 	private long orderID; // get latest ID from array, orderID++ automatically with the constructor?
-	private double totalPrice;
 	private int loyaltyPtsUsed;
 	private int loyaltyPtsEarned;
-	private double totalDiscountedPrice;
 	
 	public CheckoutCart(){
 		//TODO orderID
@@ -25,6 +23,7 @@ public class CheckoutCart {
 	
 	public double getTotalPrice()
 	{
+		double totalPrice = 0;
 		for(int i = 0; i < lineItems.size(); i++)
 		{
 			totalPrice += lineItems.get(i).getTotalPrice();
@@ -35,7 +34,7 @@ public class CheckoutCart {
 	public double getTotalDiscountedPrice(Customer customer)
 	{
 		int pts = customer.getLoyaltyPts();
-		totalDiscountedPrice = getTotalPrice();
+		double totalDiscountedPrice = getTotalPrice();
 		while (pts >= 20)
 		{
 			totalDiscountedPrice -= 5;
@@ -45,10 +44,10 @@ public class CheckoutCart {
 	}
 	
 	
-	public int getLoyaltyPtsUsed()
+	public int getLoyaltyPtsUsed(Customer customer)
 	{
 		double tempPrice = getTotalPrice();
-		tempPrice -= totalDiscountedPrice;
+		tempPrice -= getTotalDiscountedPrice(customer);
 		int tempPtsUsed = 0;
 		while (tempPrice != 0)
 		{
@@ -87,7 +86,7 @@ public class CheckoutCart {
 		}
 	}
 	
-	public SalesLineItem getSalesLineItem(long productID)
+	public SalesLineItem getSalesLineItem(String productID)
 	{
 		for(int i = 0; i < lineItems.size(); i++)
 		{
@@ -128,7 +127,7 @@ public class CheckoutCart {
 		
 		// add loyalty points
 		
-		customer.deductLoyaltyPts(getLoyaltyPtsUsed());
+		customer.deductLoyaltyPts(getLoyaltyPtsUsed(customer));
 		customer.addLoyaltyPts(getLoyaltyPtsEarned(customer));
 
 	}
