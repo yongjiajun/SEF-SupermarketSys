@@ -1,33 +1,47 @@
 package model.pay;
 
-import model.Customer;
+import model.people.Customer;
 
 public class CreditCard {
 
 	private String creditCardID;
+	private String cardHolderID; // for verification
+	private String pin;
 	private double balance;
-	private int loyaltyPoints;
-	private Customer belongsTo;
 	
-	public creditCardID(String creditCardID, double balance, int loyaltyPoints, Customer belongsTo)
+	public CreditCard(String creditCardID, Customer cardHolder, String pin)
 	{
-		this.creditCardID = creditCardId;
-		this.balance = balance;
-		this.loyaltyPoints = loyaltyPoints;
+		this.creditCardID = creditCardID;
+		this.cardHolderID = cardHolder.getCustomerID();
+		this.pin = pin;
 	}
 	
-	public double getLoyaltyPoints() {
-		return loyaltyPoints;
+	public String getCreditCardID()
+	{
+		return creditCardID;
 	}
 	
-	public double getBalance()
+	public String getCardHolder()
 	{
+		return cardHolderID;
+	}
+	
+	public String getPin() {
+		return pin;
+	}
+	
+	public double getBalance() {
 		return balance;
 	}
 	
-	public String getID()
+	public void addBalance(double topup)
 	{
-		
+		this.balance += topup;
 	}
-	//TODO
+	
+	public void deductBalance(double deductAmount)
+	{
+		this.balance += deductAmount;
+	}
+	
 }
