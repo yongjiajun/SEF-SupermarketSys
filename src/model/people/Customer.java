@@ -6,16 +6,13 @@ public class Customer {
 	private String customerPIN;
 	private String customerFName;
 	private String customerLName;
-	private String customerPhone;
 	private int loyaltyPts;
 
-	public Customer(String customerID, String customerPIN, String customerFName, String customerLName, 
-			String customerPhone) {
+	public Customer(String customerID, String customerPIN, String customerFName, String customerLName) {
 		this.customerID = customerID;
 		this.customerPIN = customerPIN;
 		this.customerFName = customerFName;
 		this.customerLName = customerLName;
-		this.customerPhone = customerPhone;
 		this.loyaltyPts = 0;
 	}
 
