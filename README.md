@@ -1,4 +1,4 @@
-# SupermarketSupportSystem - $$
+# SupermarketSupportSystem - $$$
 
 ###### - for Software Engineering Fundamentals Assignment, RMIT 2018
 
