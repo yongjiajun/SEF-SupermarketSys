@@ -12,7 +12,9 @@ SupermarketSupportSystem is a revolutionary self-checkout system that does what 
 
 ## Current Issues:
 
-- Getting sale to work.
+#### - Class communications. 
+- Getting transaction to work.
+- Support System, Account Manager.
 - Actually nothing works yet.
 
 ### Issues to-be dealt later:
