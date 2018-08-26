@@ -10,13 +10,13 @@ public class Customer {
 	private int loyaltyPts;
 
 	public Customer(String customerID, String customerPIN, String customerFName, String customerLName, 
-			String customerPhone, int loyaltyPts) {
+			String customerPhone) {
 		this.customerID = customerID;
 		this.customerPIN = customerPIN;
 		this.customerFName = customerFName;
 		this.customerLName = customerLName;
 		this.customerPhone = customerPhone;
-		this.loyaltyPts = loyaltyPts;
+		this.loyaltyPts = 0;
 	}
 
 	public String getCustomerID() {
