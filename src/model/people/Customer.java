@@ -32,10 +32,6 @@ public class Customer {
 		return customerLName;
 	}
 
-	public String getCustomerPhone() {
-		return customerPhone;
-	}
-
 	public int getLoyaltyPts() {
 		return loyaltyPts;
 	}
