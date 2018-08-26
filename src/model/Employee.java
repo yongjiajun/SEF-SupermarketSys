@@ -2,8 +2,7 @@ package model;
 
 public abstract class Employee {
 
-	protected String username;
-	protected String password;
+	protected String username, password;
 
 	public String getUsername() {
 		return username;
