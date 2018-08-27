@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class MainMenu {
 
 	// serves as view (for now), NOT WORKING YET
-
+//	test - Clinton
 	// TODO make login work
 
 	public MainMenu() {
@@ -21,10 +21,10 @@ public class MainMenu {
 
 		Scanner scan = new Scanner(System.in);
 		int input = scan.nextInt();
-		
+
 		if (input == 1) {
 
-		} 
+		}
 		else if (input == 2) {
 			System.out.println("Login as:");
 			System.out.println("1 - Sales staff");
@@ -32,26 +32,26 @@ public class MainMenu {
 			System.out.println("3 - Manager\n");
 
 			input = scan.nextInt();
-			
+
 			if (input == 1) {
 
-			} 
+			}
 			else if (input == 2) {
 
-			} 
+			}
 			else if (input == 3) {
 
-			} 
+			}
 			else {
 				printInvalidInput();
 				mainMenu();
 			}
-			
+
 		}
 		else if (input == 3) {
 			System.out.println("Thanks for using XD Supermarket Support System!");
 			System.exit(0);
-		} 
+		}
 		else {
 			printInvalidInput();
 			mainMenu();
