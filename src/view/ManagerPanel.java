@@ -49,15 +49,18 @@ public class ManagerPanel extends JFrame {
 		productsPanel();
 	}
 
+	private void dashboardPanel() {
+
+	}
 
 	private void productsPanel() {
 
 
-		JPanel Panel = new JPanel();
-		Panel.setBackground(Color.DARK_GRAY);
-		Panel.setBounds(0, 0, 167, 750);
-		contentPane.add(Panel);
-		Panel.setLayout(null);
+		JPanel actionPanel = new JPanel();
+		actionPanel.setBackground(Color.DARK_GRAY);
+		actionPanel.setBounds(0, 0, 167, 750);
+		contentPane.add(actionPanel);
+		actionPanel.setLayout(null);
 
 
 		JLabel salesLbl = new JLabel("SALES", SwingConstants.CENTER);
@@ -66,7 +69,7 @@ public class ManagerPanel extends JFrame {
 		salesLbl.setForeground(new Color(255, 255, 255));
 		salesLbl.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 16));
 		salesLbl.setBounds(0, 194, 163, 62);
-		Panel.add(salesLbl);
+		actionPanel.add(salesLbl);
 
 		JLabel dashBoardLbl = new JLabel("DASHBOARD", SwingConstants.CENTER);
 
@@ -74,40 +77,40 @@ public class ManagerPanel extends JFrame {
 		dashBoardLbl.setForeground(Color.WHITE);
 		dashBoardLbl.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 16));
 		dashBoardLbl.setBounds(0, 120, 163, 62);
-		Panel.add(dashBoardLbl);
+		actionPanel.add(dashBoardLbl);
 
 		JLabel CustomerLbl = new JLabel("CUSTOMERS", SwingConstants.CENTER);
 		CustomerLbl.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		CustomerLbl.setForeground(Color.WHITE);
 		CustomerLbl.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 16));
 		CustomerLbl.setBounds(0, 285, 163, 62);
-		Panel.add(CustomerLbl);
+		actionPanel.add(CustomerLbl);
 
 		JLabel SystemLbl = new JLabel("SYSTEM", SwingConstants.CENTER);
 		SystemLbl.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		SystemLbl.setForeground(Color.WHITE);
 		SystemLbl.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 16));
 		SystemLbl.setBounds(0, 610, 163, 62);
-		Panel.add(SystemLbl);
+		actionPanel.add(SystemLbl);
 
 		JLabel lblNewLabel = new JLabel("", SwingConstants.CENTER);
 		lblNewLabel.setIcon(new ImageIcon(ManagerPanel.class.getResource("/images/Sef4.jpg")));
 		lblNewLabel.setBounds(44, 16, 69, 72);
-		Panel.add(lblNewLabel);
+		actionPanel.add(lblNewLabel);
 
 		JLabel lblProducts = new JLabel("PRODUCTS", SwingConstants.CENTER);
 		lblProducts.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		lblProducts.setForeground(Color.WHITE);
 		lblProducts.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 16));
 		lblProducts.setBounds(0, 381, 163, 62);
-		Panel.add(lblProducts);
+		actionPanel.add(lblProducts);
 
 		JLabel supplierLbl = new JLabel("SUPPLIER", SwingConstants.CENTER);
 		supplierLbl.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		supplierLbl.setForeground(Color.WHITE);
 		supplierLbl.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 16));
 		supplierLbl.setBounds(0, 491, 163, 62);
-		Panel.add(supplierLbl);
+		actionPanel.add(supplierLbl);
 
 		JPanel parentPanel = new JPanel();
 		parentPanel.setBounds(164, 0, 1036, 750);
@@ -165,8 +168,89 @@ public class ManagerPanel extends JFrame {
 		scrollPane.setViewportView(table);
 
 		JPanel dashboardPanel = new JPanel();
-		dashboardPanel.setBackground(Color.BLUE);
+		dashboardPanel.setBackground(new Color(0, 128, 128));
 		parentPanel.add(dashboardPanel, "name_282481430111453");
+		dashboardPanel.setLayout(null);
+
+		JPanel welcomeDateTimeBorder = new JPanel();
+		welcomeDateTimeBorder.setBackground(new Color(128, 128, 128));
+		welcomeDateTimeBorder.setBounds(0, 0, 1036, 40);
+		dashboardPanel.add(welcomeDateTimeBorder);
+		welcomeDateTimeBorder.setLayout(null);
+
+		JLabel welcomeLbl = new JLabel("Welcome [getName/getId]");
+		welcomeLbl.setBounds(6, 6, 163, 16);
+		welcomeDateTimeBorder.add(welcomeLbl);
+
+		JLabel dateTimeLbl = new JLabel("[DATE][TIME]");
+		dateTimeLbl.setBounds(934, 6, 96, 16);
+		welcomeDateTimeBorder.add(dateTimeLbl);
+
+		JLabel dashboardLbl = new JLabel("Dashboard");
+		dashboardLbl.setFont(new Font("Lucida Grande", Font.BOLD, 16));
+		dashboardLbl.setBounds(44, 52, 100, 32);
+		dashboardPanel.add(dashboardLbl);
+
+		JPanel todaySalesPanel = new JPanel();
+		todaySalesPanel.setBounds(44, 96, 396, 229);
+		dashboardPanel.add(todaySalesPanel);
+		todaySalesPanel.setLayout(null);
+
+		JPanel todaySalesBox = new JPanel();
+		todaySalesBox.setBackground(new Color(0, 128, 0));
+		todaySalesBox.setBounds(30, 55, 326, 42);
+		todaySalesPanel.add(todaySalesBox);
+		todaySalesBox.setLayout(null);
+
+		JLabel temporaySalesLbl = new JLabel("$43244");
+		temporaySalesLbl.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
+		temporaySalesLbl.setForeground(new Color(255, 255, 255));
+		temporaySalesLbl.setBounds(132, 5, 123, 31);
+		todaySalesBox.add(temporaySalesLbl);
+
+		JLabel lblTodaysSales = new JLabel("Todays Sales");
+		lblTodaysSales.setBounds(142, 24, 95, 19);
+		todaySalesPanel.add(lblTodaysSales);
+
+		JPanel grossProfitBox = new JPanel();
+		grossProfitBox.setBackground(new Color(0, 128, 0));
+		grossProfitBox.setBounds(30, 157, 147, 30);
+		todaySalesPanel.add(grossProfitBox);
+
+		JLabel label_1 = new JLabel("$43244");
+		label_1.setForeground(Color.WHITE);
+		label_1.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
+		grossProfitBox.add(label_1);
+
+		JPanel grossProfit1Box = new JPanel();
+		grossProfit1Box.setBackground(new Color(0, 128, 0));
+		grossProfit1Box.setBounds(209, 157, 147, 30);
+		todaySalesPanel.add(grossProfit1Box);
+
+		JLabel label_2 = new JLabel("$43244");
+		label_2.setForeground(Color.WHITE);
+		label_2.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
+		grossProfit1Box.add(label_2);
+
+		JLabel lblNewLabel_1 = new JLabel("New label");
+		lblNewLabel_1.setBounds(72, 130, 61, 16);
+		todaySalesPanel.add(lblNewLabel_1);
+
+		JLabel label = new JLabel("New label");
+		label.setBounds(249, 130, 61, 16);
+		todaySalesPanel.add(label);
+
+		JPanel topSellingProductBox = new JPanel();
+		topSellingProductBox.setBounds(44, 356, 396, 351);
+		dashboardPanel.add(topSellingProductBox);
+
+		JPanel panel_1 = new JPanel();
+		panel_1.setBounds(603, 96, 363, 335);
+		dashboardPanel.add(panel_1);
+
+		JPanel panel_2 = new JPanel();
+		panel_2.setBounds(603, 515, 363, 192);
+		dashboardPanel.add(panel_2);
 
 		JPanel salesPanel = new JPanel();
 		salesPanel.setBackground(Color.BLUE);
