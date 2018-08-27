@@ -2,18 +2,18 @@ package model;
 
 public abstract class Employee {
 
-	protected String username, password;
+	protected String username, pin;
 
 	public String getUsername() {
 		return username;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getPin() {
+		return pin;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setPin(String pin) {
+		this.pin = pin;
 		// for changing password??
 	}
 

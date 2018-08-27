@@ -15,18 +15,19 @@ import model.people.Supplier;
 
 public class AccountManager {
 
-	/* README FIRST:
+	/*
+	 * README FIRST:
 	 * 
 	 * don't care about this first. will create using TestClient class.
 	 * 
 	 */
-	
-	/* INFO:
+
+	/*
+	 * INFO:
 	 * 
-	 * manages arrays of customers, SalesStaffs, manager(s), suppliers can perform add / get /
-	 * remove. 
-	 * Another account login class may be needed! 
-	 * accounts (except customers) can be added using test client or a debug view
+	 * manages arrays of customers, SalesStaffs, manager(s), suppliers can perform
+	 * add / get / remove. Another account login class may be needed! accounts
+	 * (except customers) can be added using test client or a debug view
 	 * 
 	 */
 
