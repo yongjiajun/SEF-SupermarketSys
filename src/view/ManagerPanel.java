@@ -58,7 +58,7 @@ public class ManagerPanel extends JFrame {
 
 		JPanel actionPanel = new JPanel();
 		actionPanel.setBackground(Color.DARK_GRAY);
-		actionPanel.setBounds(0, 0, 167, 750);
+		actionPanel.setBounds(0, 0, 174, 750);
 		contentPane.add(actionPanel);
 		actionPanel.setLayout(null);
 
@@ -68,7 +68,7 @@ public class ManagerPanel extends JFrame {
 		salesLbl.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		salesLbl.setForeground(new Color(255, 255, 255));
 		salesLbl.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 16));
-		salesLbl.setBounds(0, 194, 163, 62);
+		salesLbl.setBounds(0, 246, 163, 62);
 		actionPanel.add(salesLbl);
 
 		JLabel dashBoardLbl = new JLabel("DASHBOARD", SwingConstants.CENTER);
@@ -76,21 +76,21 @@ public class ManagerPanel extends JFrame {
 		dashBoardLbl.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		dashBoardLbl.setForeground(Color.WHITE);
 		dashBoardLbl.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 16));
-		dashBoardLbl.setBounds(0, 120, 163, 62);
+		dashBoardLbl.setBounds(0, 110, 163, 62);
 		actionPanel.add(dashBoardLbl);
 
 		JLabel CustomerLbl = new JLabel("CUSTOMERS", SwingConstants.CENTER);
 		CustomerLbl.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		CustomerLbl.setForeground(Color.WHITE);
 		CustomerLbl.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 16));
-		CustomerLbl.setBounds(0, 285, 163, 62);
+		CustomerLbl.setBounds(0, 329, 163, 62);
 		actionPanel.add(CustomerLbl);
 
 		JLabel SystemLbl = new JLabel("SYSTEM", SwingConstants.CENTER);
 		SystemLbl.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		SystemLbl.setForeground(Color.WHITE);
 		SystemLbl.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 16));
-		SystemLbl.setBounds(0, 610, 163, 62);
+		SystemLbl.setBounds(0, 669, 163, 62);
 		actionPanel.add(SystemLbl);
 
 		JLabel lblNewLabel = new JLabel("", SwingConstants.CENTER);
@@ -102,15 +102,27 @@ public class ManagerPanel extends JFrame {
 		lblProducts.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		lblProducts.setForeground(Color.WHITE);
 		lblProducts.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 16));
-		lblProducts.setBounds(0, 381, 163, 62);
+		lblProducts.setBounds(0, 183, 163, 62);
 		actionPanel.add(lblProducts);
 
-		JLabel supplierLbl = new JLabel("SUPPLIER", SwingConstants.CENTER);
-		supplierLbl.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		supplierLbl.setForeground(Color.WHITE);
-		supplierLbl.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 16));
-		supplierLbl.setBounds(0, 491, 163, 62);
-		actionPanel.add(supplierLbl);
+		JLabel logisticsLbl = new JLabel("SUPPLIER", SwingConstants.CENTER);
+		logisticsLbl.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		logisticsLbl.setForeground(Color.WHITE);
+		logisticsLbl.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 16));
+		logisticsLbl.setBounds(0, 420, 163, 62);
+		actionPanel.add(logisticsLbl);
+
+		JLabel generateReportLbl = new JLabel("REPORT", SwingConstants.CENTER);
+		generateReportLbl.setForeground(Color.WHITE);
+		generateReportLbl.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 16));
+		generateReportLbl.setBounds(0, 505, 163, 62);
+		actionPanel.add(generateReportLbl);
+
+		JLabel lblEmployeeManagement = new JLabel("EMPLOYEES", SwingConstants.CENTER);
+		lblEmployeeManagement.setForeground(Color.WHITE);
+		lblEmployeeManagement.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 16));
+		lblEmployeeManagement.setBounds(0, 579, 163, 62);
+		actionPanel.add(lblEmployeeManagement);
 
 		JPanel parentPanel = new JPanel();
 		parentPanel.setBounds(164, 0, 1036, 750);
@@ -124,11 +136,11 @@ public class ManagerPanel extends JFrame {
 
 		JLabel productsTitle = new JLabel("Products");
 		productsTitle.setFont(new Font("Lucida Grande", Font.BOLD, 20));
-		productsTitle.setBounds(6, 6, 100, 38);
+		productsTitle.setBounds(19, 6, 100, 38);
 		productsPanel.add(productsTitle);
 
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 78, 1036, 84);
+		panel.setBounds(6, 78, 1030, 84);
 		productsPanel.add(panel);
 		panel.setLayout(null);
 
@@ -306,7 +318,7 @@ public class ManagerPanel extends JFrame {
 			}
 		});
 
-		supplierLbl.addMouseListener(new MouseAdapter(){
+		logisticsLbl.addMouseListener(new MouseAdapter(){
 			@Override
 			public void mouseClicked (MouseEvent e) {
 				  parentPanel.removeAll();
