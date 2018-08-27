@@ -1,21 +1,33 @@
 package client;
+// Commented these out because it was giving errors
 
-<<<<<<< HEAD
-=======
-import static org.junit.Assert.*;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import java.awt.EventQueue;
 
-import model.pay.CheckoutCart;
-import model.pay.SalesLineItem;
-import model.people.Customer;
-import model.system.Product;
->>>>>>> 2e34ca331e4475a47e7f94657279b4fa7f2c4dd4
-import view.MainMenu;
+//<<<<<<< HEAD
+//=======
+//import static org.junit.Assert.*;
+//import org.junit.After;
+//import org.junit.Before;
+//import org.junit.Test;
+
+import view.ManagerPanel;
 
 public class SupermarketClient {
 	// TEST CASES GO HERE
-	
-	
+
+	public static void main(String[] arg) {
+		EventQueue.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					ManagerPanel managerPanel = new ManagerPanel();
+					managerPanel.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+
+	}
+
 }
