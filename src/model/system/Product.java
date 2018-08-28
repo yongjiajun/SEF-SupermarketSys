@@ -34,6 +34,10 @@ public class Product {
 		// product name is ID, quantitySold is written to sales.txt and read from there
 	}
 
+	public void setProductName(String name) {
+		this.productName = name;
+	}
+
 	public String getProductName() {
 		return productName;
 	}
