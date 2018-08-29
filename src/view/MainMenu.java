@@ -5,8 +5,7 @@ import java.util.Scanner;
 public class MainMenu {
 
 	// serves as view (for now), NOT WORKING YET
-//	test - Clinton
-	// TODO make login work
+ 	// TODO make login work
 
 	public MainMenu() {
 		mainMenu();
