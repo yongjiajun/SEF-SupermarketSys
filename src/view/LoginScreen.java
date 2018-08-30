@@ -13,21 +13,27 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import control.LoginController;
+
 public class LoginScreen extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField;
 	private JPasswordField passwordField;
+	private JLabel errorMessage;
+	private LoginController loginController = new LoginController(this);
 
 
 
 	public LoginScreen() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1200, 750);
+		setResizable(false);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
 
 		JPanel mainPanel = new JPanel();
 		mainPanel.setBackground(new Color(30, 144, 255));
@@ -57,10 +63,24 @@ public class LoginScreen extends JFrame {
 		loginBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				String id = textField.getText();
+				char[] pw = passwordField.getPassword();
+				loginController.checkCredentials(id, pw);
+				
+				
+				
+				
 			}
 		});
 		loginBtn.setBounds(479, 350, 141, 56);
 		mainPanel.add(loginBtn);
+		
+		errorMessage = new JLabel("Login Failed. Please try again.");
+		errorMessage.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
+		errorMessage.setForeground(Color.RED);
+		errorMessage.setBounds(479, 400, 600, 200);
+		errorMessage.setVisible(false);
+		mainPanel.add(errorMessage);
 
 		JPanel dateTimePanel = new JPanel();
 		dateTimePanel.setBackground(new Color(128, 128, 128));
@@ -118,5 +138,9 @@ public class LoginScreen extends JFrame {
 		passwordField = new JPasswordField();
 		passwordField.setBounds(427, 283, 256, 37);
 		mainPanel.add(passwordField);
+	}
+	
+	public void setErrorMessageVisible() {
+		errorMessage.setVisible(true);
 	}
 }
