@@ -112,6 +112,12 @@ public class WelcomeScreen extends JFrame {
 		assisstancePanel.setLayout(null);
 
 		JButton requireAssistanceBtn = new JButton("I NEED ASSISTANCE");
+		requireAssistanceBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				INeedAssistanceLogin inaLogin = new INeedAssistanceLogin();
+				inaLogin.setVisible(true);
+			}
+		});
 //		requireAssistanceBtn.setBackground(new Color(255, 0, 0));
 		requireAssistanceBtn.setBackground(new Color(128, 128, 128));
 //		requireAssistanceBtn.setForeground(new Color(255, 0, 0));

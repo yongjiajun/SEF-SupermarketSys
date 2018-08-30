@@ -1,16 +1,15 @@
 package control;
 
 import model.system.AccountManager;
-import view.LoginScreen;
-import view.ManagerPanel;
+import view.INeedAssistanceLogin;
 
-public class LoginController {
+public class EmployeeLoginController {
 
-	private LoginScreen view;
+	private INeedAssistanceLogin view;
 	private AccountManager accountManager;
-	private Boolean loginPass = false;
+	private boolean loginPass = false;
 
-	public LoginController(LoginScreen view) {
+	public EmployeeLoginController(INeedAssistanceLogin view) {
 		this.view = view;
 		accountManager = new AccountManager();
 	}
@@ -22,9 +21,10 @@ public class LoginController {
 		case 'M':
 			if (accountManager.getManager(id) != null) {
 				if (accountManager.getManager(id).getEmployeePIN().equals(new String(pass))) {
+					// Login Successful. Change view
 					loginPass = true;
-					ManagerPanel managerPanel = new ManagerPanel();
-					managerPanel.setVisible(true);
+					view.dispose();
+					
 				}
 			}
 
@@ -35,30 +35,13 @@ public class LoginController {
 				if (accountManager.getSalesStaff(id).getEmployeePIN().equals(new String(pass))) {
 					// Login Successful. Change view
 					loginPass = true;
+					view.dispose();
+					
 				}
 			}
-			break;
-		// Customer Login
-		case 'C':
-			if (accountManager.getCustomer(id) != null) {
-				if (accountManager.getCustomer(id).getCustomerPIN().equals(new String(pass))) {
-					// Login Successful. Change view
-					loginPass = true;
-				}
-			}
-			break;
-		// Supplier Login
-		case 'P':
-			if (accountManager.getSupplier(id) != null) {
-				if (accountManager.getSupplier(id).getSupplierPIN().equals(new String(pass))) {
-					// Login Successful. Change view
-					loginPass = true;
-				}
-			}
-
 			break;
 		}
-		
+
 		view.setErrorMessageVisible(loginPass);
 		
 	}

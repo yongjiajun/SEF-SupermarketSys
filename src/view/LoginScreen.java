@@ -23,8 +23,6 @@ public class LoginScreen extends JFrame {
 	private JLabel errorMessage;
 	private LoginController loginController = new LoginController(this);
 
-
-
 	public LoginScreen() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1200, 750);
@@ -33,7 +31,6 @@ public class LoginScreen extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
 
 		JPanel mainPanel = new JPanel();
 		mainPanel.setBackground(new Color(30, 144, 255));
@@ -66,15 +63,12 @@ public class LoginScreen extends JFrame {
 				String id = textField.getText();
 				char[] pw = passwordField.getPassword();
 				loginController.checkCredentials(id, pw);
-				
-				
-				
-				
+
 			}
 		});
 		loginBtn.setBounds(479, 350, 141, 56);
 		mainPanel.add(loginBtn);
-		
+
 		errorMessage = new JLabel("Login Failed. Please try again.");
 		errorMessage.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
 		errorMessage.setForeground(Color.RED);
@@ -109,8 +103,14 @@ public class LoginScreen extends JFrame {
 		assisstancePanel.setLayout(null);
 
 		JButton requireAssistanceBtn = new JButton("I NEED ASSISTANCE");
- 		requireAssistanceBtn.setBackground(new Color(128, 128, 128));
- 		requireAssistanceBtn.setOpaque(true);
+		requireAssistanceBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				INeedAssistanceLogin inaLogin = new INeedAssistanceLogin();
+				inaLogin.setVisible(true);
+			}
+		});
+		requireAssistanceBtn.setBackground(new Color(128, 128, 128));
+		requireAssistanceBtn.setOpaque(true);
 		requireAssistanceBtn.setBounds(926, 6, 219, 38);
 		assisstancePanel.add(requireAssistanceBtn);
 
@@ -118,7 +118,7 @@ public class LoginScreen extends JFrame {
 		backBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				dispose();
+//				dispose();
 				WelcomeScreen welcomeScreen = new WelcomeScreen();
 				welcomeScreen.setVisible(true);
 				validate();
@@ -139,8 +139,8 @@ public class LoginScreen extends JFrame {
 		passwordField.setBounds(427, 283, 256, 37);
 		mainPanel.add(passwordField);
 	}
-	
-	public void setErrorMessageVisible() {
-		errorMessage.setVisible(true);
+
+	public void setErrorMessageVisible(Boolean value) {
+		errorMessage.setVisible(!value);
 	}
 }
