@@ -2,10 +2,7 @@ package model.people;
 
 public class Customer {
 
-	private String customerID;
-	private String customerPIN;
-	private String customerFName;
-	private String customerLName;
+	private String customerID, customerPIN, customerFName, customerLName;
 	private int loyaltyPts;
 
 	public Customer(String customerID, String customerPIN, String customerFName, String customerLName) {
@@ -36,13 +33,11 @@ public class Customer {
 		return loyaltyPts;
 	}
 
-	public void addLoyaltyPts(int pts)
-	{
+	public void addLoyaltyPts(int pts) {
 		this.loyaltyPts += pts;
 	}
-	
-	public void deductLoyaltyPts(int pts)
-	{
+
+	public void deductLoyaltyPts(int pts) {
 		this.loyaltyPts -= pts;
 	}
 

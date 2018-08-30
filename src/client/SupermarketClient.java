@@ -3,14 +3,7 @@ package client;
 
 import java.awt.EventQueue;
 
-//<<<<<<< HEAD
-//=======
-//import static org.junit.Assert.*;
-//import org.junit.After;
-//import org.junit.Before;
-//import org.junit.Test;
-
-import view.ManagerPanel;
+import view.WelcomeScreen;
 
 public class SupermarketClient {
 	// TEST CASES GO HERE
@@ -20,8 +13,8 @@ public class SupermarketClient {
 			@Override
 			public void run() {
 				try {
-					ManagerPanel managerPanel = new ManagerPanel();
-					managerPanel.setVisible(true);
+					WelcomeScreen welcomeScreen = new WelcomeScreen();
+					welcomeScreen.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

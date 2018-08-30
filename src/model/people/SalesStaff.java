@@ -2,7 +2,7 @@ package model.people;
 
 public class SalesStaff extends Employee {
 
-	public SalesStaff(String employeeFName, String employeeLName, String employeeID, String employeePIN) {
-		super(employeeFName, employeeLName, employeeID, employeePIN);
+	public SalesStaff(String employeeID, String employeePIN, String employeeFName, String employeeLName) {
+		super(employeeID, employeePIN, employeeFName, employeeLName);
 	}
 }

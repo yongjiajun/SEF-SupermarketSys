@@ -39,6 +39,19 @@ public class AccountManager {
 	public AccountManager() {
 		// init();
 		// will have to call terminate() when closing the program!
+		Customer c1 = new Customer("C123", "1234", "Alpha", "Bravo");
+		addCustomer(c1);
+
+		Manager m1 = new Manager("M123", "1234", "Charlie", "Delta");
+		addManager(m1);
+
+		SalesStaff s1 = new SalesStaff("S123", "1234", "Echo", "Foxtrot");
+		addSalesStaff(s1);
+
+		Supplier p1 = new Supplier("P123", "1234", "Golf", "Hotel", "CompName", "CompPhone", "CompEmail",
+				"CompLocation");
+		addSupplier(p1);
+
 	}
 
 	public Customer getCustomer(String id) {
