@@ -103,5 +103,4 @@ public class INeedAssistanceLogin extends JFrame {
 	public void setErrorMessageVisible(Boolean value) {
 		errorMessage.setVisible(!value);
 	}
-
 }
