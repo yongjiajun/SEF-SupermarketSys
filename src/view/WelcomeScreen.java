@@ -1,14 +1,12 @@
 package view;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -67,14 +65,15 @@ public class WelcomeScreen extends JFrame {
 		mainPanel.add(startDescription);
 
 		JPanel dateTimePanel = new JPanel();
-		dateTimePanel.setBackground(new Color(128, 128, 128));
-		dateTimePanel.setForeground(new Color(128, 128, 128));
+		dateTimePanel.setBackground(new Color(102, 102, 102));
+		dateTimePanel.setForeground(new Color(102, 102, 102));
 		dateTimePanel.setBounds(0, 0, 1200, 50);
 		mainPanel.add(dateTimePanel);
 		dateTimePanel.setLayout(null);
 
 		JLabel welcomeLbl = new JLabel("WELCOME");
 		welcomeLbl.setFont(new Font("Lucida Grande", Font.BOLD, 20));
+		welcomeLbl.setForeground(Color.WHITE);
 		welcomeLbl.setBounds(548, 8, 104, 30);
 		dateTimePanel.add(welcomeLbl);
 		
@@ -82,13 +81,14 @@ public class WelcomeScreen extends JFrame {
 		String date = new SimpleDateFormat("[dd/MM/yyyy] [hh:mm:ss]").format(new Date());
         JLabel labelTime = new JLabel(date);
         labelTime.setFont(new Font("Lucida Grande", Font.BOLD, 16));
+        labelTime.setForeground(Color.WHITE);
         labelTime.setBounds(975, 9, 220, 30);
  		dateTimePanel.add(labelTime);
 
 
 		JPanel assisstancePanel = new JPanel();
-		assisstancePanel.setForeground(Color.GRAY);
-		assisstancePanel.setBackground(Color.GRAY);
+		assisstancePanel.setForeground(new Color(102, 102, 102));
+		assisstancePanel.setBackground(new Color(102, 102, 102));
 		assisstancePanel.setBounds(0, 678, 1200, 50);
 		mainPanel.add(assisstancePanel);
 		assisstancePanel.setLayout(null);
@@ -100,9 +100,7 @@ public class WelcomeScreen extends JFrame {
 				inaLogin.setVisible(true);
 			}
 		});
-//		requireAssistanceBtn.setBackground(new Color(255, 0, 0));
-		requireAssistanceBtn.setBackground(new Color(128, 128, 128));
-//		requireAssistanceBtn.setForeground(new Color(255, 0, 0));
+		requireAssistanceBtn.setBackground(new Color(102, 102, 102));
 		requireAssistanceBtn.setOpaque(true);
 		requireAssistanceBtn.setBounds(970, 7, 219, 38);
 		assisstancePanel.add(requireAssistanceBtn);

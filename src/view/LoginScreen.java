@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -80,27 +79,29 @@ public class LoginScreen extends JFrame {
 		mainPanel.add(errorMessage);
 
 		JPanel dateTimePanel = new JPanel();
-		dateTimePanel.setBackground(new Color(128, 128, 128));
-		dateTimePanel.setForeground(new Color(128, 128, 128));
+		dateTimePanel.setBackground(new Color(102, 102, 102));
+		dateTimePanel.setForeground(new Color(102, 102, 102));
 		dateTimePanel.setBounds(0, 0, 1200, 50);
 		mainPanel.add(dateTimePanel);
 		dateTimePanel.setLayout(null);
 
 		JLabel loginTitle = new JLabel("LOGIN");
 		loginTitle.setFont(new Font("Lucida Grande", Font.BOLD, 20));
+		loginTitle.setForeground(Color.WHITE);
 		loginTitle.setBounds(566, 8, 67, 30);
 		dateTimePanel.add(loginTitle);
 
 		String date = new SimpleDateFormat("[dd/MM/yyyy] [hh:mm:ss]").format(new Date());
         JLabel labelTime = new JLabel(date);
         labelTime.setFont(new Font("Lucida Grande", Font.BOLD, 16));
+        labelTime.setForeground(Color.WHITE);
         labelTime.setBounds(975, 9, 220, 30);
  		dateTimePanel.add(labelTime);
 		
 
 		JPanel assisstancePanel = new JPanel();
-		assisstancePanel.setForeground(Color.GRAY);
-		assisstancePanel.setBackground(Color.GRAY);
+		assisstancePanel.setForeground(new Color(102, 102, 102));
+		assisstancePanel.setBackground(new Color(102, 102, 102));
 		assisstancePanel.setBounds(0, 678, 1200, 50);
 		mainPanel.add(assisstancePanel);
 		assisstancePanel.setLayout(null);
@@ -112,7 +113,7 @@ public class LoginScreen extends JFrame {
 				inaLogin.setVisible(true);
 			}
 		});
-		requireAssistanceBtn.setBackground(new Color(128, 128, 128));
+		requireAssistanceBtn.setBackground(new Color(102, 102, 102));
 		requireAssistanceBtn.setOpaque(true);
 		requireAssistanceBtn.setBounds(970, 7, 219, 38);
 		assisstancePanel.add(requireAssistanceBtn);
@@ -129,7 +130,7 @@ public class LoginScreen extends JFrame {
 			}
 		});
 		backBtn.setOpaque(true);
-		backBtn.setBackground(Color.GRAY);
+		backBtn.setBackground(new Color(102, 102, 102));
 		backBtn.setBounds(10, 7, 142, 38);
 		assisstancePanel.add(backBtn);
 

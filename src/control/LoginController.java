@@ -1,6 +1,7 @@
 package control;
 
 import model.system.AccountManager;
+import view.CustomerCheckoutPanel;
 import view.LoginScreen;
 import view.ManagerPanel;
 
@@ -43,8 +44,9 @@ public class LoginController {
 			case 'C':
 				if (accountManager.getCustomer(id) != null) {
 					if (accountManager.getCustomer(id).getCustomerPIN().equals(new String(pass))) {
-						// Login Successful. Change view
 						loginPass = true;
+						CustomerCheckoutPanel customerCheckOutPanel = new CustomerCheckoutPanel();
+						customerCheckOutPanel.setVisible(true);
 					}
 				}
 				break;

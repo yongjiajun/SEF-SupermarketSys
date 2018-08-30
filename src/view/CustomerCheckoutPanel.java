@@ -1,7 +1,6 @@
 package view;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,20 +17,6 @@ import javax.swing.border.EmptyBorder;
 public class CustomerCheckoutPanel extends JFrame {
 
 	private JPanel contentPane;
-
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					CustomerCheckoutPanel frame = new CustomerCheckoutPanel();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	public CustomerCheckoutPanel() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -69,43 +54,49 @@ public class CustomerCheckoutPanel extends JFrame {
 		mainPanel.add(selectItem);
 
 		JPanel dateTimePanel = new JPanel();
-		dateTimePanel.setBackground(new Color(128, 128, 128));
-		dateTimePanel.setForeground(new Color(128, 128, 128));
-		dateTimePanel.setBounds(0, 0, 1200, 43);
+		dateTimePanel.setBackground(new Color(102, 102, 102));
+		dateTimePanel.setForeground(new Color(102, 102, 102));
+		dateTimePanel.setBounds(0, 0, 1200, 50);
 		mainPanel.add(dateTimePanel);
 		dateTimePanel.setLayout(null);
 
-		JLabel welcomeLbl = new JLabel("Welcome [getID]");
+		JLabel welcomeLbl = new JLabel("Welcome, [getID]");
 		welcomeLbl.setFont(new Font("Lucida Grande", Font.BOLD, 20));
-		welcomeLbl.setBounds(18, 7, 234, 31);
+		welcomeLbl.setForeground(Color.WHITE);
+		welcomeLbl.setBounds(18, 8, 234, 30);
 		dateTimePanel.add(welcomeLbl);
-//Need to fix so the time changes value overtime. Integrate ClockPanel if you know how
-		String date = new SimpleDateFormat("[dd/MM/yyyy] [hh:mm:ss]").format(new Date());
-        JLabel labelTime = new JLabel(date);
-        labelTime.setFont(new Font("Lucida Grande", Font.BOLD, 16));
-        labelTime.setBounds(952, 7, 242, 35);
- 		dateTimePanel.add(labelTime);
 
+		// Need to fix so the time changes value overtime. Integrate ClockPanel if you know how
+		String date = new SimpleDateFormat("[dd/MM/yyyy] [hh:mm:ss]").format(new Date());
+		JLabel labelTime = new JLabel(date);
+		labelTime.setFont(new Font("Lucida Grande", Font.BOLD, 16));
+		labelTime.setForeground(Color.WHITE);
+		labelTime.setBounds(975, 9, 220, 30);
+		dateTimePanel.add(labelTime);
 
 		JPanel assisstancePanel = new JPanel();
-		assisstancePanel.setForeground(Color.GRAY);
-		assisstancePanel.setBackground(Color.GRAY);
+		assisstancePanel.setForeground(new Color(102, 102, 102));
+		assisstancePanel.setBackground(new Color(102, 102, 102));
 		assisstancePanel.setBounds(0, 678, 1200, 50);
 		mainPanel.add(assisstancePanel);
 		assisstancePanel.setLayout(null);
 
 		JButton requireAssistanceBtn = new JButton("I NEED ASSISTANCE");
-//		requireAssistanceBtn.setBackground(new Color(255, 0, 0));
-		requireAssistanceBtn.setBackground(new Color(128, 128, 128));
-//		requireAssistanceBtn.setForeground(new Color(255, 0, 0));
+		requireAssistanceBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				INeedAssistanceLogin inaLogin = new INeedAssistanceLogin();
+				inaLogin.setVisible(true);
+			}
+		});
+		requireAssistanceBtn.setBackground(new Color(102, 102, 102));
 		requireAssistanceBtn.setOpaque(true);
-		requireAssistanceBtn.setBounds(926, 6, 219, 38);
+		requireAssistanceBtn.setBounds(970, 7, 219, 38);
 		assisstancePanel.add(requireAssistanceBtn);
 
 		JButton cancelOrderBtn = new JButton("Cancel Order");
 		cancelOrderBtn.setOpaque(true);
-		cancelOrderBtn.setBackground(Color.GRAY);
-		cancelOrderBtn.setBounds(695, 6, 187, 38);
+		cancelOrderBtn.setBackground(new Color(102, 102, 102));
+		cancelOrderBtn.setBounds(720, 7, 187, 38);
 		assisstancePanel.add(cancelOrderBtn);
 
 		JPanel imagePanel = new JPanel();
@@ -129,10 +120,10 @@ public class CustomerCheckoutPanel extends JFrame {
 		totalLabel.setBounds(6, 335, 61, 16);
 		panel.add(totalLabel);
 
-				JSeparator separator = new JSeparator();
-				separator.setBounds(0, 311, 471, 12);
-				panel.add(separator);
-				separator.setBackground(Color.BLACK);
-				separator.setForeground(Color.BLACK);
+		JSeparator separator = new JSeparator();
+		separator.setBounds(0, 311, 471, 12);
+		panel.add(separator);
+		separator.setBackground(Color.BLACK);
+		separator.setForeground(Color.BLACK);
 	}
 }
