@@ -75,7 +75,7 @@ public class LoginScreen extends JFrame {
 		errorMessage = new JLabel("Login Failed. Please try again.");
 		errorMessage.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
 		errorMessage.setForeground(Color.RED);
-		errorMessage.setBounds(479, 400, 600, 200);
+		errorMessage.setBounds(457, 450, 286, 50);
 		errorMessage.setVisible(false);
 		mainPanel.add(errorMessage);
 
