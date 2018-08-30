@@ -4,7 +4,10 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -41,19 +44,19 @@ public class LoginScreen extends JFrame {
 		JLabel grocerySystemTitle = new JLabel("Welcome to Kostco");
 		grocerySystemTitle.setForeground(new Color(255, 255, 255));
 		grocerySystemTitle.setFont(new Font("Lucida Grande", Font.BOLD, 25));
-		grocerySystemTitle.setBounds(423, 88, 373, 65);
+		grocerySystemTitle.setBounds(485, 88, 245, 65);
 		mainPanel.add(grocerySystemTitle);
 
 		JLabel pinLabel = new JLabel("PIN");
 		pinLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
 		pinLabel.setForeground(new Color(255, 255, 255));
-		pinLabel.setBounds(374, 277, 53, 43);
+		pinLabel.setBounds(440, 277, 35, 43);
 		mainPanel.add(pinLabel);
 
 		JLabel idLabel = new JLabel("ID");
 		idLabel.setForeground(Color.WHITE);
 		idLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		idLabel.setBounds(379, 222, 35, 43);
+		idLabel.setBounds(450, 215, 25, 50);
 		mainPanel.add(idLabel);
 
 		JButton loginBtn = new JButton("Login");
@@ -66,7 +69,7 @@ public class LoginScreen extends JFrame {
 
 			}
 		});
-		loginBtn.setBounds(479, 350, 141, 56);
+		loginBtn.setBounds(530, 350, 141, 56);
 		mainPanel.add(loginBtn);
 
 		errorMessage = new JLabel("Login Failed. Please try again.");
@@ -79,21 +82,21 @@ public class LoginScreen extends JFrame {
 		JPanel dateTimePanel = new JPanel();
 		dateTimePanel.setBackground(new Color(128, 128, 128));
 		dateTimePanel.setForeground(new Color(128, 128, 128));
-		dateTimePanel.setBounds(0, 0, 1200, 43);
+		dateTimePanel.setBounds(0, 0, 1200, 50);
 		mainPanel.add(dateTimePanel);
 		dateTimePanel.setLayout(null);
 
-		JLabel loginTitle = new JLabel("Login");
+		JLabel loginTitle = new JLabel("LOGIN");
 		loginTitle.setFont(new Font("Lucida Grande", Font.BOLD, 20));
-		loginTitle.setBounds(519, 6, 112, 31);
+		loginTitle.setBounds(566, 8, 67, 30);
 		dateTimePanel.add(loginTitle);
 
-		JLabel dateTimeLbl = new JLabel();
-//		dateTimeLbl.add(new ClockPanel());
-
-		dateTimeLbl.setFont(new Font("Lucida Grande", Font.BOLD, 20));
-		dateTimeLbl.setBounds(1005, 6, 189, 31);
-		dateTimePanel.add(dateTimeLbl);
+		String date = new SimpleDateFormat("[dd/MM/yyyy] [hh:mm:ss]").format(new Date());
+        JLabel labelTime = new JLabel(date);
+        labelTime.setFont(new Font("Lucida Grande", Font.BOLD, 16));
+        labelTime.setBounds(975, 9, 220, 30);
+ 		dateTimePanel.add(labelTime);
+		
 
 		JPanel assisstancePanel = new JPanel();
 		assisstancePanel.setForeground(Color.GRAY);
@@ -111,7 +114,7 @@ public class LoginScreen extends JFrame {
 		});
 		requireAssistanceBtn.setBackground(new Color(128, 128, 128));
 		requireAssistanceBtn.setOpaque(true);
-		requireAssistanceBtn.setBounds(926, 6, 219, 38);
+		requireAssistanceBtn.setBounds(970, 7, 219, 38);
 		assisstancePanel.add(requireAssistanceBtn);
 
 		JButton backBtn = new JButton("BACK");
@@ -127,16 +130,16 @@ public class LoginScreen extends JFrame {
 		});
 		backBtn.setOpaque(true);
 		backBtn.setBackground(Color.GRAY);
-		backBtn.setBounds(20, 6, 142, 38);
+		backBtn.setBounds(10, 7, 142, 38);
 		assisstancePanel.add(backBtn);
 
 		textField = new JTextField();
-		textField.setBounds(426, 222, 257, 37);
+		textField.setBounds(478, 222, 257, 37);
 		mainPanel.add(textField);
 		textField.setColumns(10);
 
 		passwordField = new JPasswordField();
-		passwordField.setBounds(427, 283, 256, 37);
+		passwordField.setBounds(478, 283, 257, 37);
 		mainPanel.add(passwordField);
 	}
 
