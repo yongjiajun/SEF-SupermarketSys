@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.border.EmptyBorder;
@@ -94,6 +95,15 @@ public class CustomerCheckoutPanel extends JFrame {
 		assisstancePanel.add(requireAssistanceBtn);
 
 		JButton cancelOrderBtn = new JButton("Cancel Order");
+		cancelOrderBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int cancelResp = JOptionPane.showConfirmDialog(null, "Are you sure you want to cancel your order?", "Cancel Order", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE);
+				if (cancelResp == JOptionPane.YES_OPTION) {
+					WelcomeScreen welcomeScreen = new WelcomeScreen();
+					welcomeScreen.setVisible(true);
+				}
+			}
+		});
 		cancelOrderBtn.setOpaque(true);
 		cancelOrderBtn.setBackground(new Color(102, 102, 102));
 		cancelOrderBtn.setBounds(720, 7, 187, 38);

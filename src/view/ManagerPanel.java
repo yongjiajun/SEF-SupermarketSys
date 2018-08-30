@@ -6,6 +6,8 @@ import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
@@ -237,19 +239,24 @@ public class ManagerPanel extends JFrame {
 		dashboardPanel.setLayout(null);
 
 		JPanel welcomeDateTimeBorder = new JPanel();
-		welcomeDateTimeBorder.setBackground(new Color(128, 128, 128));
-		welcomeDateTimeBorder.setBounds(0, 0, 1036, 40);
+		welcomeDateTimeBorder.setBackground(new Color(102, 102, 102));
+		welcomeDateTimeBorder.setBounds(0, 0, 1036, 50);
 		dashboardPanel.add(welcomeDateTimeBorder);
 		welcomeDateTimeBorder.setLayout(null);
 
-		JLabel welcomeLbl = new JLabel("Welcome [getName/getId]");
-		welcomeLbl.setBounds(6, 6, 163, 16);
+		JLabel welcomeLbl = new JLabel("Welcome, [ManagerName]");
+		welcomeLbl.setFont(new Font("Lucida Grande", Font.BOLD, 20));
+		welcomeLbl.setForeground(Color.WHITE);
+		welcomeLbl.setBounds(18, 8, 400, 30);
 		welcomeDateTimeBorder.add(welcomeLbl);
 
-		JLabel dateTimeLbl = new JLabel("[DATE][TIME]");
-		dateTimeLbl.setBounds(934, 6, 96, 16);
-		welcomeDateTimeBorder.add(dateTimeLbl);
-
+		//Need to fix so the time changes value overtime. Integrate ClockPanel if you know how
+		String date = new SimpleDateFormat("[dd/MM/yyyy] [hh:mm:ss]").format(new Date());
+        JLabel labelTime = new JLabel(date);
+        labelTime.setFont(new Font("Lucida Grande", Font.BOLD, 16));
+        labelTime.setForeground(Color.WHITE);
+        labelTime.setBounds(811, 9, 220, 30);
+ 		welcomeDateTimeBorder.add(labelTime);
 		salesPanel.setBackground(Color.BLUE);
 		parentPanel.add(salesPanel, "name_282489540810395");
 
