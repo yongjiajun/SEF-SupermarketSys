@@ -16,47 +16,51 @@ public class LoginController {
 	}
 
 	public void checkCredentials(String id, char[] pass) {
-		id = id.toUpperCase();
-		switch (id.charAt(0)) {
-		// Manager Login
-		case 'M':
-			if (accountManager.getManager(id) != null) {
-				if (accountManager.getManager(id).getEmployeePIN().equals(new String(pass))) {
-					loginPass = true;
-					ManagerPanel managerPanel = new ManagerPanel();
-					managerPanel.setVisible(true);
+		try {
+			id = id.toUpperCase();
+			switch (id.charAt(0)) {
+			// Manager Login
+			case 'M':
+				if (accountManager.getManager(id) != null) {
+					if (accountManager.getManager(id).getEmployeePIN().equals(new String(pass))) {
+						loginPass = true;
+						ManagerPanel managerPanel = new ManagerPanel();
+						managerPanel.setVisible(true);
+					}
 				}
-			}
-
-			break;
-		// SalesStaff Login
-		case 'S':
-			if (accountManager.getSalesStaff(id) != null) {
-				if (accountManager.getSalesStaff(id).getEmployeePIN().equals(new String(pass))) {
-					// Login Successful. Change view
-					loginPass = true;
+	
+				break;
+			// SalesStaff Login
+			case 'S':
+				if (accountManager.getSalesStaff(id) != null) {
+					if (accountManager.getSalesStaff(id).getEmployeePIN().equals(new String(pass))) {
+						// Login Successful. Change view
+						loginPass = true;
+					}
 				}
-			}
-			break;
-		// Customer Login
-		case 'C':
-			if (accountManager.getCustomer(id) != null) {
-				if (accountManager.getCustomer(id).getCustomerPIN().equals(new String(pass))) {
-					// Login Successful. Change view
-					loginPass = true;
+				break;
+			// Customer Login
+			case 'C':
+				if (accountManager.getCustomer(id) != null) {
+					if (accountManager.getCustomer(id).getCustomerPIN().equals(new String(pass))) {
+						// Login Successful. Change view
+						loginPass = true;
+					}
 				}
-			}
-			break;
-		// Supplier Login
-		case 'P':
-			if (accountManager.getSupplier(id) != null) {
-				if (accountManager.getSupplier(id).getSupplierPIN().equals(new String(pass))) {
-					// Login Successful. Change view
-					loginPass = true;
+				break;
+			// Supplier Login
+			case 'P':
+				if (accountManager.getSupplier(id) != null) {
+					if (accountManager.getSupplier(id).getSupplierPIN().equals(new String(pass))) {
+						// Login Successful. Change view
+						loginPass = true;
+					}
 				}
+	
+				break;
 			}
-
-			break;
+		} catch(IndexOutOfBoundsException e) {
+			System.err.println("Must fill out the form");
 		}
 		
 		view.setErrorMessageVisible(loginPass);

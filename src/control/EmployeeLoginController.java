@@ -15,31 +15,35 @@ public class EmployeeLoginController {
 	}
 
 	public void checkCredentials(String id, char[] pass) {
-		id = id.toUpperCase();
-		switch (id.charAt(0)) {
-		// Manager Login
-		case 'M':
-			if (accountManager.getManager(id) != null) {
-				if (accountManager.getManager(id).getEmployeePIN().equals(new String(pass))) {
-					// Login Successful. Change view
-					loginPass = true;
-					view.dispose();
-					
+		try {
+			id = id.toUpperCase();
+			switch (id.charAt(0)) {
+			// Manager Login
+			case 'M':
+				if (accountManager.getManager(id) != null) {
+					if (accountManager.getManager(id).getEmployeePIN().equals(new String(pass))) {
+						// Login Successful. Change view
+						loginPass = true;
+						view.dispose();
+						
+					}
 				}
-			}
-
-			break;
-		// SalesStaff Login
-		case 'S':
-			if (accountManager.getSalesStaff(id) != null) {
-				if (accountManager.getSalesStaff(id).getEmployeePIN().equals(new String(pass))) {
-					// Login Successful. Change view
-					loginPass = true;
-					view.dispose();
-					
+	
+				break;
+			// SalesStaff Login
+			case 'S':
+				if (accountManager.getSalesStaff(id) != null) {
+					if (accountManager.getSalesStaff(id).getEmployeePIN().equals(new String(pass))) {
+						// Login Successful. Change view
+						loginPass = true;
+						view.dispose();
+						
+					}
 				}
+				break;
 			}
-			break;
+		} catch (IndexOutOfBoundsException e) {
+			System.err.println("Must fill out the form");
 		}
 
 		view.setErrorMessageVisible(loginPass);

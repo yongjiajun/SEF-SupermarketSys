@@ -33,6 +33,7 @@ public class INeedAssistanceLogin extends JFrame {
 		setSize(new Dimension(400, 250));
 		setUndecorated(true);
 		getRootPane().setWindowDecorationStyle(JRootPane.NONE);
+		setAlwaysOnTop(true);
 
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -103,4 +104,5 @@ public class INeedAssistanceLogin extends JFrame {
 	public void setErrorMessageVisible(Boolean value) {
 		errorMessage.setVisible(!value);
 	}
+
 }
