@@ -21,24 +21,9 @@ import javax.swing.border.EmptyBorder;
 
 public class ManagerPanel extends JFrame {
 
-//	STILL NEED TO REFACTOR CODE
-//	NEED TO FIX:
-
-//	ACTIONLISTENERS
-
-
-	private JPanel contentPane;
+	private JPanel contentPane, parentPanel, sideBarPanel, dashboardPanel, todaySalesPanel, productsPanel,
+			customersPanel, suppliersPanel, salesPanel, reportPanel, employeesPanel, systemPanel;
 	private JTable table;
-	private JPanel actionPanel = new JPanel();
-	private JPanel productsPanel = new JPanel();
-	private JLabel dashBoardLbl = new JLabel("DASHBOARD", SwingConstants.CENTER);
-	private JPanel dashboardPanel = new JPanel();
-	private JPanel parentPanel = new JPanel();
-	private JPanel customersPanel = new JPanel();
-	private JPanel supplierPanel = new JPanel();
-	private JPanel todaySalesPanel = new JPanel();
-	private JLabel salesLbl = new JLabel("SALES", SwingConstants.CENTER);
-	private JPanel salesPanel = new JPanel();
 
 	public ManagerPanel() {
 		setTitle("SEF Assignment");
@@ -49,70 +34,57 @@ public class ManagerPanel extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		productsPanel();
+		parentPanel = new JPanel();
+		parentPanel.setBounds(164, 0, 1036, 750);
+		contentPane.add(parentPanel);
+		parentPanel.setLayout(new CardLayout(0, 0));
+
+		sideBarPanel();
 		dashboardPanel();
-		refactorThisCode();
-		customerPanel();
+		productsPanel();
+		customersPanel();
 		salesPanel();
-		supplierPanel();
+		suppliersPanel();
 		reportPanel();
 		employeesPanel();
 		systemPanel();
+
 	}
 
-	private void productsPanel() {
-		JLabel productsTitle = new JLabel("Products");
-		productsTitle.setFont(new Font("Lucida Grande", Font.BOLD, 20));
-		productsTitle.setBounds(19, 6, 100, 38);
-		productsPanel.add(productsTitle);
+	private void sideBarPanel() {
+		sideBarPanel = new JPanel();
+		sideBarPanel.setBackground(Color.DARK_GRAY);
+		sideBarPanel.setBounds(0, 0, 174, 750);
+		contentPane.add(sideBarPanel);
+		sideBarPanel.setLayout(null);
 
-		JPanel panel = new JPanel();
-		panel.setBounds(6, 78, 1030, 84);
-		productsPanel.add(panel);
-		panel.setLayout(null);
+		JLabel lblNewLabel = new JLabel("", SwingConstants.CENTER);
+		lblNewLabel.setIcon(new ImageIcon(ManagerPanel.class.getResource("/images/Sef4.jpg")));
+		lblNewLabel.setBounds(50, 28, 74, 72);
+		sideBarPanel.add(lblNewLabel);
 
-		JLabel lblProducts = new JLabel("PRODUCTS", SwingConstants.CENTER);
-		lblProducts.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		lblProducts.setForeground(Color.WHITE);
-		lblProducts.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 16));
-		lblProducts.setBounds(0, 183, 163, 62);
-		actionPanel.add(lblProducts);
+		JLabel dashboardLabel = new JLabel("DASHBOARD", SwingConstants.CENTER);
+		dashboardLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		dashboardLabel.setForeground(Color.WHITE);
+		dashboardLabel.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 20));
+		dashboardLabel.setBounds(0, 140, 174, 37);
+		sideBarPanel.add(dashboardLabel);
+		dashboardLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				parentPanel.removeAll();
+				parentPanel.add(dashboardPanel);
+				parentPanel.repaint();
+				parentPanel.revalidate();
+			}
+		});
 
-		JLabel addProductButton = new JLabel("Add Product", SwingConstants.CENTER);
-		addProductButton.setBounds(873, 21, 125, 41);
-		panel.add(addProductButton);
-		addProductButton.setOpaque(true);
-		addProductButton.setForeground(Color.WHITE);
-		addProductButton.setBackground(new Color(255, 140, 0));
-		addProductButton.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-
-		JComboBox actionBox = new JComboBox();
-		actionBox.setBounds(39, 30, 165, 32);
-		actionBox.addItem("Add Item");
-		actionBox.addItem("Modify Item");
-		actionBox.addItem("Remove item");
-		panel.add(actionBox);
-
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(36, 180, 981, 528);
-		productsPanel.add(scrollPane);
-
-// Temporary data - shouldn't be here. Need to comply with MVC
-		Object[][] data = { { "1", "Apple", "Fruit", "", "$1.00", "100", "Fruit" },
-				{ "2", "Apple", "Fruit", "", "$1.00", "100", "Fruit" },
-				{ "3", "Apple", "Fruit", "", "$1.00", "100", "Fruit" },
-				{ "4", "Apple", "Fruit", "", "$1.00", "100", "Fruit" },
-				{ "5", "Apple", "Fruit", "", "$1.00", "100", "Fruit" },
-				{ "6", "Apple", "Fruit", "", "$1.00", "100", "Fruit" }, };
-
-		String[] columnHeaders = { "ID", "Name", "Type", "Description", "Price", "Stock", "Category" };
-
-		table = new JTable(data, columnHeaders);
-		table.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		scrollPane.setViewportView(table);
-
-		lblProducts.addMouseListener(new MouseAdapter() {
-			@Override
+		JLabel productsLabel = new JLabel("PRODUCTS", SwingConstants.CENTER);
+		productsLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		productsLabel.setForeground(Color.WHITE);
+		productsLabel.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 20));
+		productsLabel.setBounds(0, 217, 174, 37);
+		sideBarPanel.add(productsLabel);
+		productsLabel.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				parentPanel.removeAll();
 				parentPanel.add(productsPanel);
@@ -121,23 +93,131 @@ public class ManagerPanel extends JFrame {
 			}
 		});
 
+		JLabel salesLabel = new JLabel("SALES", SwingConstants.CENTER);
+		salesLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		salesLabel.setForeground(new Color(255, 255, 255));
+		salesLabel.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 20));
+		salesLabel.setBounds(0, 294, 174, 37);
+		sideBarPanel.add(salesLabel);
+		salesLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				parentPanel.removeAll();
+				parentPanel.add(salesPanel);
+				parentPanel.repaint();
+				parentPanel.revalidate();
+			}
+		});
+
+		JLabel customersLabel = new JLabel("CUSTOMERS", SwingConstants.CENTER);
+		customersLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		customersLabel.setForeground(Color.WHITE);
+		customersLabel.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 20));
+		customersLabel.setBounds(0, 371, 174, 37);
+		sideBarPanel.add(customersLabel);
+		customersLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				parentPanel.removeAll();
+				parentPanel.add(customersPanel);
+				parentPanel.repaint();
+				parentPanel.revalidate();
+			}
+		});
+
+		JLabel supplierLabel = new JLabel("SUPPLIER", SwingConstants.CENTER);
+		supplierLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		supplierLabel.setForeground(Color.WHITE);
+		supplierLabel.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 20));
+		supplierLabel.setBounds(0, 448, 174, 37);
+		sideBarPanel.add(supplierLabel);
+		supplierLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				parentPanel.removeAll();
+				parentPanel.add(suppliersPanel);
+				parentPanel.repaint();
+				parentPanel.revalidate();
+			}
+		});
+
+		JLabel reportLabel = new JLabel("REPORT", SwingConstants.CENTER);
+		reportLabel.setForeground(Color.WHITE);
+		reportLabel.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 20));
+		reportLabel.setBounds(0, 525, 174, 37);
+		sideBarPanel.add(reportLabel);
+		reportLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				parentPanel.removeAll();
+				parentPanel.add(reportPanel);
+				parentPanel.repaint();
+				parentPanel.revalidate();
+			}
+		});
+
+		JLabel employeesLabel = new JLabel("EMPLOYEES", SwingConstants.CENTER);
+		employeesLabel.setForeground(Color.WHITE);
+		employeesLabel.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 20));
+		employeesLabel.setBounds(0, 602, 174, 37);
+		sideBarPanel.add(employeesLabel);
+		employeesLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				parentPanel.removeAll();
+				parentPanel.add(employeesPanel);
+				parentPanel.repaint();
+				parentPanel.revalidate();
+			}
+		});
+
+		JLabel systemLabel = new JLabel("SYSTEM", SwingConstants.CENTER);
+		systemLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		systemLabel.setForeground(Color.WHITE);
+		systemLabel.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 20));
+		systemLabel.setBounds(0, 679, 174, 37);
+		sideBarPanel.add(systemLabel);
+		systemLabel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				parentPanel.removeAll();
+				parentPanel.add(systemPanel);
+				parentPanel.repaint();
+				parentPanel.revalidate();
+			}
+		});
+
 	}
 
 	private void dashboardPanel() {
+		dashboardPanel = new JPanel();
+		dashboardPanel.setBackground(new Color(0, 128, 128));
+		parentPanel.add(dashboardPanel);
+		dashboardPanel.setLayout(null);
 
-		dashBoardLbl.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		dashBoardLbl.setForeground(Color.WHITE);
-		dashBoardLbl.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 16));
-		dashBoardLbl.setBounds(0, 110, 163, 62);
-		actionPanel.add(dashBoardLbl);
+		JPanel welcomeDateTimePanel = new JPanel();
+		welcomeDateTimePanel.setBackground(new Color(102, 102, 102));
+		welcomeDateTimePanel.setBounds(0, 0, 1036, 50);
+		dashboardPanel.add(welcomeDateTimePanel);
+		welcomeDateTimePanel.setLayout(null);
 
+		JLabel welcomeLbl = new JLabel("Welcome, [ManagerName]");
+		welcomeLbl.setFont(new Font("Lucida Grande", Font.BOLD, 20));
+		welcomeLbl.setForeground(Color.WHITE);
+		welcomeLbl.setBounds(18, 8, 400, 30);
+		welcomeDateTimePanel.add(welcomeLbl);
+
+		// Need to fix so the time changes value overtime. Integrate ClockPanel if you
+		// know how
+		String date = new SimpleDateFormat("[dd/MM/yyyy] [hh:mm:ss]").format(new Date());
+		JLabel labelTime = new JLabel(date);
+		labelTime.setFont(new Font("Lucida Grande", Font.BOLD, 16));
+		labelTime.setForeground(Color.WHITE);
+		labelTime.setBounds(811, 9, 220, 30);
+		welcomeDateTimePanel.add(labelTime);
+
+		todaySalesPanel = new JPanel();
 		todaySalesPanel.setBounds(44, 96, 396, 229);
 		dashboardPanel.add(todaySalesPanel);
 		todaySalesPanel.setLayout(null);
 
 		JLabel dashboardLbl = new JLabel("Dashboard");
 		dashboardLbl.setFont(new Font("Lucida Grande", Font.BOLD, 16));
-		dashboardLbl.setBounds(44, 52, 100, 32);
+		dashboardLbl.setBounds(44, 52, 174, 32);
 		dashboardPanel.add(dashboardLbl);
 
 		JPanel todaySalesBox = new JPanel();
@@ -195,159 +275,94 @@ public class ManagerPanel extends JFrame {
 		JPanel dashBoardDisplaySomething2 = new JPanel();
 		dashBoardDisplaySomething2.setBounds(603, 515, 363, 192);
 		dashboardPanel.add(dashBoardDisplaySomething2);
-
-		dashBoardLbl.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				parentPanel.removeAll();
-				parentPanel.add(dashboardPanel);
-				parentPanel.repaint();
-				parentPanel.revalidate();
-			}
-		});
 	}
 
-	private void refactorThisCode() {
-
-		actionPanel.setBackground(Color.DARK_GRAY);
-		actionPanel.setBounds(0, 0, 174, 750);
-		contentPane.add(actionPanel);
-		actionPanel.setLayout(null);
-
-		salesLbl.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		salesLbl.setForeground(new Color(255, 255, 255));
-		salesLbl.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 16));
-		salesLbl.setBounds(0, 246, 163, 62);
-		actionPanel.add(salesLbl);
-
-//		image
-		JLabel lblNewLabel = new JLabel("", SwingConstants.CENTER);
-		lblNewLabel.setIcon(new ImageIcon(ManagerPanel.class.getResource("/images/Sef4.jpg")));
-		lblNewLabel.setBounds(44, 16, 69, 72);
-		actionPanel.add(lblNewLabel);
-
-		parentPanel.setBounds(164, 0, 1036, 750);
-		contentPane.add(parentPanel);
-		parentPanel.setLayout(new CardLayout(0, 0));
-
+	private void productsPanel() {
+		productsPanel = new JPanel();
 		productsPanel.setBackground(Color.WHITE);
-		parentPanel.add(productsPanel, "name_282454748275033");
+		parentPanel.add(productsPanel);
 		productsPanel.setLayout(null);
 
-		dashboardPanel.setBackground(new Color(0, 128, 128));
-		parentPanel.add(dashboardPanel, "name_282481430111453");
-		dashboardPanel.setLayout(null);
+		JLabel productsTitle = new JLabel("Products");
+		productsTitle.setFont(new Font("Lucida Grande", Font.BOLD, 20));
+		productsTitle.setBounds(19, 6, 100, 38);
+		productsPanel.add(productsTitle);
 
-		JPanel welcomeDateTimeBorder = new JPanel();
-		welcomeDateTimeBorder.setBackground(new Color(102, 102, 102));
-		welcomeDateTimeBorder.setBounds(0, 0, 1036, 50);
-		dashboardPanel.add(welcomeDateTimeBorder);
-		welcomeDateTimeBorder.setLayout(null);
+		JPanel panel = new JPanel();
+		panel.setBounds(6, 78, 1030, 84);
+		productsPanel.add(panel);
+		panel.setLayout(null);
 
-		JLabel welcomeLbl = new JLabel("Welcome, [ManagerName]");
-		welcomeLbl.setFont(new Font("Lucida Grande", Font.BOLD, 20));
-		welcomeLbl.setForeground(Color.WHITE);
-		welcomeLbl.setBounds(18, 8, 400, 30);
-		welcomeDateTimeBorder.add(welcomeLbl);
+		JLabel addProductButton = new JLabel("Add Product", SwingConstants.CENTER);
+		addProductButton.setBounds(873, 21, 125, 41);
+		panel.add(addProductButton);
+		addProductButton.setOpaque(true);
+		addProductButton.setForeground(Color.WHITE);
+		addProductButton.setBackground(new Color(255, 140, 0));
+		addProductButton.setFont(new Font("Lucida Grande", Font.BOLD, 15));
 
-		//Need to fix so the time changes value overtime. Integrate ClockPanel if you know how
-		String date = new SimpleDateFormat("[dd/MM/yyyy] [hh:mm:ss]").format(new Date());
-        JLabel labelTime = new JLabel(date);
-        labelTime.setFont(new Font("Lucida Grande", Font.BOLD, 16));
-        labelTime.setForeground(Color.WHITE);
-        labelTime.setBounds(811, 9, 220, 30);
- 		welcomeDateTimeBorder.add(labelTime);
-		salesPanel.setBackground(Color.BLUE);
-		parentPanel.add(salesPanel, "name_282489540810395");
+		JComboBox actionBox = new JComboBox();
+		actionBox.setBounds(39, 30, 165, 32);
+		actionBox.addItem("Add Item");
+		actionBox.addItem("Modify Item");
+		actionBox.addItem("Remove item");
+		panel.add(actionBox);
 
-		supplierPanel.setBackground(Color.CYAN);
-		parentPanel.add(supplierPanel, "name_282496209162460");
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(36, 180, 981, 528);
+		productsPanel.add(scrollPane);
 
-		JPanel systemPanel = new JPanel();
-		parentPanel.add(systemPanel, "name_282499597586599");
+// Temporary data - shouldn't be here. Need to comply with MVC
+		Object[][] data = { { "1", "Apple", "Fruit", "", "$1.00", "100", "Fruit" },
+				{ "2", "Apple", "Fruit", "", "$1.00", "100", "Fruit" },
+				{ "3", "Apple", "Fruit", "", "$1.00", "100", "Fruit" },
+				{ "4", "Apple", "Fruit", "", "$1.00", "100", "Fruit" },
+				{ "5", "Apple", "Fruit", "", "$1.00", "100", "Fruit" },
+				{ "6", "Apple", "Fruit", "", "$1.00", "100", "Fruit" }, };
 
+		String[] columnHeaders = { "ID", "Name", "Type", "Description", "Price", "Stock", "Category" };
+
+		table = new JTable(data, columnHeaders);
+		table.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		scrollPane.setViewportView(table);
 
 	}
 
-	private void customerPanel() {
-		parentPanel.add(customersPanel, "name_282493106161656");
+	private void customersPanel() {
+		customersPanel = new JPanel();
+		customersPanel.setBackground(Color.BLACK);
+		parentPanel.add(customersPanel);
 
-		JLabel CustomerLbl = new JLabel("CUSTOMERS", SwingConstants.CENTER);
-		CustomerLbl.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		CustomerLbl.setForeground(Color.WHITE);
-		CustomerLbl.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 16));
-		CustomerLbl.setBounds(0, 329, 163, 62);
-		actionPanel.add(CustomerLbl);
-
-		CustomerLbl.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				parentPanel.removeAll();
-				parentPanel.add(customersPanel);
-				parentPanel.repaint();
-				parentPanel.revalidate();
-			}
-		});
 	}
 
 	private void salesPanel() {
-
-		salesLbl.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				parentPanel.removeAll();
-				parentPanel.add(salesPanel);
-				parentPanel.repaint();
-				parentPanel.revalidate();
-			}
-		});
+		salesPanel = new JPanel();
+		salesPanel.setBackground(Color.BLUE);
+		parentPanel.add(salesPanel);
 
 	}
 
-	private void supplierPanel() {
-
-		JLabel logisticsLbl = new JLabel("SUPPLIER", SwingConstants.CENTER);
-		logisticsLbl.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		logisticsLbl.setForeground(Color.WHITE);
-		logisticsLbl.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 16));
-		logisticsLbl.setBounds(0, 420, 163, 62);
-		actionPanel.add(logisticsLbl);
-
-		logisticsLbl.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				parentPanel.removeAll();
-				parentPanel.add(supplierPanel);
-				parentPanel.repaint();
-				parentPanel.revalidate();
-			}
-		});
+	private void suppliersPanel() {
+		suppliersPanel = new JPanel();
+		suppliersPanel.setBackground(Color.RED);
+		parentPanel.add(suppliersPanel);
 	}
 
 	private void reportPanel() {
-		JLabel generateReportLbl = new JLabel("REPORT", SwingConstants.CENTER);
-		generateReportLbl.setForeground(Color.WHITE);
-		generateReportLbl.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 16));
-		generateReportLbl.setBounds(0, 505, 163, 62);
-		actionPanel.add(generateReportLbl);
+		reportPanel = new JPanel();
+		reportPanel.setBackground(Color.PINK);
+		parentPanel.add(suppliersPanel);
 	}
 
 	private void employeesPanel() {
-
-		JLabel lblEmployeeManagement = new JLabel("EMPLOYEES", SwingConstants.CENTER);
-		lblEmployeeManagement.setForeground(Color.WHITE);
-		lblEmployeeManagement.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 16));
-		lblEmployeeManagement.setBounds(0, 579, 163, 62);
-		actionPanel.add(lblEmployeeManagement);
+		employeesPanel = new JPanel();
+		employeesPanel.setBackground(Color.ORANGE);
+		parentPanel.add(employeesPanel);
 	}
 
 	private void systemPanel() {
-		JLabel SystemLbl = new JLabel("SYSTEM", SwingConstants.CENTER);
-		SystemLbl.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		SystemLbl.setForeground(Color.WHITE);
-		SystemLbl.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 16));
-		SystemLbl.setBounds(0, 669, 163, 62);
-		actionPanel.add(SystemLbl);
-
+		systemPanel = new JPanel();
+		systemPanel.setBackground(Color.YELLOW);
+		parentPanel.add(systemPanel);
 	}
 }
