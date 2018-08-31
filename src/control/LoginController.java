@@ -27,6 +27,7 @@ public class LoginController {
 						loginPass = true;
 						ManagerPanel managerPanel = new ManagerPanel();
 						managerPanel.setVisible(true);
+						view.dispose();
 					}
 				}
 	
@@ -47,6 +48,7 @@ public class LoginController {
 						loginPass = true;
 						CustomerCheckoutPanel customerCheckOutPanel = new CustomerCheckoutPanel();
 						customerCheckOutPanel.setVisible(true);
+						view.dispose();
 					}
 				}
 				break;

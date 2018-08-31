@@ -25,7 +25,6 @@ public class EmployeeLoginController {
 						// Login Successful. Change view
 						loginPass = true;
 						view.dispose();
-						
 					}
 				}
 	
@@ -37,7 +36,6 @@ public class EmployeeLoginController {
 						// Login Successful. Change view
 						loginPass = true;
 						view.dispose();
-						
 					}
 				}
 				break;

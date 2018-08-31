@@ -102,6 +102,7 @@ public class CustomerCheckoutPanel extends JFrame {
 				if (cancelResp == JOptionPane.YES_OPTION) {
 					WelcomeScreen welcomeScreen = new WelcomeScreen();
 					welcomeScreen.setVisible(true);
+					dispose();
 				}
 			}
 		});
