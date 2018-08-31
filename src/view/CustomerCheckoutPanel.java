@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -36,7 +37,7 @@ public class CustomerCheckoutPanel extends JFrame {
 		JLabel grocerySystemTitle = new JLabel("Kostco Market");
 		grocerySystemTitle.setForeground(new Color(255, 255, 255));
 		grocerySystemTitle.setFont(new Font("Lucida Grande", Font.BOLD, 25));
-		grocerySystemTitle.setBounds(842, 96, 211, 70);
+		grocerySystemTitle.setBounds(806, 96, 188, 70);
 		mainPanel.add(grocerySystemTitle);
 
 		JButton selectItem = new JButton("Select Item");
@@ -51,7 +52,7 @@ public class CustomerCheckoutPanel extends JFrame {
 
 			}
 		});
-		selectItem.setBounds(803, 390, 298, 43);
+		selectItem.setBounds(751, 390, 298, 43);
 		mainPanel.add(selectItem);
 
 		JPanel dateTimePanel = new JPanel();
@@ -110,29 +111,29 @@ public class CustomerCheckoutPanel extends JFrame {
 		assisstancePanel.add(cancelOrderBtn);
 
 		JPanel imagePanel = new JPanel();
-		imagePanel.setBounds(66, 83, 471, 158);
+		imagePanel.setBounds(66, 90, 471, 158);
 		mainPanel.add(imagePanel);
 
 		JButton enterItemBtn = new JButton("Enter Item");
-		enterItemBtn.setBounds(803, 460, 298, 43);
+		enterItemBtn.setBounds(751, 460, 298, 43);
 		mainPanel.add(enterItemBtn);
 
 		JButton btnFinishAndPay = new JButton("Finish and Pay");
-		btnFinishAndPay.setBounds(803, 539, 298, 43);
+		btnFinishAndPay.setBounds(751, 539, 298, 43);
 		mainPanel.add(btnFinishAndPay);
 
-		JPanel panel = new JPanel();
-		panel.setBounds(66, 280, 471, 357);
-		mainPanel.add(panel);
-		panel.setLayout(null);
+		JPanel itemListPanel = new JPanel();
+		itemListPanel.setBounds(66, 283, 471, 357);
+		mainPanel.add(itemListPanel);
+		itemListPanel.setLayout(null);
 
 		JLabel totalLabel = new JLabel("Total");
-		totalLabel.setBounds(6, 335, 61, 16);
-		panel.add(totalLabel);
+		totalLabel.setBounds(10, 330, 61, 16);
+		itemListPanel.add(totalLabel);
 
 		JSeparator separator = new JSeparator();
 		separator.setBounds(0, 311, 471, 12);
-		panel.add(separator);
+		itemListPanel.add(separator);
 		separator.setBackground(Color.BLACK);
 		separator.setForeground(Color.BLACK);
 	}
