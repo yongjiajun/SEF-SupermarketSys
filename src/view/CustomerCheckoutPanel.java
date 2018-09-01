@@ -19,6 +19,7 @@ public class CustomerCheckoutPanel extends JFrame {
 
 	private JPanel contentPane;
 
+
 	public CustomerCheckoutPanel() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1200, 750);
@@ -84,6 +85,7 @@ public class CustomerCheckoutPanel extends JFrame {
 
 		JButton requireAssistanceBtn = new JButton("I NEED ASSISTANCE");
 		requireAssistanceBtn.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				INeedAssistanceLogin inaLogin = new INeedAssistanceLogin();
 				inaLogin.setVisible(true);
@@ -96,6 +98,7 @@ public class CustomerCheckoutPanel extends JFrame {
 
 		JButton cancelOrderBtn = new JButton("Cancel Order");
 		cancelOrderBtn.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				int cancelResp = JOptionPane.showConfirmDialog(null, "Are you sure you want to cancel your order?", "Cancel Order", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE);
 				if (cancelResp == JOptionPane.YES_OPTION) {

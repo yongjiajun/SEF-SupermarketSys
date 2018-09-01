@@ -47,9 +47,9 @@ public class WelcomeScreen extends JFrame {
 		btnStart.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				dispose();
-				LoginScreen login = new LoginScreen();
+ 				LoginScreen login = new LoginScreen();
 				login.setVisible(true);
+				dispose();
 				validate();
 				revalidate();
 
@@ -76,7 +76,7 @@ public class WelcomeScreen extends JFrame {
 		welcomeLbl.setForeground(Color.WHITE);
 		welcomeLbl.setBounds(548, 8, 104, 30);
 		dateTimePanel.add(welcomeLbl);
-		
+
 		//Need to fix so the time changes value overtime. Integrate ClockPanel if you know how
 		String date = new SimpleDateFormat("[dd/MM/yyyy] [hh:mm:ss]").format(new Date());
         JLabel labelTime = new JLabel(date);
@@ -95,6 +95,7 @@ public class WelcomeScreen extends JFrame {
 
 		JButton requireAssistanceBtn = new JButton("I NEED ASSISTANCE");
 		requireAssistanceBtn.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				INeedAssistanceLogin inaLogin = new INeedAssistanceLogin();
 				inaLogin.setVisible(true);

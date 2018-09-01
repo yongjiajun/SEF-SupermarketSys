@@ -97,7 +97,7 @@ public class LoginScreen extends JFrame {
         labelTime.setForeground(Color.WHITE);
         labelTime.setBounds(975, 9, 220, 30);
  		dateTimePanel.add(labelTime);
-		
+
 
 		JPanel assisstancePanel = new JPanel();
 		assisstancePanel.setForeground(new Color(102, 102, 102));
@@ -108,6 +108,7 @@ public class LoginScreen extends JFrame {
 
 		JButton requireAssistanceBtn = new JButton("I NEED ASSISTANCE");
 		requireAssistanceBtn.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				INeedAssistanceLogin inaLogin = new INeedAssistanceLogin();
 				inaLogin.setVisible(true);
@@ -122,9 +123,9 @@ public class LoginScreen extends JFrame {
 		backBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-//				dispose();
-				WelcomeScreen welcomeScreen = new WelcomeScreen();
+ 				WelcomeScreen welcomeScreen = new WelcomeScreen();
 				welcomeScreen.setVisible(true);
+				dispose();
 				validate();
 				revalidate();
 			}
