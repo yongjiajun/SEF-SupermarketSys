@@ -47,7 +47,7 @@ public class WelcomeScreen extends JFrame {
 		btnStart.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
- 				LoginScreen login = new LoginScreen();
+				LoginScreen login = new LoginScreen();
 				login.setVisible(true);
 				dispose();
 				validate();
