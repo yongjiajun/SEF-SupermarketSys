@@ -1,0 +1,4 @@
+
+
+"ID", "Name", "Type", "Description", "Price", "Stock", "Category"
+ "1"  "Apple" "Fruit",      "", 	 "$1.00"   "100"	"Fruit" 

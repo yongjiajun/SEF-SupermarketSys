@@ -70,6 +70,7 @@ public class ManagerPanel extends JFrame {
 		dashboardLabel.setBounds(0, 140, 174, 37);
 		sideBarPanel.add(dashboardLabel);
 		dashboardLabel.addMouseListener(new MouseAdapter() {
+			@Override
 			public void mouseClicked(MouseEvent e) {
 				parentPanel.removeAll();
 				parentPanel.add(dashboardPanel);
@@ -85,6 +86,7 @@ public class ManagerPanel extends JFrame {
 		productsLabel.setBounds(0, 217, 174, 37);
 		sideBarPanel.add(productsLabel);
 		productsLabel.addMouseListener(new MouseAdapter() {
+			@Override
 			public void mouseClicked(MouseEvent e) {
 				parentPanel.removeAll();
 				parentPanel.add(productsPanel);
@@ -97,9 +99,10 @@ public class ManagerPanel extends JFrame {
 		salesLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		salesLabel.setForeground(new Color(255, 255, 255));
 		salesLabel.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 20));
-		salesLabel.setBounds(0, 294, 174, 37);
+		salesLabel.setBounds(0, 290, 174, 37);
 		sideBarPanel.add(salesLabel);
 		salesLabel.addMouseListener(new MouseAdapter() {
+			@Override
 			public void mouseClicked(MouseEvent e) {
 				parentPanel.removeAll();
 				parentPanel.add(salesPanel);
@@ -115,6 +118,7 @@ public class ManagerPanel extends JFrame {
 		customersLabel.setBounds(0, 371, 174, 37);
 		sideBarPanel.add(customersLabel);
 		customersLabel.addMouseListener(new MouseAdapter() {
+			@Override
 			public void mouseClicked(MouseEvent e) {
 				parentPanel.removeAll();
 				parentPanel.add(customersPanel);
@@ -130,6 +134,7 @@ public class ManagerPanel extends JFrame {
 		supplierLabel.setBounds(0, 448, 174, 37);
 		sideBarPanel.add(supplierLabel);
 		supplierLabel.addMouseListener(new MouseAdapter() {
+			@Override
 			public void mouseClicked(MouseEvent e) {
 				parentPanel.removeAll();
 				parentPanel.add(suppliersPanel);
@@ -144,6 +149,7 @@ public class ManagerPanel extends JFrame {
 		reportLabel.setBounds(0, 525, 174, 37);
 		sideBarPanel.add(reportLabel);
 		reportLabel.addMouseListener(new MouseAdapter() {
+			@Override
 			public void mouseClicked(MouseEvent e) {
 				parentPanel.removeAll();
 				parentPanel.add(reportPanel);
@@ -158,6 +164,7 @@ public class ManagerPanel extends JFrame {
 		employeesLabel.setBounds(0, 602, 174, 37);
 		sideBarPanel.add(employeesLabel);
 		employeesLabel.addMouseListener(new MouseAdapter() {
+			@Override
 			public void mouseClicked(MouseEvent e) {
 				parentPanel.removeAll();
 				parentPanel.add(employeesPanel);
@@ -173,6 +180,7 @@ public class ManagerPanel extends JFrame {
 		systemLabel.setBounds(0, 679, 174, 37);
 		sideBarPanel.add(systemLabel);
 		systemLabel.addMouseListener(new MouseAdapter() {
+			@Override
 			public void mouseClicked(MouseEvent e) {
 				parentPanel.removeAll();
 				parentPanel.add(systemPanel);
@@ -279,30 +287,23 @@ public class ManagerPanel extends JFrame {
 
 	private void productsPanel() {
 		productsPanel = new JPanel();
-		productsPanel.setBackground(Color.WHITE);
+		productsPanel.setBackground(new Color(0, 128, 0));
 		parentPanel.add(productsPanel);
 		productsPanel.setLayout(null);
 
-		JLabel productsTitle = new JLabel("Products");
+		JLabel productsTitle = new JLabel("Products Panel");
 		productsTitle.setFont(new Font("Lucida Grande", Font.BOLD, 20));
-		productsTitle.setBounds(19, 6, 100, 38);
+		productsTitle.setBounds(19, 6, 188, 38);
 		productsPanel.add(productsTitle);
 
 		JPanel panel = new JPanel();
+		panel.setBackground(new Color(128, 128, 128));
 		panel.setBounds(6, 78, 1030, 84);
 		productsPanel.add(panel);
 		panel.setLayout(null);
 
-		JLabel addProductButton = new JLabel("Add Product", SwingConstants.CENTER);
-		addProductButton.setBounds(873, 21, 125, 41);
-		panel.add(addProductButton);
-		addProductButton.setOpaque(true);
-		addProductButton.setForeground(Color.WHITE);
-		addProductButton.setBackground(new Color(255, 140, 0));
-		addProductButton.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-
 		JComboBox actionBox = new JComboBox();
-		actionBox.setBounds(39, 30, 165, 32);
+		actionBox.setBounds(833, 23, 166, 40);
 		actionBox.addItem("Add Item");
 		actionBox.addItem("Modify Item");
 		actionBox.addItem("Remove item");
