@@ -24,7 +24,7 @@ SupermarketSupportSystem is a revolutionary self-checkout system that does what 
 - Actually nothing works yet.
 
 ### Issues to-be dealt later:
-
+- AccountManager class: Fix the credentials so they're not in the java classes. Store them in the text files and maybe hash the passwords if we have enough time.
 - In AccountManager, should accounts be serialized instead of writing all their attributes into text files?
 
 ```java
