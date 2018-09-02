@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRootPane;
 import javax.swing.border.EmptyBorder;
 
 public class WelcomeScreen extends JFrame {
@@ -44,6 +45,8 @@ public class WelcomeScreen extends JFrame {
 		mainPanel.add(checkoutDescription);
 
 		JButton btnStart = new JButton("START");
+		JRootPane rootPane = contentPane.getRootPane();
+		rootPane.setDefaultButton(btnStart);
 		btnStart.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
