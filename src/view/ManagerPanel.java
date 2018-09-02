@@ -287,7 +287,7 @@ public class ManagerPanel extends JFrame {
 
 	private void productsPanel() {
 		productsPanel = new JPanel();
-		productsPanel.setBackground(new Color(0, 128, 0));
+		productsPanel.setBackground(new Color(0, 128, 128));
 		parentPanel.add(productsPanel);
 		productsPanel.setLayout(null);
 

@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JRootPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
@@ -58,7 +59,10 @@ public class LoginScreen extends JFrame {
 		idLabel.setBounds(450, 215, 25, 50);
 		mainPanel.add(idLabel);
 
+
 		JButton loginBtn = new JButton("Login");
+		JRootPane rootPane = contentPane.getRootPane();
+		rootPane.setDefaultButton(loginBtn);
 		loginBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
