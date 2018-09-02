@@ -28,7 +28,7 @@ public class Manager extends Employee {
 		return product.getDiscountEligible();
 	}
 
-	public void setDiscount(Product product, double percentage) {
+	public void setProductDiscount(Product product, double percentage) {
 		product.setDiscountRate(percentage);
 	}
 

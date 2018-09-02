@@ -95,7 +95,6 @@ public class CheckoutCart {
 
 	public void pay(Customer customer) {
 		this.paid = true;
-
 		// deduct product stock
 		for (int i = 0; i < lineItems.size(); i++) {
 			Product tempProduct = lineItems.get(i).getProduct();
@@ -104,9 +103,11 @@ public class CheckoutCart {
 		}
 
 		// add loyalty points
+		int ptsUsed = getLoyaltyPtsUsed(customer);
+		int ptsEarned = getLoyaltyPtsEarned(customer);
 
-		customer.deductLoyaltyPts(getLoyaltyPtsUsed(customer));
-		customer.addLoyaltyPts(getLoyaltyPtsEarned(customer));
+		customer.deductLoyaltyPts(ptsUsed);
+		customer.addLoyaltyPts(ptsEarned);
 
 	}
 }
