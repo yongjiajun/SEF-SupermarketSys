@@ -35,6 +35,7 @@ class ProductTest {
 	@Test
 	public void checkDiscountRate() {
 		apple.setProductPrice(1000);
+		assertEquals(apple.getProductPrice(), 1000);
 		apple.setDiscountedPrice(10);
 		assertEquals(apple.getDiscountedPrice(), 900);
  	}
