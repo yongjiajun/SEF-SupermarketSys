@@ -37,7 +37,7 @@ public class Manager extends User {
 	// supplier.getDetails();
 	public String getSupplierDetails(Supplier supplier) {
 		String info = String.format("Name: %s %s\nID: %s\nCompany: %s\nPhone: %s\nLocation: %s\nEmail: %s\n",
-				supplier.getUserFName(), supplier.getUserLName(), supplier.getSupplierID(),
+				supplier.getUserFName(), supplier.getUserLName(), supplier.getUserID(),
 				supplier.getSupplierCompanyName(), supplier.getSupplierContactNo(), supplier.getSupplierLocation(),
 				supplier.getSupplierEmail());
 

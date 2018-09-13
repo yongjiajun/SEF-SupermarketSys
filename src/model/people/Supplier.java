@@ -1,35 +1,16 @@
 package model.people;
 
-public class Supplier {
+public class Supplier extends User{
 	
-	private String supplierID, supplierPIN, supplierFName, supplierLName, supplierCompanyName, supplierContactNo, supplierEmail, supplierLocation;
+	private String supplierCompanyName, supplierContactNo, supplierEmail, supplierLocation;
 
 	public Supplier(String supplierID, String supplierPIN, String supplierFName, String supplierLName,
 			String supplierCompanyName, String supplierContactNo, String supplierEmail, String supplierLocation) {
-		this.supplierID = supplierID;
-		this.supplierPIN = supplierPIN;
-		this.supplierFName = supplierFName;
-		this.supplierLName = supplierLName;
+		super(supplierID, supplierPIN, supplierFName, supplierLName);
 		this.supplierCompanyName = supplierCompanyName;
 		this.supplierContactNo = supplierContactNo;
 		this.supplierEmail = supplierEmail;
 		this.supplierLocation = supplierLocation;
-	}
-
-	public String getSupplierFName() {
-		return supplierFName;
-	}
-
-	public String getSupplierLName() {
-		return supplierLName;
-	}
-
-	public String getSupplierID() {
-		return supplierID;
-	}
-
-	public String getSupplierPIN() {
-		return supplierPIN;
 	}
 
 	public String getSupplierCompanyName() {

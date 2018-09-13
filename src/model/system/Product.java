@@ -32,7 +32,6 @@ public class Product {
 
 	private static NumberFormat formatter = new DecimalFormat("#0.00");
 
-//	productID, productName, productPrice, productCategory, productQuantity
 	public Product(String productID, String productName, double productPrice, int stockQty) {
 		this.productName = productName;
 		this.stockQty = stockQty;
