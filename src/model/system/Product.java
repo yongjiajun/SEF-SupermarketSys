@@ -1,5 +1,8 @@
 package model.system;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
 public class Product {
 
 	// manages product details, manager can modify most, supplier modifies quantity
@@ -28,8 +31,11 @@ public class Product {
 	private int restockLvl = 0;
 	private int reorderQty = 0;
 
+    private static NumberFormat formatter = new DecimalFormat("#0.00");
 
-	public Product(String productName, int stockQty, String productID, double productPrice) {
+
+//	productID, productName, productPrice, productCategory, productQuantity
+	public Product(String productID, String productName, double productPrice, int stockQty) {
 		this.productName = productName;
 		this.stockQty = stockQty;
 		this.productID = productID;
@@ -177,5 +183,9 @@ public class Product {
 		// monitored
 	}
 
+	@Override
+	public String toString() {
+		return String.format("Product ID: %s", "Produce Price: %%d", getProductId(), getProductPrice());
 
+	}
 }

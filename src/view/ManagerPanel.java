@@ -24,6 +24,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import control.AddProductController;
+
 public class ManagerPanel extends JFrame {
 
 	private JPanel contentPane, parentPanel, sideBarPanel, dashboardPanel, todaySalesPanel, productsPanel,
@@ -33,6 +35,8 @@ public class ManagerPanel extends JFrame {
 	private JTextField productNameField;
 	private JTextField productPriceField;
 
+
+	private AddProductController addProduct = new AddProductController(this);
 	public ManagerPanel() {
 		setTitle("SEF Assignment");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -56,6 +60,10 @@ public class ManagerPanel extends JFrame {
 		reportPanel();
 		employeesPanel();
 		systemPanel();
+
+		addProductPanel();
+//		removeProductPanel();
+		modifyProductPanel();
 
 
 
@@ -298,6 +306,9 @@ public class ManagerPanel extends JFrame {
 	}
 
 	private void productsPanel() {
+		salesPanel = new JPanel();
+		salesPanel.setBackground(Color.BLUE);
+		parentPanel.add(salesPanel);
 
 		productsPanel = new JPanel();
 		productsPanel.setBackground(new Color(0, 128, 128));
@@ -380,9 +391,6 @@ public class ManagerPanel extends JFrame {
 	}
 
 	private void salesPanel() {
-		salesPanel = new JPanel();
-		salesPanel.setBackground(Color.BLUE);
-		parentPanel.add(salesPanel);
 
 	}
 
@@ -447,10 +455,10 @@ public class ManagerPanel extends JFrame {
 		btnCancel.setBounds(826, 28, 117, 29);
 		panel.add(btnCancel);
 
-		JLabel lblNewLabel_2 = new JLabel("ID *");
-		lblNewLabel_2.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		lblNewLabel_2.setBounds(120, 216, 84, 31);
-		addProductPanel.add(lblNewLabel_2);
+		JLabel productIdLabel = new JLabel("ID *");
+		productIdLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
+		productIdLabel.setBounds(120, 216, 84, 31);
+		addProductPanel.add(productIdLabel);
 
 		JLabel lblName = new JLabel("Name *");
 		lblName.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
@@ -482,6 +490,7 @@ public class ManagerPanel extends JFrame {
 		addProductPanel.add(productIdField);
 		productIdField.setColumns(10);
 
+
 		productNameField = new JTextField();
 		productNameField.setColumns(10);
 		productNameField.setBounds(265, 275, 256, 31);
@@ -501,6 +510,10 @@ public class ManagerPanel extends JFrame {
 		addProductPanel.add(newCategoryBtn);
 
 		JComboBox productQuantityBox = new JComboBox();
+				for (int i=0; i<=99; i++) {
+					productQuantityBox.addItem(new Integer(i));
+			}
+
 		productQuantityBox.setBounds(265, 439, 93, 27);
 		addProductPanel.add(productQuantityBox);
 
@@ -509,6 +522,20 @@ public class ManagerPanel extends JFrame {
 		addProductPanel.add(productEnabledBox);
 
 		JButton btnSubmit = new JButton("Submit");
+		btnSubmit.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+//					 (Product productID, Product productName, Product productPrice,
+//				Product productCategory, Product productQuantity)
+				String productID = productIdField.getText();
+				String productName = productNameField.getText();
+				double productPrice = Double.parseDouble(productPriceField.getText());
+				String productCategory = (String) productCategoryBox.getSelectedItem();
+				int productQuantity = (int)productQuantityBox.getSelectedItem();
+
+				addProduct.addItems(productID, productName, productPrice, productQuantity);
+ 			}
+		});
 		btnSubmit.setBounds(120, 582, 131, 44);
 		addProductPanel.add(btnSubmit);
 
