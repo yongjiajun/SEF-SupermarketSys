@@ -4,26 +4,37 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 public class ManagerPanel extends JFrame {
 
 	private JPanel contentPane, parentPanel, sideBarPanel, dashboardPanel, todaySalesPanel, productsPanel,
-			customersPanel, suppliersPanel, salesPanel, reportPanel, employeesPanel, systemPanel;
+			customersPanel, suppliersPanel, salesPanel, reportPanel, employeesPanel, systemPanel, tempName,
+			productsPanel1;
 	private JTable table;
+	private JTextField textField;
+	private JTextField textField_1;
+	private JTextField textField_2;
+	private JTextField textField_3;
+	private JTextField textField_4;
+	private JTextField textField_5;
 
 	public ManagerPanel() {
 		setTitle("SEF Assignment");
@@ -48,6 +59,8 @@ public class ManagerPanel extends JFrame {
 		reportPanel();
 		employeesPanel();
 		systemPanel();
+
+		addProductPanel();
 
 	}
 
@@ -88,10 +101,12 @@ public class ManagerPanel extends JFrame {
 		productsLabel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+
 				parentPanel.removeAll();
 				parentPanel.add(productsPanel);
 				parentPanel.repaint();
 				parentPanel.revalidate();
+
 			}
 		});
 
@@ -286,6 +301,7 @@ public class ManagerPanel extends JFrame {
 	}
 
 	private void productsPanel() {
+
 		productsPanel = new JPanel();
 		productsPanel.setBackground(new Color(0, 128, 128));
 		parentPanel.add(productsPanel);
@@ -302,26 +318,55 @@ public class ManagerPanel extends JFrame {
 		productsPanel.add(panel);
 		panel.setLayout(null);
 
-		JComboBox actionBox = new JComboBox();
+		String[] actionNames = { "Add Item", "Remove Item", "Modify Item" };
+		JComboBox actionBox = new JComboBox(actionNames);
 		actionBox.setBounds(833, 23, 166, 40);
-		actionBox.addItem("Add Item");
-		actionBox.addItem("Modify Item");
-		actionBox.addItem("Remove item");
 		panel.add(actionBox);
+
+		ActionListener actionListener = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent actionEvent) {
+//		    	  Add Item
+				int selectedActiom = actionBox.getSelectedIndex();
+
+				switch (selectedActiom) {
+				case 0:
+					productsPanel.removeAll();
+					addProductPanel();
+					productsPanel1.setVisible(true);
+					productsPanel.add(productsPanel1);
+ 					productsPanel.repaint();
+					productsPanel.revalidate();
+					break;
+
+				case 1:
+
+					break;
+
+				case 2:
+
+					break;
+				}
+			}
+
+		};
+
+		actionBox.addActionListener(actionListener);
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(36, 180, 981, 528);
 		productsPanel.add(scrollPane);
 
 // Temporary data - shouldn't be here. Need to comply with MVC
-		Object[][] data = { { "1", "Apple", "Fruit", "", "$1.00", "100", "Fruit" },
-				{ "2", "Apple", "Fruit", "", "$1.00", "100", "Fruit" },
-				{ "3", "Apple", "Fruit", "", "$1.00", "100", "Fruit" },
-				{ "4", "Apple", "Fruit", "", "$1.00", "100", "Fruit" },
-				{ "5", "Apple", "Fruit", "", "$1.00", "100", "Fruit" },
-				{ "6", "Apple", "Fruit", "", "$1.00", "100", "Fruit" }, };
+		Object[][] data = {
+				{ "1", "Apple", "Fruit", "", "$1.00", "100", "Fruit", "True" },
+				{ "2", "Apple", "Fruit", "", "$1.00", "100", "Fruit", "True" },
+				{ "3", "Apple", "Fruit", "", "$1.00", "100", "Fruit", "True" },
+				{ "4", "Apple", "Fruit", "", "$1.00", "100", "Fruit", "True" },
+				{ "5", "Apple", "Fruit", "", "$1.00", "100", "Fruit", "True" },
+				{ "6", "Apple", "Fruit", "", "$1.00", "100", "Fruit", "True" }, };
 
-		String[] columnHeaders = { "ID", "Name", "Type", "Description", "Price", "Stock", "Category" };
+		String[] columnHeaders = { "ID", "Name", "Type", "Description", "Price", "Stock", "Category", "Enabled" };
 
 		table = new JTable(data, columnHeaders);
 		table.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
@@ -359,11 +404,116 @@ public class ManagerPanel extends JFrame {
 		employeesPanel = new JPanel();
 		employeesPanel.setBackground(Color.ORANGE);
 		parentPanel.add(employeesPanel);
+
 	}
 
 	private void systemPanel() {
 		systemPanel = new JPanel();
 		systemPanel.setBackground(Color.YELLOW);
-		parentPanel.add(systemPanel);
+
+	}
+
+	private void addProductPanel() {
+		productsPanel1 = new JPanel();
+ 		parentPanel.add(productsPanel1, "name_379884347646550");
+		productsPanel1.setVisible(true);
+		productsPanel1.setBackground(new Color(0, 128, 128));
+		productsPanel1.setLayout(null);
+
+		JLabel lblProductDetail = new JLabel("Product Detail");
+		lblProductDetail.setFont(new Font("Lucida Grande", Font.BOLD, 20));
+		lblProductDetail.setBounds(16, 6, 188, 38);
+		productsPanel1.add(lblProductDetail);
+
+		JPanel panel = new JPanel();
+		panel.setLayout(null);
+		panel.setBackground(Color.GRAY);
+		panel.setBounds(6, 67, 1030, 84);
+		productsPanel1.add(panel);
+
+		JButton btnSave = new JButton("Save");
+		btnSave.setBounds(682, 28, 117, 29);
+		panel.add(btnSave);
+
+		JButton btnCancel = new JButton("Cancel");
+		btnCancel.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				productsPanel1.setVisible(false);
+				parentPanel.removeAll();
+				productsPanel();
+				parentPanel.repaint();
+				parentPanel.revalidate();
+			}
+		});
+		btnCancel.setBounds(826, 28, 117, 29);
+		panel.add(btnCancel);
+
+		JLabel lblNewLabel_2 = new JLabel("ID *");
+		lblNewLabel_2.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
+		lblNewLabel_2.setBounds(120, 216, 84, 31);
+		productsPanel1.add(lblNewLabel_2);
+
+		JLabel lblName = new JLabel("Name *");
+		lblName.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
+		lblName.setBounds(120, 270, 84, 31);
+		productsPanel1.add(lblName);
+
+		JLabel lblPrice = new JLabel("Price *");
+		lblPrice.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
+		lblPrice.setBounds(120, 324, 84, 31);
+		productsPanel1.add(lblPrice);
+
+		JLabel lblCategory = new JLabel("Category *");
+		lblCategory.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
+		lblCategory.setBounds(120, 377, 101, 31);
+		productsPanel1.add(lblCategory);
+
+		JLabel lblQuantity = new JLabel("Quantity *");
+		lblQuantity.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
+		lblQuantity.setBounds(120, 433, 101, 31);
+		productsPanel1.add(lblQuantity);
+
+		JLabel lblStatus = new JLabel("Status *");
+		lblStatus.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
+		lblStatus.setBounds(120, 504, 101, 31);
+		productsPanel1.add(lblStatus);
+
+		textField_3 = new JTextField();
+		textField_3.setBounds(265, 216, 447, 31);
+		productsPanel1.add(textField_3);
+		textField_3.setColumns(10);
+
+		textField_4 = new JTextField();
+		textField_4.setColumns(10);
+		textField_4.setBounds(265, 275, 447, 31);
+		productsPanel1.add(textField_4);
+
+		textField_5 = new JTextField();
+		textField_5.setColumns(10);
+		textField_5.setBounds(265, 329, 447, 31);
+		productsPanel1.add(textField_5);
+
+		JComboBox comboBox = new JComboBox();
+		comboBox.setBounds(265, 383, 93, 27);
+		productsPanel1.add(comboBox);
+
+		JButton btnNewButton = new JButton("New Category");
+		btnNewButton.setBounds(379, 382, 117, 29);
+		productsPanel1.add(btnNewButton);
+
+		JComboBox comboBox_1 = new JComboBox();
+		comboBox_1.setBounds(265, 439, 93, 27);
+		productsPanel1.add(comboBox_1);
+
+		JComboBox comboBox_2 = new JComboBox();
+		comboBox_2.setBounds(265, 510, 93, 27);
+		productsPanel1.add(comboBox_2);
+
+		JButton btnSubmit = new JButton("Submit");
+		btnSubmit.setBounds(120, 582, 131, 44);
+		productsPanel1.add(btnSubmit);
+
+		productsPanel1.setVisible(false);
 	}
 }
