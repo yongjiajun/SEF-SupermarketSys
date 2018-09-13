@@ -13,24 +13,27 @@ public class AddProductController {
 	}
 
 	public void addItems(String productID, String productName, double productPrice, int productQuantity) {
-		Product[] products = new Product[0];
-		Product newProduct = new Product(productID, productName, productPrice, productQuantity);
-		products = addProduct(products, newProduct);
+		try {
+			Product[] products = new Product[0];
+			Product newProduct = new Product(productID, productName, productPrice, productQuantity);
+			products = addProduct(products, newProduct);
 
-		printProduct(newProduct);
+			printProduct(newProduct);
+		} catch (NumberFormatException e) {
+			System.err.println("Incorrect Format!");
+		}
 	}
 
 	private static Product[] addProduct(Product[] products, Product productToAdd) {
-	    Product[] newProducts = new Product[products.length + 1];
-	    System.arraycopy(products, 0, newProducts, 0, products.length);
-	    newProducts[newProducts.length - 1] = productToAdd;
+		Product[] newProducts = new Product[products.length + 1];
+		System.arraycopy(products, 0, newProducts, 0, products.length);
+		newProducts[newProducts.length - 1] = productToAdd;
 
-	    return newProducts;
+		return newProducts;
 	}
 
-
 	private void printProduct(Product product) {
- 		System.out.println(product.toString());
+		System.out.println(product.toString());
 	}
 
 	public String getProductName() {

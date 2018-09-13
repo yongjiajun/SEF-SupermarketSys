@@ -18,7 +18,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -30,13 +29,14 @@ public class ManagerPanel extends JFrame {
 
 	private JPanel contentPane, parentPanel, sideBarPanel, dashboardPanel, todaySalesPanel, productsPanel,
 			customersPanel, suppliersPanel, salesPanel, reportPanel, employeesPanel, systemPanel, addProductPanel;
-	private JTable table;
-	private JTextField productIdField;
+ 	private JTextField productIdField;
 	private JTextField productNameField;
 	private JTextField productPriceField;
 
 
 	private AddProductController addProduct = new AddProductController(this);
+	private JTable table_1;
+	private JTable table_2;
 	public ManagerPanel() {
 		setTitle("SEF Assignment");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -61,9 +61,9 @@ public class ManagerPanel extends JFrame {
 		employeesPanel();
 		systemPanel();
 
-		addProductPanel();
+//		addProductPanel();
 //		removeProductPanel();
-		modifyProductPanel();
+//		modifyProductPanel();
 
 
 
@@ -306,9 +306,9 @@ public class ManagerPanel extends JFrame {
 	}
 
 	private void productsPanel() {
-		salesPanel = new JPanel();
-		salesPanel.setBackground(Color.BLUE);
-		parentPanel.add(salesPanel);
+//		salesPanel = new JPanel();
+//		salesPanel.setBackground(Color.BLUE);
+//		parentPanel.add(salesPanel);
 
 		productsPanel = new JPanel();
 		productsPanel.setBackground(new Color(0, 128, 128));
@@ -330,6 +330,7 @@ public class ManagerPanel extends JFrame {
 		JComboBox actionBox = new JComboBox(actionNames);
 		actionBox.setBounds(833, 23, 166, 40);
 		panel.add(actionBox);
+
 
 		ActionListener actionListener = new ActionListener() {
 			@Override
@@ -360,10 +361,10 @@ public class ManagerPanel extends JFrame {
 		};
 
 		actionBox.addActionListener(actionListener);
-
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(36, 180, 981, 528);
-		productsPanel.add(scrollPane);
+//
+//		JScrollPane scrollPane = new JScrollPane();
+//		scrollPane.setBounds(36, 180, 981, 528);
+//		productsPanel.add(scrollPane);
 
 // Temporary data - shouldn't be here. Need to comply with MVC
 //		Object[][] data = {
@@ -376,15 +377,19 @@ public class ManagerPanel extends JFrame {
 //				};
 
 
-		Object[][] data = {
+//		Object[][] data = {
 //{addProduct.getProductID(), addProduct.getProductName(), addProduct.getProductPrice(), addProduct.getProductQuantity()},
 
-		};
-		String[] columnHeaders = { "Product ID", "Product Name", "Product Price", "Quantity" };
 
-		table = new JTable(data, columnHeaders);
-		table.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		scrollPane.setViewportView(table);
+//		};
+//		Object[] row = new Object[4];
+//
+//		String[] columnHeaders = { "Product ID", "Product Name", "Product Price", "Quantity" };
+//
+//		table = new JTable(row, columnHeaders);
+//		table.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+//		scrollPane.setViewportView(table);
+
 
 	}
 
@@ -425,6 +430,8 @@ public class ManagerPanel extends JFrame {
 	}
 
 	private void addProductPanel() {
+//		productsPanel();
+
 		addProductPanel = new JPanel();
  		parentPanel.add(addProductPanel, "name_379884347646550");
 		addProductPanel.setVisible(true);
@@ -527,6 +534,8 @@ public class ManagerPanel extends JFrame {
 //		addProductPanel.add(productEnabledBox);
 
 		JButton btnSubmit = new JButton("Submit");
+
+
 		btnSubmit.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -539,8 +548,19 @@ public class ManagerPanel extends JFrame {
 				int productQuantity = (int)productQuantityBox.getSelectedItem();
 
 				addProduct.addItems(productID, productName, productPrice, productQuantity);
+
+
+
+
+				parentPanel.removeAll();
+				productsPanel();
+				parentPanel.repaint();
+				parentPanel.revalidate();
  			}
 		});
+
+
+
 		btnSubmit.setBounds(120, 582, 131, 44);
 		addProductPanel.add(btnSubmit);
 
@@ -554,7 +574,7 @@ public class ManagerPanel extends JFrame {
 
 //		Retrieve items - temporary variable
 		String[] items = {"Apple", "Banana", "Kiwi"};
-		JComboBox<String> combo = new JComboBox<>(items);
+		JComboBox combo = new JComboBox(items);
 		String[] options = {"Cancel", "Remove"};
 		String title = "Remove Item";
 		int selection = JOptionPane.showOptionDialog(null, combo, title, JOptionPane.DEFAULT_OPTION,
