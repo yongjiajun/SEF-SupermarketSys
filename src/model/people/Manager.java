@@ -2,10 +2,10 @@ package model.people;
 
 import model.system.Product;
 
-public class Manager extends Employee {
+public class Manager extends User {
 
-	public Manager(String employeeID, String employeePIN, String employeeFName, String employeeLName) {
-		super(employeeID, employeePIN, employeeFName, employeeLName);
+	public Manager(String managerID, String managerPIN, String managerFName, String managerLName) {
+		super(managerID, managerPIN, managerFName, managerLName);
 	}
 
 	public void setProductQuantity(Product product, int quantity) {
@@ -37,7 +37,7 @@ public class Manager extends Employee {
 	// supplier.getDetails();
 	public String getSupplierDetails(Supplier supplier) {
 		String info = String.format("Name: %s %s\nID: %s\nCompany: %s\nPhone: %s\nLocation: %s\nEmail: %s\n",
-				supplier.getSupplierFName(), supplier.getSupplierLName(), supplier.getSupplierID(),
+				supplier.getUserFName(), supplier.getUserLName(), supplier.getSupplierID(),
 				supplier.getSupplierCompanyName(), supplier.getSupplierContactNo(), supplier.getSupplierLocation(),
 				supplier.getSupplierEmail());
 
