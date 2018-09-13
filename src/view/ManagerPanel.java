@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -32,9 +33,9 @@ public class ManagerPanel extends JFrame {
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_5;
+	private JTextField productIdField;
+	private JTextField productNameField;
+	private JTextField productPriceField;
 
 	public ManagerPanel() {
 		setTitle("SEF Assignment");
@@ -61,6 +62,7 @@ public class ManagerPanel extends JFrame {
 		systemPanel();
 
 		addProductPanel();
+
 
 	}
 
@@ -340,7 +342,17 @@ public class ManagerPanel extends JFrame {
 					break;
 
 				case 1:
-
+//					Object[] options = new Object[] {"Test"};
+//					JOptionPane jop = new JOptionPane("Please Select", JOptionPane.QUESTION_MESSAGE,
+//																		JOptionPane.DEFAULT_OPTION,
+//																		null, options, null);
+//
+//
+//					JDialog diag = new JDialog();
+//					diag.getContentPane().add(jop);
+//					diag.pack();
+//					diag.setVisible(true);
+					removeProductPanel();
 					break;
 
 				case 2:
@@ -479,41 +491,57 @@ public class ManagerPanel extends JFrame {
 		lblStatus.setBounds(120, 504, 101, 31);
 		productsPanel1.add(lblStatus);
 
-		textField_3 = new JTextField();
-		textField_3.setBounds(265, 216, 447, 31);
-		productsPanel1.add(textField_3);
-		textField_3.setColumns(10);
+		productIdField = new JTextField();
+		productIdField.setBounds(265, 216, 256, 31);
+		productsPanel1.add(productIdField);
+		productIdField.setColumns(10);
 
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		textField_4.setBounds(265, 275, 447, 31);
-		productsPanel1.add(textField_4);
+		productNameField = new JTextField();
+		productNameField.setColumns(10);
+		productNameField.setBounds(265, 275, 256, 31);
+		productsPanel1.add(productNameField);
 
-		textField_5 = new JTextField();
-		textField_5.setColumns(10);
-		textField_5.setBounds(265, 329, 447, 31);
-		productsPanel1.add(textField_5);
+		productPriceField = new JTextField();
+		productPriceField.setColumns(10);
+		productPriceField.setBounds(265, 329, 93, 31);
+		productsPanel1.add(productPriceField);
 
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(265, 383, 93, 27);
-		productsPanel1.add(comboBox);
+		JComboBox productCategoryBox = new JComboBox();
+		productCategoryBox.setBounds(265, 383, 93, 27);
+		productsPanel1.add(productCategoryBox);
 
-		JButton btnNewButton = new JButton("New Category");
-		btnNewButton.setBounds(379, 382, 117, 29);
-		productsPanel1.add(btnNewButton);
+		JButton newCategoryBtn = new JButton("New Category");
+		newCategoryBtn.setBounds(379, 382, 117, 29);
+		productsPanel1.add(newCategoryBtn);
 
-		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setBounds(265, 439, 93, 27);
-		productsPanel1.add(comboBox_1);
+		JComboBox productQuantityBox = new JComboBox();
+		productQuantityBox.setBounds(265, 439, 93, 27);
+		productsPanel1.add(productQuantityBox);
 
-		JComboBox comboBox_2 = new JComboBox();
-		comboBox_2.setBounds(265, 510, 93, 27);
-		productsPanel1.add(comboBox_2);
+		JComboBox productEnabledBox = new JComboBox();
+		productEnabledBox.setBounds(265, 510, 93, 27);
+		productsPanel1.add(productEnabledBox);
 
 		JButton btnSubmit = new JButton("Submit");
 		btnSubmit.setBounds(120, 582, 131, 44);
 		productsPanel1.add(btnSubmit);
 
 		productsPanel1.setVisible(false);
+	}
+	private void modifyProductPanel() {
+
+
+	}
+	private void removeProductPanel() {
+
+//		Retrieve items - temporary variable
+		String[] items = {"Apple", "Banana", "Kiwi"};
+		JComboBox<String> combo = new JComboBox<>(items);
+		String[] options = {"Ok", "Cancel"};
+		String title = "Remove Item";
+		int selection = JOptionPane.showOptionDialog(null, combo, title, JOptionPane.DEFAULT_OPTION,
+				JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
+
+
 	}
 }
