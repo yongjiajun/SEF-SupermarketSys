@@ -61,7 +61,6 @@ public class ManagerPanel extends JFrame {
 		employeesPanel();
 		systemPanel();
 
-		addProductPanel();
 
 
 	}
@@ -537,7 +536,7 @@ public class ManagerPanel extends JFrame {
 //		Retrieve items - temporary variable
 		String[] items = {"Apple", "Banana", "Kiwi"};
 		JComboBox<String> combo = new JComboBox<>(items);
-		String[] options = {"Ok", "Cancel"};
+		String[] options = {"Remove", "Cancel"};
 		String title = "Remove Item";
 		int selection = JOptionPane.showOptionDialog(null, combo, title, JOptionPane.DEFAULT_OPTION,
 				JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
