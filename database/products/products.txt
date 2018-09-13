@@ -1,4 +1,5 @@
+ID-Department-ProductName-Price-Stock
+
+0-Bakery-Chocolate Cake-$12.5-250
 
 
-"ID", "Name", "Type", "Description", "Price", "Stock", "Category"
- "1"  "Apple" "Fruit",      "", 	 "$1.00"   "100"	"Fruit" 

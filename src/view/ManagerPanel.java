@@ -27,12 +27,8 @@ import javax.swing.border.EmptyBorder;
 public class ManagerPanel extends JFrame {
 
 	private JPanel contentPane, parentPanel, sideBarPanel, dashboardPanel, todaySalesPanel, productsPanel,
-			customersPanel, suppliersPanel, salesPanel, reportPanel, employeesPanel, systemPanel, tempName,
-			productsPanel1;
+			customersPanel, suppliersPanel, salesPanel, reportPanel, employeesPanel, systemPanel, addProductPanel;
 	private JTable table;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
 	private JTextField productIdField;
 	private JTextField productNameField;
 	private JTextField productPriceField;
@@ -334,23 +330,13 @@ public class ManagerPanel extends JFrame {
 				case 0:
 					productsPanel.removeAll();
 					addProductPanel();
-					productsPanel1.setVisible(true);
-					productsPanel.add(productsPanel1);
+					addProductPanel.setVisible(true);
+					productsPanel.add(addProductPanel);
  					productsPanel.repaint();
 					productsPanel.revalidate();
 					break;
 
 				case 1:
-//					Object[] options = new Object[] {"Test"};
-//					JOptionPane jop = new JOptionPane("Please Select", JOptionPane.QUESTION_MESSAGE,
-//																		JOptionPane.DEFAULT_OPTION,
-//																		null, options, null);
-//
-//
-//					JDialog diag = new JDialog();
-//					diag.getContentPane().add(jop);
-//					diag.pack();
-//					diag.setVisible(true);
 					removeProductPanel();
 					break;
 
@@ -375,7 +361,8 @@ public class ManagerPanel extends JFrame {
 				{ "3", "Apple", "Fruit", "", "$1.00", "100", "Fruit", "True" },
 				{ "4", "Apple", "Fruit", "", "$1.00", "100", "Fruit", "True" },
 				{ "5", "Apple", "Fruit", "", "$1.00", "100", "Fruit", "True" },
-				{ "6", "Apple", "Fruit", "", "$1.00", "100", "Fruit", "True" }, };
+				{ "6", "Apple", "Fruit", "", "$1.00", "100", "Fruit", "True" },
+				};
 
 		String[] columnHeaders = { "ID", "Name", "Type", "Description", "Price", "Stock", "Category", "Enabled" };
 
@@ -425,22 +412,22 @@ public class ManagerPanel extends JFrame {
 	}
 
 	private void addProductPanel() {
-		productsPanel1 = new JPanel();
- 		parentPanel.add(productsPanel1, "name_379884347646550");
-		productsPanel1.setVisible(true);
-		productsPanel1.setBackground(new Color(0, 128, 128));
-		productsPanel1.setLayout(null);
+		addProductPanel = new JPanel();
+ 		parentPanel.add(addProductPanel, "name_379884347646550");
+		addProductPanel.setVisible(true);
+		addProductPanel.setBackground(new Color(0, 128, 128));
+		addProductPanel.setLayout(null);
 
 		JLabel lblProductDetail = new JLabel("Product Detail");
 		lblProductDetail.setFont(new Font("Lucida Grande", Font.BOLD, 20));
 		lblProductDetail.setBounds(16, 6, 188, 38);
-		productsPanel1.add(lblProductDetail);
+		addProductPanel.add(lblProductDetail);
 
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
 		panel.setBackground(Color.GRAY);
 		panel.setBounds(6, 67, 1030, 84);
-		productsPanel1.add(panel);
+		addProductPanel.add(panel);
 
 		JButton btnSave = new JButton("Save");
 		btnSave.setBounds(682, 28, 117, 29);
@@ -450,7 +437,7 @@ public class ManagerPanel extends JFrame {
 		btnCancel.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				productsPanel1.setVisible(false);
+				addProductPanel.setVisible(false);
 				parentPanel.removeAll();
 				productsPanel();
 				parentPanel.repaint();
@@ -463,69 +450,69 @@ public class ManagerPanel extends JFrame {
 		JLabel lblNewLabel_2 = new JLabel("ID *");
 		lblNewLabel_2.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
 		lblNewLabel_2.setBounds(120, 216, 84, 31);
-		productsPanel1.add(lblNewLabel_2);
+		addProductPanel.add(lblNewLabel_2);
 
 		JLabel lblName = new JLabel("Name *");
 		lblName.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
 		lblName.setBounds(120, 270, 84, 31);
-		productsPanel1.add(lblName);
+		addProductPanel.add(lblName);
 
 		JLabel lblPrice = new JLabel("Price *");
 		lblPrice.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
 		lblPrice.setBounds(120, 324, 84, 31);
-		productsPanel1.add(lblPrice);
+		addProductPanel.add(lblPrice);
 
 		JLabel lblCategory = new JLabel("Category *");
 		lblCategory.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
 		lblCategory.setBounds(120, 377, 101, 31);
-		productsPanel1.add(lblCategory);
+		addProductPanel.add(lblCategory);
 
 		JLabel lblQuantity = new JLabel("Quantity *");
 		lblQuantity.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
 		lblQuantity.setBounds(120, 433, 101, 31);
-		productsPanel1.add(lblQuantity);
+		addProductPanel.add(lblQuantity);
 
 		JLabel lblStatus = new JLabel("Status *");
 		lblStatus.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
 		lblStatus.setBounds(120, 504, 101, 31);
-		productsPanel1.add(lblStatus);
+		addProductPanel.add(lblStatus);
 
 		productIdField = new JTextField();
 		productIdField.setBounds(265, 216, 256, 31);
-		productsPanel1.add(productIdField);
+		addProductPanel.add(productIdField);
 		productIdField.setColumns(10);
 
 		productNameField = new JTextField();
 		productNameField.setColumns(10);
 		productNameField.setBounds(265, 275, 256, 31);
-		productsPanel1.add(productNameField);
+		addProductPanel.add(productNameField);
 
 		productPriceField = new JTextField();
 		productPriceField.setColumns(10);
 		productPriceField.setBounds(265, 329, 93, 31);
-		productsPanel1.add(productPriceField);
+		addProductPanel.add(productPriceField);
 
 		JComboBox productCategoryBox = new JComboBox();
 		productCategoryBox.setBounds(265, 383, 93, 27);
-		productsPanel1.add(productCategoryBox);
+		addProductPanel.add(productCategoryBox);
 
 		JButton newCategoryBtn = new JButton("New Category");
 		newCategoryBtn.setBounds(379, 382, 117, 29);
-		productsPanel1.add(newCategoryBtn);
+		addProductPanel.add(newCategoryBtn);
 
 		JComboBox productQuantityBox = new JComboBox();
 		productQuantityBox.setBounds(265, 439, 93, 27);
-		productsPanel1.add(productQuantityBox);
+		addProductPanel.add(productQuantityBox);
 
 		JComboBox productEnabledBox = new JComboBox();
 		productEnabledBox.setBounds(265, 510, 93, 27);
-		productsPanel1.add(productEnabledBox);
+		addProductPanel.add(productEnabledBox);
 
 		JButton btnSubmit = new JButton("Submit");
 		btnSubmit.setBounds(120, 582, 131, 44);
-		productsPanel1.add(btnSubmit);
+		addProductPanel.add(btnSubmit);
 
-		productsPanel1.setVisible(false);
+		addProductPanel.setVisible(false);
 	}
 	private void modifyProductPanel() {
 
@@ -536,7 +523,7 @@ public class ManagerPanel extends JFrame {
 //		Retrieve items - temporary variable
 		String[] items = {"Apple", "Banana", "Kiwi"};
 		JComboBox<String> combo = new JComboBox<>(items);
-		String[] options = {"Remove", "Cancel"};
+		String[] options = {"Cancel", "Remove"};
 		String title = "Remove Item";
 		int selection = JOptionPane.showOptionDialog(null, combo, title, JOptionPane.DEFAULT_OPTION,
 				JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
