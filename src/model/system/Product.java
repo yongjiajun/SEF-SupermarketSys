@@ -9,7 +9,7 @@ public class Product {
 	// productLoad and productSave not implemented yet! (product.txt read/write)
 	// product array can be stored in SupportSystem..?
 
-	//TODO
+	// TODO
 
 	private String productName;
 	private int stockQty;
@@ -21,7 +21,6 @@ public class Product {
 	private double discountRate = 0;
 	private double discountedPrice = 0;
 
-
 	private boolean bulkSalesEligible = false;
 	private int bulkSalesQty = 0;
 	private double bulkSalesRate = 0;
@@ -31,8 +30,7 @@ public class Product {
 	private int restockLvl = 0;
 	private int reorderQty = 0;
 
-    private static NumberFormat formatter = new DecimalFormat("#0.00");
-
+	private static NumberFormat formatter = new DecimalFormat("#0.00");
 
 //	productID, productName, productPrice, productCategory, productQuantity
 	public Product(String productID, String productName, double productPrice, int stockQty) {
@@ -55,13 +53,11 @@ public class Product {
 		return stockQty;
 	}
 
-	public void addStockQty(int quantity)
-	{
+	public void addStockQty(int quantity) {
 		this.stockQty += quantity;
 	}
 
-	public void reduceStockQty(int quantity)
-	{
+	public void reduceStockQty(int quantity) {
 		this.stockQty -= quantity;
 	}
 
@@ -73,8 +69,7 @@ public class Product {
 		return productPrice;
 	}
 
-	public void setProductPrice(double price)
-	{
+	public void setProductPrice(double price) {
 		this.productPrice = price;
 	}
 
@@ -82,13 +77,11 @@ public class Product {
 		return discountEligible;
 	}
 
-	public double getDiscountRate()
-	{
+	public double getDiscountRate() {
 		return discountRate;
 	}
 
-	public void setDiscountRate(double rate)
-	{
+	public void setDiscountRate(double rate) {
 //		double price = this.getProductPrice();
 		this.discountRate = rate;
 
@@ -98,10 +91,9 @@ public class Product {
 //		total = (s * price) / 100;
 //		this.setProductPrice(total);
 
-
 		if (rate > 0)
 			this.discountEligible = true;
- 		else if (rate == 0)
+		else if (rate == 0)
 			this.discountEligible = false;
 	}
 
@@ -119,7 +111,7 @@ public class Product {
 		total = (s * price) / 100;
 
 		this.discountedPrice = total;
- 	}
+	}
 
 	public boolean getBulkSalesEligible() {
 		return bulkSalesEligible;
@@ -133,8 +125,7 @@ public class Product {
 		return bulkSalesQty;
 	}
 
-	public void setBulkSales(double rate, int qty)
-	{
+	public void setBulkSales(double rate, int qty) {
 		this.bulkSalesRate = rate;
 		this.bulkSalesQty = qty;
 		if (rate > 0 && qty != 0)
@@ -143,17 +134,15 @@ public class Product {
 			this.bulkSalesEligible = false;
 	}
 
-	public boolean getWeightable()
-	{
+	public boolean getWeightable() {
 		return weightable;
 	}
 
-	public double getPricePerGram(){
+	public double getPricePerGram() {
 		return pricePerGram;
 	}
 
-	public void setWeightable(double pricePerGram)
-	{
+	public void setWeightable(double pricePerGram) {
 		this.pricePerGram = pricePerGram;
 		if (pricePerGram > 0)
 			this.weightable = true;
@@ -161,8 +150,7 @@ public class Product {
 			this.weightable = false;
 	}
 
-	public void setRestockLvl(int restockLvl)
-	{
+	public void setRestockLvl(int restockLvl) {
 		this.restockLvl = restockLvl;
 	}
 
@@ -172,20 +160,19 @@ public class Product {
 		// restocks will be done by addStockQty(int qty)
 	}
 
-	public void setReorderQty(int qty)
-	{
+	public void setReorderQty(int qty) {
 		this.reorderQty = qty;
 	}
 
-	public int getReorderQty()
-	{
+	public int getReorderQty() {
 		return reorderQty;
 		// monitored
 	}
 
 	@Override
 	public String toString() {
-		return String.format("Product ID: %s", "Produce Price: %%d", getProductId(), getProductPrice());
-
+		return String.format("Product ID: %s\r\nProduct Name: %s\r\nProduct Price: %s\r\nProduct Stock: %d\r\n",
+				productID, productName, formatter.format(productPrice), stockQty);
 	}
+
 }

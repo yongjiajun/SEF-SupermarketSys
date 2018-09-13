@@ -366,16 +366,21 @@ public class ManagerPanel extends JFrame {
 		productsPanel.add(scrollPane);
 
 // Temporary data - shouldn't be here. Need to comply with MVC
-		Object[][] data = {
-				{ "1", "Apple", "Fruit", "", "$1.00", "100", "Fruit", "True" },
-				{ "2", "Apple", "Fruit", "", "$1.00", "100", "Fruit", "True" },
-				{ "3", "Apple", "Fruit", "", "$1.00", "100", "Fruit", "True" },
-				{ "4", "Apple", "Fruit", "", "$1.00", "100", "Fruit", "True" },
-				{ "5", "Apple", "Fruit", "", "$1.00", "100", "Fruit", "True" },
-				{ "6", "Apple", "Fruit", "", "$1.00", "100", "Fruit", "True" },
-				};
+//		Object[][] data = {
+//				{ "1", "Apple", "Fruit", "", "$1.00", "100", "Fruit", "True" },
+//				{ "2", "Apple", "Fruit", "", "$1.00", "100", "Fruit", "True" },
+//				{ "3", "Apple", "Fruit", "", "$1.00", "100", "Fruit", "True" },
+//				{ "4", "Apple", "Fruit", "", "$1.00", "100", "Fruit", "True" },
+//				{ "5", "Apple", "Fruit", "", "$1.00", "100", "Fruit", "True" },
+//				{ "6", "Apple", "Fruit", "", "$1.00", "100", "Fruit", "True" },
+//				};
 
-		String[] columnHeaders = { "ID", "Name", "Type", "Description", "Price", "Stock", "Category", "Enabled" };
+
+		Object[][] data = {
+//{addProduct.getProductID(), addProduct.getProductName(), addProduct.getProductPrice(), addProduct.getProductQuantity()},
+
+		};
+		String[] columnHeaders = { "Product ID", "Product Name", "Product Price", "Quantity" };
 
 		table = new JTable(data, columnHeaders);
 		table.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
@@ -470,20 +475,20 @@ public class ManagerPanel extends JFrame {
 		lblPrice.setBounds(120, 324, 84, 31);
 		addProductPanel.add(lblPrice);
 
-		JLabel lblCategory = new JLabel("Category *");
-		lblCategory.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		lblCategory.setBounds(120, 377, 101, 31);
-		addProductPanel.add(lblCategory);
+//		JLabel lblCategory = new JLabel("Category *");
+//		lblCategory.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
+//		lblCategory.setBounds(120, 377, 101, 31);
+//		addProductPanel.add(lblCategory);
 
 		JLabel lblQuantity = new JLabel("Quantity *");
 		lblQuantity.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		lblQuantity.setBounds(120, 433, 101, 31);
+		lblQuantity.setBounds(120, 388, 101, 31);
 		addProductPanel.add(lblQuantity);
 
-		JLabel lblStatus = new JLabel("Status *");
-		lblStatus.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		lblStatus.setBounds(120, 504, 101, 31);
-		addProductPanel.add(lblStatus);
+//		JLabel lblStatus = new JLabel("Status *");
+//		lblStatus.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
+//		lblStatus.setBounds(120, 504, 101, 31);
+//		addProductPanel.add(lblStatus);
 
 		productIdField = new JTextField();
 		productIdField.setBounds(265, 216, 256, 31);
@@ -501,25 +506,25 @@ public class ManagerPanel extends JFrame {
 		productPriceField.setBounds(265, 329, 93, 31);
 		addProductPanel.add(productPriceField);
 
-		JComboBox productCategoryBox = new JComboBox();
-		productCategoryBox.setBounds(265, 383, 93, 27);
-		addProductPanel.add(productCategoryBox);
-
-		JButton newCategoryBtn = new JButton("New Category");
-		newCategoryBtn.setBounds(379, 382, 117, 29);
-		addProductPanel.add(newCategoryBtn);
+//		JComboBox productCategoryBox = new JComboBox();
+//		productCategoryBox.setBounds(265, 383, 93, 27);
+//		addProductPanel.add(productCategoryBox);
+//
+//		JButton newCategoryBtn = new JButton("New Category");
+//		newCategoryBtn.setBounds(379, 382, 117, 29);
+//		addProductPanel.add(newCategoryBtn);
 
 		JComboBox productQuantityBox = new JComboBox();
 				for (int i=0; i<=99; i++) {
 					productQuantityBox.addItem(new Integer(i));
 			}
 
-		productQuantityBox.setBounds(265, 439, 93, 27);
+		productQuantityBox.setBounds(265, 394, 93, 27);
 		addProductPanel.add(productQuantityBox);
 
-		JComboBox productEnabledBox = new JComboBox();
-		productEnabledBox.setBounds(265, 510, 93, 27);
-		addProductPanel.add(productEnabledBox);
+//		JComboBox productEnabledBox = new JComboBox();
+//		productEnabledBox.setBounds(265, 510, 93, 27);
+//		addProductPanel.add(productEnabledBox);
 
 		JButton btnSubmit = new JButton("Submit");
 		btnSubmit.addActionListener(new ActionListener() {
@@ -530,7 +535,7 @@ public class ManagerPanel extends JFrame {
 				String productID = productIdField.getText();
 				String productName = productNameField.getText();
 				double productPrice = Double.parseDouble(productPriceField.getText());
-				String productCategory = (String) productCategoryBox.getSelectedItem();
+//				String productCategory = (String) productCategoryBox.getSelectedItem();
 				int productQuantity = (int)productQuantityBox.getSelectedItem();
 
 				addProduct.addItems(productID, productName, productPrice, productQuantity);
