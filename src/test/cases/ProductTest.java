@@ -12,7 +12,7 @@ import model.system.Product;
 class ProductTest {
 
 	HashMap<String, Product> products = new HashMap<String, Product>();
-	Product apple = new Product("Apple", 100, "1", 1.99);
+	Product apple = new Product("Apple", "1", 1.99, 100);
 
 	@Test
 	public void addProductTest() {

@@ -23,7 +23,7 @@ public class LoginController {
 			// Manager Login
 			case 'M':
 				if (accountManager.getManager(id) != null) {
-					if (accountManager.getManager(id).getEmployeePIN().equals(new String(pass))) {
+					if (accountManager.getManager(id).getUserPIN().equals(new String(pass))) {
 						loginPass = true;
 						ManagerPanel managerPanel = new ManagerPanel();
 						managerPanel.setVisible(true);
@@ -35,7 +35,7 @@ public class LoginController {
 			// SalesStaff Login
 			case 'S':
 				if (accountManager.getSalesStaff(id) != null) {
-					if (accountManager.getSalesStaff(id).getEmployeePIN().equals(new String(pass))) {
+					if (accountManager.getSalesStaff(id).getUserPIN().equals(new String(pass))) {
 						// Login Successful. Change view
 						loginPass = true;
 					}
@@ -44,7 +44,7 @@ public class LoginController {
 			// Customer Login
 			case 'C':
 				if (accountManager.getCustomer(id) != null) {
-					if (accountManager.getCustomer(id).getCustomerPIN().equals(new String(pass))) {
+					if (accountManager.getCustomer(id).getUserPIN().equals(new String(pass))) {
 						loginPass = true;
 						CustomerCheckoutPanel customerCheckOutPanel = new CustomerCheckoutPanel();
 						customerCheckOutPanel.setVisible(true);
@@ -55,7 +55,7 @@ public class LoginController {
 			// Supplier Login
 			case 'P':
 				if (accountManager.getSupplier(id) != null) {
-					if (accountManager.getSupplier(id).getSupplierPIN().equals(new String(pass))) {
+					if (accountManager.getSupplier(id).getUserPIN().equals(new String(pass))) {
 						// Login Successful. Change view
 						loginPass = true;
 					}

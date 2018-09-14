@@ -38,12 +38,12 @@ class ManagerTest {
 		s1 = new SalesStaff("S222", "2222", "Stephanie", "SalesStaff");
 		p1 = new Supplier("P333", "3333", "Peter", "Supplier", "CompName", "CompLoc", "CompEmail", "CompPhone");
 		
-		apple = new Product("Apple", 1000, "APPLE", 0.8);
+		apple = new Product("Apple", "APPLE", 0.8, 1000);
 		apple.setBulkSales(0.1, 10);
 		
-		orange = new Product("Orange", 500, "ORANGE", 1);
+		orange = new Product("Orange", "ORANGE", 1, 500);
 		
-		iceCream = new Product("IceCream", 50, "ICECREAM", 8);
+		iceCream = new Product("IceCream", "ICECREAM", 8, 50);
 		iceCream.setDiscountRate(.2);
 	}
 

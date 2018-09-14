@@ -25,10 +25,10 @@ class SupplierTest {
 	
 	@Test
 	void testMethods() {
-		assertEquals(supp.getSupplierID(), "s1234");
-		assertEquals(supp.getSupplierPIN(), "1234");
-		assertEquals(supp.getSupplierFName(), "fName");
-		assertEquals(supp.getSupplierLName(), "lName");
+		assertEquals(supp.getUserID(), "s1234");
+		assertEquals(supp.getUserPIN(), "1234");
+		assertEquals(supp.getUserFName(), "fName");
+		assertEquals(supp.getUserLName(), "lName");
 		assertEquals(supp.getSupplierCompanyName(), "cName");
 		assertEquals(supp.getSupplierContactNo(), "0412345678");
 		assertEquals(supp.getSupplierLocation(), "Australia");
@@ -36,7 +36,7 @@ class SupplierTest {
 	
 	@Test 
 	void testProductStock() {
-		prod = new Product("Product", 500, "PROD", 5.0);
+		prod = new Product("Product", "PROD", 5.0, 500);
 		assertTrue(prod != null);
 		
 		prod.setReorderQty(100);

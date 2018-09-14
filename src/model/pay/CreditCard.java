@@ -13,7 +13,7 @@ public class CreditCard {
 
 	public CreditCard(String creditCardID, Customer cardHolder, String pin) {
 		this.creditCardID = creditCardID;
-		this.cardHolderID = cardHolder.getCustomerID();
+		this.cardHolderID = cardHolder.getUserID();
 		this.pin = pin;
 	}
 

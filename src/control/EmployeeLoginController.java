@@ -21,7 +21,7 @@ public class EmployeeLoginController {
 			// Manager Login
 			case 'M':
 				if (accountManager.getManager(id) != null) {
-					if (accountManager.getManager(id).getEmployeePIN().equals(new String(pass))) {
+					if (accountManager.getManager(id).getUserPIN().equals(new String(pass))) {
 						// Login Successful. Change view
 						loginPass = true;
 						view.dispose();
@@ -32,7 +32,7 @@ public class EmployeeLoginController {
 			// SalesStaff Login
 			case 'S':
 				if (accountManager.getSalesStaff(id) != null) {
-					if (accountManager.getSalesStaff(id).getEmployeePIN().equals(new String(pass))) {
+					if (accountManager.getSalesStaff(id).getUserPIN().equals(new String(pass))) {
 						// Login Successful. Change view
 						loginPass = true;
 						view.dispose();

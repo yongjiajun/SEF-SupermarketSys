@@ -91,7 +91,7 @@ public class AccountManager {
 	}
 
 	public boolean addCustomer(Customer customer) {
-		String temp = customer.getCustomerID();
+		String temp = customer.getUserID();
 		if (loyalCustomers.containsKey(temp)) {
 			System.out.print("Customer exists " + temp + " in database!");
 			return false;
@@ -102,7 +102,7 @@ public class AccountManager {
 	}
 
 	public boolean addSalesStaff(SalesStaff salesStaff) {
-		String temp = salesStaff.getEmployeeID();
+		String temp = salesStaff.getUserID();
 		if (salesStaffs.containsKey(temp)) {
 			System.out.print("Sales staff " + temp + " exists in database!");
 			return false;
@@ -113,7 +113,7 @@ public class AccountManager {
 	}
 
 	public boolean addManager(Manager manager) {
-		String temp = manager.getEmployeeID();
+		String temp = manager.getUserID();
 		if (managers.containsKey(temp)) {
 			System.out.print("Manager " + temp + " exists in database!");
 			return false;
@@ -124,7 +124,7 @@ public class AccountManager {
 	}
 
 	public boolean addSupplier(Supplier supplier) {
-		String temp = supplier.getSupplierID();
+		String temp = supplier.getUserID();
 		if (suppliers.containsKey(temp)) {
 			System.out.print("Supplier " + temp + " exists in database!");
 			return false;
@@ -135,7 +135,7 @@ public class AccountManager {
 	}
 
 	public boolean removeCustomer(Customer customer) {
-		String temp = customer.getCustomerID();
+		String temp = customer.getUserID();
 		if (loyalCustomers.containsValue(customer)) {
 			loyalCustomers.remove(temp);
 			return true;
@@ -146,7 +146,7 @@ public class AccountManager {
 	}
 
 	public boolean removeSalesStaff(SalesStaff salesStaff) {
-		String temp = salesStaff.getEmployeeID();
+		String temp = salesStaff.getUserID();
 		if (salesStaffs.containsValue(salesStaff)) {
 			loyalCustomers.remove(temp);
 			return true;
@@ -157,7 +157,7 @@ public class AccountManager {
 	}
 
 	public boolean removeManager(Manager manager) {
-		String temp = manager.getEmployeeID();
+		String temp = manager.getUserID();
 		if (managers.containsValue(manager)) {
 			managers.remove(temp);
 			return true;
@@ -168,7 +168,7 @@ public class AccountManager {
 	}
 
 	public boolean removeSupplier(Supplier supplier) {
-		String temp = supplier.getSupplierID();
+		String temp = supplier.getUserID();
 		if (suppliers.containsValue(supplier)) {
 			suppliers.remove(temp);
 			return true;
