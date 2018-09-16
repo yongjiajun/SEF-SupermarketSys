@@ -9,19 +9,19 @@ public class CreditCard {
 	private String pin;
 	private double balance;
 	private int loyaltyPoints;
-	private Customer belongsTo;
 
 	public CreditCard(String creditCardID, Customer cardHolder, String pin) {
 		this.creditCardID = creditCardID;
 		this.cardHolderID = cardHolder.getUserID();
 		this.pin = pin;
+		this.balance = 0;
 	}
 
 	public String getCreditCardID() {
 		return creditCardID;
 	}
 
-	public String getCardHolder() {
+	public String getCardHolderID() {
 		return cardHolderID;
 	}
 
@@ -35,10 +35,6 @@ public class CreditCard {
 
 	public double getLoyaltyPoints() {
 		return loyaltyPoints;
-	}
-
-	public void setBalance(double balance) {
-		this.balance = balance;
 	}
 
 	public void setLoyaltyPoints(int loyaltyPoints) {
