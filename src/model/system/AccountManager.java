@@ -1,7 +1,12 @@
 package model.system;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -15,30 +20,13 @@ import model.people.Supplier;
 
 public class AccountManager {
 
-	/*
-	 * README FIRST:
-	 * 
-	 * don't care about this first. will create using TestClient class.
-	 * 
-	 */
-
-	/*
-	 * INFO:
-	 * 
-	 * manages arrays of customers, SalesStaffs, manager(s), suppliers can perform
-	 * add / get / remove. Another account login class may be needed! accounts
-	 * (except customers) can be added using test client or a debug view
-	 * 
-	 */
-
-	private HashMap<String, Customer> loyalCustomers = new HashMap<String, Customer>();
+	private HashMap<String, Customer> customers = new HashMap<String, Customer>();
 	private HashMap<String, SalesStaff> salesStaffs = new HashMap<String, SalesStaff>();
 	private HashMap<String, Manager> managers = new HashMap<String, Manager>();
 	private HashMap<String, Supplier> suppliers = new HashMap<String, Supplier>();
 
 	public AccountManager() {
-		// init();
-		// will have to call terminate() when closing the program!
+		// TODO remove these and have dummy users in the database
 		Customer c1 = new Customer("C123", "1234", "Alpha", "Bravo");
 		addCustomer(c1);
 
@@ -55,8 +43,8 @@ public class AccountManager {
 	}
 
 	public Customer getCustomer(String id) {
-		if (loyalCustomers.containsKey(id)) {
-			return loyalCustomers.get(id);
+		if (customers.containsKey(id)) {
+			return customers.get(id);
 		} else {
 			System.out.print("Customer " + id + " not found in database!");
 			return null;
@@ -92,11 +80,11 @@ public class AccountManager {
 
 	public boolean addCustomer(Customer customer) {
 		String temp = customer.getUserID();
-		if (loyalCustomers.containsKey(temp)) {
+		if (customers.containsKey(temp)) {
 			System.out.print("Customer exists " + temp + " in database!");
 			return false;
 		} else {
-			loyalCustomers.put(temp, customer);
+			customers.put(temp, customer);
 			return true;
 		}
 	}
@@ -136,8 +124,8 @@ public class AccountManager {
 
 	public boolean removeCustomer(Customer customer) {
 		String temp = customer.getUserID();
-		if (loyalCustomers.containsValue(customer)) {
-			loyalCustomers.remove(temp);
+		if (customers.containsValue(customer)) {
+			customers.remove(temp);
 			return true;
 		} else {
 			System.out.print("Customer " + temp + " doesn't exist in database!");
@@ -148,7 +136,7 @@ public class AccountManager {
 	public boolean removeSalesStaff(SalesStaff salesStaff) {
 		String temp = salesStaff.getUserID();
 		if (salesStaffs.containsValue(salesStaff)) {
-			loyalCustomers.remove(temp);
+			customers.remove(temp);
 			return true;
 		} else {
 			System.out.print("Sales staff " + temp + " doesn't exist in database!");
@@ -178,97 +166,66 @@ public class AccountManager {
 		}
 	}
 
-//	private void init() {
-//		Scanner inputStream = null;
-//		String filename = null;
-//		for (int i = 1; i <= 4; i++) {
-//			if (i == 1) {
-//				filename = "database/credentials/staff.txt";
-//			} else if (i == 2) {
-//				filename = "database/credentials/manager.txt";
-//			} else if (i == 3) {
-//				filename = "database/credentials/supplier.txt";
-//			} else if (i == 4) {
-//				filename = "database/credentials/customer.txt";
-//			}
-//			try {
-//				inputStream = new Scanner(new File(filename));
-//				inputStream.useDelimiter("#");
-//			} catch (FileNotFoundException e) {
-//				System.out.println("FATAL ERROR: The file \"" + filename + "\" isn't found!");
-//				e.printStackTrace();
-//			}
-//			while (inputStream.hasNextLine()) {
-//				String readName = inputStream.next();
-//				String readPassword = null;
-//				if (i == 1) {
-//					readPassword = inputStream.next();
-//					SalesStaff temp = new SalesStaff(readName, readPassword);
-//					salesStaffs.put(readName, temp);
-//				} else if (i == 2) {
-//					readPassword = inputStream.next();
-//					Manager temp = new Manager(readName, readPassword);
-//					managers.put(readName, temp);
-//				} else if (i == 3) {
-//					readPassword = inputStream.next();
-//					Supplier temp = new Supplier(readName, readPassword);
-//					suppliers.put(readName, temp);
-//				} else if (i == 4) {
-//					int loyaltyPts = inputStream.nextInt();
-//					Customer temp = new Customer(readName, loyaltyPts);
-//					loyalCustomers.put(readName, temp);
-//				}
-//			}
-//		}
-//	}
-//
-//	public void terminte() {
-//		PrintWriter pw = null;
-//		String filename = null;
-//		Iterator it = null;
-//		for (int i = 1; i <= 4; i++) {
-//			if (i == 1) {
-//				filename = "database/credentials/staff.txt";
-//				it = salesStaffs.entrySet().iterator();
-//			} else if (i == 2) {
-//				filename = "database/credentials/manager.txt";
-//				it = managers.entrySet().iterator();
-//			} else if (i == 3) {
-//				filename = "database/credentials/supplier.txt";
-//				it = suppliers.entrySet().iterator();
-//			} else if (i == 4) {
-//				filename = "database/credentials/customer.txt";
-//				it = loyalCustomers.entrySet().iterator();
-//			}
-//			try {
-//				pw = new PrintWriter(new File(filename));
-//			} catch (FileNotFoundException e) {
-//				System.out.println("FATAL ERROR: The file \"" + filename + "\" isn't found!");
-//				e.printStackTrace();
-//			}
-//			while (it.hasNext()) {
-//				String toBePrinted = null;
-//				Map.Entry mapPair = (Map.Entry) it.next();
-//				pw.write((String) mapPair.getKey() + "#");
-//				if (i == 1) {
-//					SalesStaff temp = (SalesStaff) mapPair.getValue();
-//					toBePrinted = temp.getPassword();
-//				} else if (i == 2) {
-//					Manager temp = (Manager) mapPair.getValue();
-//					toBePrinted = temp.getPassword();
-//				} else if (i == 3) {
-//					Supplier temp = (Supplier) mapPair.getValue();
-//					toBePrinted = temp.getPassword();
-//				} else if (i == 4) {
-//					Customer temp = (Customer) mapPair.getValue();
-//					toBePrinted = Integer.toString(temp.getLoyaltyPts());
-//				}
-//				pw.write(toBePrinted + "#");
-//				it.remove();
-//			}
-//			pw.close();
-//		}
-//
-//	}
+	public void initialiseUsers()
+	{
+		try {
+	         FileInputStream fileInCustomer = new FileInputStream("database/customers.ser");
+	         FileInputStream fileInSupplier = new FileInputStream("database/suppliers.ser");
+	         FileInputStream fileInManager = new FileInputStream("database/managers.ser");
+	         FileInputStream fileInSalesStaff = new FileInputStream("database/salesstaffs.ser");
+	         ObjectInputStream objectInCustomer = new ObjectInputStream(fileInCustomer);
+	         ObjectInputStream objectInSupplier = new ObjectInputStream(fileInSupplier);
+	         ObjectInputStream objectInManager = new ObjectInputStream(fileInManager);
+	         ObjectInputStream objectInSalesStaff = new ObjectInputStream(fileInSalesStaff);
+	         customers = (HashMap<String, Customer>) objectInCustomer.readObject();
+	         suppliers = (HashMap<String, Supplier>) objectInSupplier.readObject();
+	         managers = (HashMap<String, Manager>) objectInManager.readObject();
+	         salesStaffs = (HashMap<String, SalesStaff>) objectInSalesStaff.readObject();
+	         objectInCustomer.close();
+	         objectInSupplier.close();
+	         objectInManager.close();
+	         objectInSalesStaff.close();
+	         fileInCustomer.close();
+	         fileInSupplier.close();
+	         fileInManager.close();
+	         fileInSalesStaff.close();
+	      } catch (IOException i) {
+	         i.printStackTrace();
+	         return;
+	      } catch (ClassNotFoundException c) {
+	         c.printStackTrace();
+	         return;
+	      }
+	}
+	
+	// always call this function before shutdown
+	public void saveUsers()
+	{
+		try {
+			FileOutputStream fileOutCustomer = new FileOutputStream("database/customers.ser");
+			FileOutputStream fileOutSupplier = new FileOutputStream("database/suppliers.ser");
+			FileOutputStream fileOutManager = new FileOutputStream("database/managers.ser");
+			FileOutputStream fileOutSalesStaff = new FileOutputStream("database/salesstaffs.ser");
+	         ObjectOutputStream objectOutCustomer = new ObjectOutputStream(fileOutCustomer);
+	         ObjectOutputStream objectOutSupplier = new ObjectOutputStream(fileOutSupplier);
+	         ObjectOutputStream objectOutManager = new ObjectOutputStream(fileOutManager);
+	         ObjectOutputStream objectOutSalesStaff = new ObjectOutputStream(fileOutSalesStaff);
+	         objectOutCustomer.writeObject(customers);
+	         objectOutSupplier.writeObject(suppliers);
+	         objectOutManager.writeObject(managers);
+	         objectOutSalesStaff.writeObject(salesStaffs);
+	         objectOutCustomer.close();
+	         objectOutSupplier.close();
+	         objectOutManager.close();
+	         objectOutSalesStaff.close();
+	         fileOutCustomer.close();
+	         fileOutSupplier.close();
+	         fileOutManager.close();
+	         fileOutSalesStaff.close();
+	         System.out.println("Users are serialized!");
+	      } catch (IOException i) {
+	         i.printStackTrace();
+	      }
+	}
 
 }

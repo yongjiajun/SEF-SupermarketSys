@@ -1,6 +1,8 @@
 package model.people;
 
-public abstract class User {
+import java.io.Serializable;
+
+public abstract class User implements Serializable {
 
 	private String userID, userFName, userLName, userPIN;
 

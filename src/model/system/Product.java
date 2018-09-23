@@ -1,9 +1,10 @@
 package model.system;
 
+import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
-public class Product {
+public class Product implements Serializable {
 
 	// manages product details, manager can modify most, supplier modifies quantity
 	// productLoad and productSave not implemented yet! (product.txt read/write)
@@ -81,15 +82,7 @@ public class Product {
 	}
 
 	public void setDiscountRate(double rate) {
-//		double price = this.getProductPrice();
 		this.discountRate = rate;
-
-//		double total = 0;
-//		double s;
-// 		s = 100 - rate;
-//		total = (s * price) / 100;
-//		this.setProductPrice(total);
-
 		if (rate > 0)
 			this.discountEligible = true;
 		else if (rate == 0)

@@ -1,5 +1,0 @@
-ID-Department-ProductName-Price-Stock
-
-0-Bakery-Chocolate Cake-$12.5-250
-
-
