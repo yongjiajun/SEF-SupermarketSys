@@ -20,5 +20,5 @@ public class Customer extends User{
 	public void deductLoyaltyPts(int pts) {
 		this.loyaltyPts -= pts;
 	}
-
+	
 }
