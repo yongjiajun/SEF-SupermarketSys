@@ -17,6 +17,7 @@ public class ProductManager {
 	         FileInputStream fileIn = new FileInputStream("database/products.ser");
 	         ObjectInputStream objectIn = new ObjectInputStream(fileIn);
 	         products = (HashMap<String, Product>) objectIn.readObject();
+	         System.out.println("Products are loaded from database!");
 	         objectIn.close();
 	         fileIn.close();
 	      } catch (IOException i) {
@@ -29,7 +30,7 @@ public class ProductManager {
 	      }
 	}
 	
-	// always call this function after adding/modifying products
+	// always call this function after adding/modifying products / before shutdown
 	public void saveProducts()
 	{
 		try {
@@ -38,7 +39,7 @@ public class ProductManager {
 	         objectOut.writeObject(products);
 	         objectOut.close();
 	         fileOut.close();
-	         System.out.println("Serialized data is saved in database/products.ser");
+	         System.out.println("Products are saved to database!");
 	      } catch (IOException i) {
 	         i.printStackTrace();
 	      }
@@ -85,9 +86,4 @@ public class ProductManager {
 		}
 	}
 	
-	// called each time when 
-	public void setProduct(Product product)
-	{
-		
-	}
 }

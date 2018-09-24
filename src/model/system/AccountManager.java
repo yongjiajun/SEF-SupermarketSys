@@ -181,6 +181,7 @@ public class AccountManager {
 	         suppliers = (HashMap<String, Supplier>) objectInSupplier.readObject();
 	         managers = (HashMap<String, Manager>) objectInManager.readObject();
 	         salesStaffs = (HashMap<String, SalesStaff>) objectInSalesStaff.readObject();
+	         System.out.println("Users are loaded from database!");
 	         objectInCustomer.close();
 	         objectInSupplier.close();
 	         objectInManager.close();
@@ -222,7 +223,7 @@ public class AccountManager {
 	         fileOutSupplier.close();
 	         fileOutManager.close();
 	         fileOutSalesStaff.close();
-	         System.out.println("Users are serialized!");
+	         System.out.println("Users are saved to database!");
 	      } catch (IOException i) {
 	         i.printStackTrace();
 	      }

@@ -3,6 +3,8 @@ package client;
 
 import java.awt.EventQueue;
 
+import model.system.AccountManager;
+import model.system.ProductManager;
 import view.WelcomeScreen;
 
 public class SupermarketClient {
@@ -13,6 +15,10 @@ public class SupermarketClient {
 			@Override
 			public void run() {
 				try {
+					ProductManager pm = new ProductManager();
+					AccountManager am = new AccountManager();
+					pm.initialiseProducts();
+					am.initialiseUsers();
 					WelcomeScreen welcomeScreen = new WelcomeScreen();
 					welcomeScreen.setVisible(true);
 				} catch (Exception e) {
