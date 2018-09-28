@@ -29,7 +29,7 @@ import control.AddProductController;
 public class ManagerPanel extends JFrame {
 
 	private JPanel contentPane, parentPanel, sideBarPanel, dashboardPanel, todaySalesPanel, productsPanel,
-			customersPanel, suppliersPanel, salesPanel, reportPanel, employeesPanel, systemPanel, addProductPanel, addSupplierPanel;
+			customersPanel, suppliersPanel, salesPanel, reportPanel, employeesPanel, systemPanel, addProductPanel, addSupplierPanel, viewSupplier;
  	private JTextField productIdField;
 	private JTextField productNameField;
 	private JTextField productPriceField;
@@ -71,6 +71,7 @@ public class ManagerPanel extends JFrame {
 		employeesPanel();
 		systemPanel();
 		addSupplier();
+		viewSupplier();
 
 //		addProductPanel();
 //		removeProductPanel();
@@ -438,10 +439,15 @@ public class ManagerPanel extends JFrame {
 		panel.setBounds(6, 69, 1030, 84);
 		suppliersPanel.add(panel);
 
-		String[] actionNames = {"Add Supplier", "Remove Supplier", "Edit Supplier Details", "Refresh"};
+		String[] actionNames = {"Add Supplier", "Remove Supplier", "Edit Supplier Details"};
 		JComboBox comboBox = new JComboBox(actionNames);
 		comboBox.setBounds(833, 23, 166, 40);
 		panel.add(comboBox);
+
+		JPanel supplierMainPanel = new JPanel();
+		supplierMainPanel.setBounds(6, 192, 1012, 496);
+ 		supplierMainPanel.setLayout(null);
+		suppliersPanel.add(supplierMainPanel);
 
 
 
@@ -458,14 +464,23 @@ public class ManagerPanel extends JFrame {
 				switch(selectedAction) {
 				case 0:
 
-//					suppliersPanel.removeAll();
+					suppliersPanel.removeAll();
 					addSupplier();
 					addSupplierPanel.setVisible(true);
 					suppliersPanel.add(addSupplierPanel);
 					suppliersPanel.repaint();
 					suppliersPanel.revalidate();
 					break;
+//				case 3:
+//					viewSupplier();
+//					addSupplierPanel.setVisible(true);
+//					suppliersPanel.add(addSupplierPanel);
+//					suppliersPanel.repaint();
+//					suppliersPanel.revalidate();
+//					break;
+
 				}
+
 			}
 		};
 
@@ -647,96 +662,127 @@ public class ManagerPanel extends JFrame {
 
 		JLabel supplierID = new JLabel("Supplier ID");
 		supplierID.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		supplierID.setBounds(31, 219, 112, 36);
+		supplierID.setBounds(58, 150, 112, 36);
 		addSupplierPanel.add(supplierID);
 
 		JLabel supplierPin = new JLabel("Pin");
 		supplierPin.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		supplierPin.setBounds(31, 269, 112, 36);
+		supplierPin.setBounds(58, 200, 112, 36);
 		addSupplierPanel.add(supplierPin);
 
 		JLabel supplierFirstName = new JLabel("First Name");
 		supplierFirstName.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		supplierFirstName.setBounds(31, 320, 112, 36);
+		supplierFirstName.setBounds(58, 251, 112, 36);
 		addSupplierPanel.add(supplierFirstName);
 
 		JLabel supplierLastName = new JLabel("Last Name");
 		supplierLastName.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		supplierLastName.setBounds(31, 374, 112, 36);
+		supplierLastName.setBounds(58, 305, 112, 36);
 		addSupplierPanel.add(supplierLastName);
 
 		JLabel companyName = new JLabel("Company Name");
 		companyName.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		companyName.setBounds(31, 422, 147, 36);
+		companyName.setBounds(58, 353, 147, 36);
 		addSupplierPanel.add(companyName);
 
 		JLabel supplierContactNo = new JLabel("Contact Number");
 		supplierContactNo.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		supplierContactNo.setBounds(31, 478, 147, 36);
+		supplierContactNo.setBounds(58, 409, 147, 36);
 		addSupplierPanel.add(supplierContactNo);
 
 		JLabel supplierEmail = new JLabel("Email");
 		supplierEmail.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		supplierEmail.setBounds(31, 530, 112, 36);
+		supplierEmail.setBounds(58, 461, 112, 36);
 		addSupplierPanel.add(supplierEmail);
 
 		JLabel supplierLocation = new JLabel("Location");
 		supplierLocation.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		supplierLocation.setBounds(31, 582, 112, 36);
+		supplierLocation.setBounds(58, 513, 112, 36);
 		addSupplierPanel.add(supplierLocation);
 
 		supplierIDField = new JTextField();
-		supplierIDField.setBounds(200, 222, 397, 32);
+		supplierIDField.setBounds(227, 153, 397, 32);
 		addSupplierPanel.add(supplierIDField);
 		supplierIDField.setColumns(10);
 
 		supplierPinField = new JTextField();
 		supplierPinField.setColumns(10);
-		supplierPinField.setBounds(200, 275, 397, 32);
+		supplierPinField.setBounds(227, 206, 397, 32);
 		addSupplierPanel.add(supplierPinField);
 
 		supplierFirstNameField = new JTextField();
 		supplierFirstNameField.setColumns(10);
-		supplierFirstNameField.setBounds(200, 326, 397, 32);
+		supplierFirstNameField.setBounds(227, 257, 397, 32);
 		addSupplierPanel.add(supplierFirstNameField);
 
 		supplierLastNameField = new JTextField();
 		supplierLastNameField.setColumns(10);
-		supplierLastNameField.setBounds(200, 380, 397, 32);
+		supplierLastNameField.setBounds(227, 311, 397, 32);
 		addSupplierPanel.add(supplierLastNameField);
 
 		companyNameFiel = new JTextField();
 		companyNameFiel.setColumns(10);
-		companyNameFiel.setBounds(200, 428, 397, 32);
+		companyNameFiel.setBounds(227, 359, 397, 32);
 		addSupplierPanel.add(companyNameFiel);
 
 		contactNoField = new JTextField();
 		contactNoField.setColumns(10);
-		contactNoField.setBounds(200, 478, 397, 32);
+		contactNoField.setBounds(227, 409, 397, 32);
 		addSupplierPanel.add(contactNoField);
 
 		emailField = new JTextField();
 		emailField.setColumns(10);
-		emailField.setBounds(200, 536, 397, 32);
+		emailField.setBounds(227, 467, 397, 32);
 		addSupplierPanel.add(emailField);
 
 		locationField = new JTextField();
 		locationField.setColumns(10);
-		locationField.setBounds(200, 588, 397, 32);
+		locationField.setBounds(227, 519, 397, 32);
 		addSupplierPanel.add(locationField);
 
 		JButton submitBtn = new JButton("Submit");
 		submitBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				addSupplierPanel.setVisible(false);
+				parentPanel.removeAll();
+				suppliersPanel();
+				parentPanel.repaint();
+				parentPanel.revalidate();
 			}
 		});
-		submitBtn.setBounds(31, 667, 117, 29);
+		submitBtn.setBounds(67, 620, 117, 29);
 		addSupplierPanel.add(submitBtn);
 
 		JButton cancelBtn = new JButton("Cancel");
-		cancelBtn.setBounds(200, 667, 117, 29);
+		cancelBtn.setBounds(236, 620, 117, 29);
 		addSupplierPanel.add(cancelBtn);
+
+		JLabel lblAddSupplierDetails = new JLabel("Add Supplier Details");
+		lblAddSupplierDetails.setFont(new Font("Lucida Grande", Font.BOLD, 17));
+		lblAddSupplierDetails.setBounds(31, 32, 211, 55);
+		addSupplierPanel.add(lblAddSupplierDetails);
 		addSupplierPanel.setVisible(false);
+
+		cancelBtn.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				addSupplierPanel.setVisible(false);
+				parentPanel.removeAll();
+				suppliersPanel();
+				parentPanel.repaint();
+				parentPanel.revalidate();
+			}
+		});
 	}
+
+
+	private void viewSupplier() {
+		viewSupplier = new JPanel();
+		viewSupplier.setVisible(true);
+	}
+
+
+
+
 }
