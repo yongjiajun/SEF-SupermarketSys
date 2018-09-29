@@ -18,26 +18,30 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import control.AddProductController;
+import model.people.Supplier;
 
 public class ManagerPanel extends JFrame {
 
-	private JPanel contentPane, parentPanel, sideBarPanel, dashboardPanel, todaySalesPanel, productsPanel, suppliersPanel, salesPanel, reportPanel, systemPanel, addProductPanel, addSupplierPanel, viewSupplier;
- 	private JTextField productIdField;
+	private JPanel contentPane, parentPanel, sideBarPanel, dashboardPanel, todaySalesPanel, productsPanel,
+			suppliersPanel, salesPanel, reportPanel, systemPanel, addProductPanel, addSupplierPanel, viewSupplier;
+	private JTextField productIdField;
 	private JTextField productNameField;
 	private JTextField productPriceField;
 
-
 	private AddProductController addProduct = new AddProductController(this);
-	private JTable table_1;
-	private JTable table_2;
-	private JTable table_3;
+	private Supplier supplier;
+
+	private JFrame frame;
+	private JTable table;
 	private JTextField supplierIDField;
 	private JTextField supplierPinField;
 	private JTextField supplierFirstNameField;
@@ -46,6 +50,9 @@ public class ManagerPanel extends JFrame {
 	private JTextField contactNoField;
 	private JTextField emailField;
 	private JTextField locationField;
+
+	private DefaultTableModel model;
+
 	public ManagerPanel() {
 		setTitle("SEF Assignment");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -72,14 +79,13 @@ public class ManagerPanel extends JFrame {
 		addSupplier();
 		viewSupplier();
 
-//		addProductPanel();
+		addProductPanel();
 //		removeProductPanel();
 //		modifyProductPanel();
 
-
-
 	}
 
+//
 	private void sideBarPanel() {
 		sideBarPanel = new JPanel();
 		sideBarPanel.setBackground(Color.DARK_GRAY);
@@ -169,6 +175,10 @@ public class ManagerPanel extends JFrame {
 		logoutLbl.setFont(new Font("Microsoft Sans Serif", Font.BOLD, 20));
 		logoutLbl.setBounds(-6, 691, 174, 37);
 		sideBarPanel.add(logoutLbl);
+		salesPanel = new JPanel();
+		salesPanel.setBounds(0, 0, 1036, 750);
+		contentPane.add(salesPanel);
+		salesPanel.setBackground(Color.GREEN);
 		reportLabel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -301,10 +311,25 @@ public class ManagerPanel extends JFrame {
 		actionBox.setBounds(833, 23, 166, 40);
 		panel.add(actionBox);
 
-		table_3 = new JTable();
-		table_3.setBounds(6, 222, 1008, 460);
-		productsPanel.add(table_3);
+		table = new JTable();
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		table.setBounds(19, 208, 1008, 460);
+		// addProduct.addItems(productID, productName, productPrice, productQuantity);
 
+		Object[] columns = { "ID", "Name", "Price", "Quantity" };
+		model = new DefaultTableModel();
+		model.setColumnIdentifiers(columns);
+		table.setModel(model);
+		table.setBackground(Color.LIGHT_GRAY);
+		table.setForeground(Color.black);
+		Font font = new Font("", 1, 22);
+		table.setFont(font);
+		table.setRowHeight(30);
+
+		JScrollPane pane = new JScrollPane(table);
+		pane.setBounds(34,253,951,440);
+		productsPanel.add(pane);
+//		productsPanel.add(table);
 
 		ActionListener actionListener = new ActionListener() {
 			@Override
@@ -318,7 +343,7 @@ public class ManagerPanel extends JFrame {
 					addProductPanel();
 					addProductPanel.setVisible(true);
 					productsPanel.add(addProductPanel);
- 					productsPanel.repaint();
+					productsPanel.repaint();
 					productsPanel.revalidate();
 					break;
 
@@ -336,45 +361,9 @@ public class ManagerPanel extends JFrame {
 
 		actionBox.addActionListener(actionListener);
 //
-//		JScrollPane scrollPane = new JScrollPane();
-//		scrollPane.setBounds(36, 180, 981, 528);
-//		productsPanel.add(scrollPane);
-
-// Temporary data - shouldn't be here. Need to comply with MVC
-//		Object[][] data = {
-//				{ "1", "Apple", "Fruit", "", "$1.00", "100", "Fruit", "True" },
-//				{ "2", "Apple", "Fruit", "", "$1.00", "100", "Fruit", "True" },
-//				{ "3", "Apple", "Fruit", "", "$1.00", "100", "Fruit", "True" },
-//				{ "4", "Apple", "Fruit", "", "$1.00", "100", "Fruit", "True" },
-//				{ "5", "Apple", "Fruit", "", "$1.00", "100", "Fruit", "True" },
-//				{ "6", "Apple", "Fruit", "", "$1.00", "100", "Fruit", "True" },
-//				};
-
-
-//		Object[][] data = {
-//{addProduct.getProductID(), addProduct.getProductName(), addProduct.getProductPrice(), addProduct.getProductQuantity()},
-
-
-//		};
-//		Object[] row = new Object[4];
-//
-//		String[] columnHeaders = { "Product ID", "Product Name", "Product Price", "Quantity" };
-//
-//		table = new JTable(row, columnHeaders);
-//		table.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-//		scrollPane.setViewportView(table);
-
-
 	}
 
-//	private void customersPanel() {
-//
-//	}
-
 	private void salesPanel() {
-		salesPanel = new JPanel();
-		salesPanel.setBackground(Color.GREEN);
-		parentPanel.add(salesPanel);
 	}
 
 	private void suppliersPanel() {
@@ -396,21 +385,19 @@ public class ManagerPanel extends JFrame {
 		panel.setBounds(6, 69, 1030, 84);
 		suppliersPanel.add(panel);
 
-		String[] actionNames = {"Add Supplier", "Remove Supplier", "Edit Supplier Details"};
+		String[] actionNames = { "Add Supplier", "Remove Supplier", "Edit Supplier Details" };
 		JComboBox comboBox = new JComboBox(actionNames);
 		comboBox.setBounds(833, 23, 166, 40);
 		panel.add(comboBox);
 
 		JPanel supplierMainPanel = new JPanel();
 		supplierMainPanel.setBounds(6, 192, 1012, 496);
- 		supplierMainPanel.setLayout(null);
+		supplierMainPanel.setLayout(null);
 		suppliersPanel.add(supplierMainPanel);
-
-
 
 //		public Supplier(String supplierID, String supplierPIN, String supplierFName, String supplierLName,
 //				String supplierCompanyName, String supplierContactNo, String supplierEmail, String supplierLocation) {
-		Object[] columns = {"ID", "First Name", "Last Name", "Company Name", "Contact No", "Email", "Location"};
+		Object[] columns = { "ID", "First Name", "Last Name", "Company Name", "Contact No", "Email", "Location" };
 		model.setColumnIdentifiers(columns);
 
 		ActionListener actionListener = new ActionListener() {
@@ -418,7 +405,7 @@ public class ManagerPanel extends JFrame {
 			public void actionPerformed(ActionEvent actionEvent) {
 				int selectedAction = comboBox.getSelectedIndex();
 
-				switch(selectedAction) {
+				switch (selectedAction) {
 				case 0:
 
 					suppliersPanel.removeAll();
@@ -443,8 +430,6 @@ public class ManagerPanel extends JFrame {
 
 		comboBox.addActionListener(actionListener);
 
-
-
 	}
 
 	private void reportPanel() {
@@ -467,7 +452,7 @@ public class ManagerPanel extends JFrame {
 //		productsPanel();
 
 		addProductPanel = new JPanel();
- 		parentPanel.add(addProductPanel, "name_379884347646550");
+		parentPanel.add(addProductPanel, "name_379884347646550");
 		addProductPanel.setVisible(true);
 		addProductPanel.setBackground(new Color(0, 128, 128));
 		addProductPanel.setLayout(null);
@@ -536,7 +521,6 @@ public class ManagerPanel extends JFrame {
 		addProductPanel.add(productIdField);
 		productIdField.setColumns(10);
 
-
 		productNameField = new JTextField();
 		productNameField.setColumns(10);
 		productNameField.setBounds(265, 275, 256, 31);
@@ -547,12 +531,10 @@ public class ManagerPanel extends JFrame {
 		productPriceField.setBounds(265, 329, 93, 31);
 		addProductPanel.add(productPriceField);
 
-
-
 		JComboBox productQuantityBox = new JComboBox();
-				for (int i=0; i<=99; i++) {
-					productQuantityBox.addItem(new Integer(i));
-			}
+		for (int i = 0; i <= 99; i++) {
+			productQuantityBox.addItem(new Integer(i));
+		}
 
 		productQuantityBox.setBounds(265, 394, 93, 27);
 		addProductPanel.add(productQuantityBox);
@@ -563,56 +545,62 @@ public class ManagerPanel extends JFrame {
 
 		JButton btnSubmit = new JButton("Submit");
 
-
+		Object[] row = new Object[4];
 		btnSubmit.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+
 //					 (Product productID, Product productName, Product productPrice,
 //				Product productCategory, Product productQuantity)
-				String productID = productIdField.getText();
-				String productName = productNameField.getText();
-				double productPrice = Double.parseDouble(productPriceField.getText());
-//				String productCategory = (String) productCategoryBox.getSelectedItem();
-				int productQuantity = (int)productQuantityBox.getSelectedItem();
+//				System.out.println();
+//				String productID = productIdField.getText();
+//				String productName = productNameField.getText();
+//				double productPrice = Double.parseDouble(productPriceField.getText());
+////				String productCategory = (String) productCategoryBox.getSelectedItem();
+//				int productQuantity = (int)productQuantityBox.getSelectedItem();
 
-				addProduct.addItems(productID, productName, productPrice, productQuantity);
+//				addProduct.addItems(productIdField.getText(), productNameField.getText(), productPriceField.getText(), productQuantityBox.getSelectedIndex());
+
+
 				parentPanel.removeAll();
 				productsPanel();
+				row[0] = productIdField.getText();
+				row[1] = productNameField.getText();
+				row[2] = productPriceField.getText();
+				row[3] = productQuantityBox.getSelectedItem();
+				model.addRow(row);
 				parentPanel.repaint();
 				parentPanel.revalidate();
- 			}
+			}
 		});
 
-
-
-		btnSubmit.setBounds(120, 582, 131, 44);
+		btnSubmit.setBounds(140, 579, 131, 44);
 		addProductPanel.add(btnSubmit);
 		addProductPanel.setVisible(false);
 	}
+
 	private void modifyProductPanel() {
 
-
 	}
+
 	private void removeProductPanel() {
 
 //		Retrieve items - temporary variable
-		String[] items = {"Apple", "Banana", "Kiwi"};
+		String[] items = { "Apple", "Banana", "Kiwi" };
 		JComboBox combo = new JComboBox(items);
-		String[] options = {"Cancel", "Remove"};
+		String[] options = { "Cancel", "Remove" };
 		String title = "Remove Item";
 		int selection = JOptionPane.showOptionDialog(null, combo, title, JOptionPane.DEFAULT_OPTION,
 				JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
-
-
 	}
 
 	private void addSupplier() {
 
 		addSupplierPanel = new JPanel();
- 		parentPanel.add(addSupplierPanel, "name_379884347646550");
- 		addSupplierPanel.setVisible(true);
- 		addSupplierPanel.setBackground(new Color(0, 128, 128));
- 		addSupplierPanel.setLayout(null);
+		parentPanel.add(addSupplierPanel, "name_379884347646550");
+		addSupplierPanel.setVisible(true);
+		addSupplierPanel.setBackground(new Color(0, 128, 128));
+		addSupplierPanel.setLayout(null);
 
 		JLabel supplierID = new JLabel("Supplier ID");
 		supplierID.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
@@ -695,9 +683,23 @@ public class ManagerPanel extends JFrame {
 		addSupplierPanel.add(locationField);
 
 		JButton submitBtn = new JButton("Submit");
+
+
 		submitBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				String supplierId = supplierIDField.getText();
+				String supplierPin = supplierPinField.getText();
+				String supplierFirstName = supplierFirstNameField.getText();
+				String supplierLastName = supplierLastNameField.getText();
+				String companyName = companyNameFiel.getText();
+				String contactNo = contactNoField.getText();
+				String email = emailField.getText();
+				String loc = locationField.getText();
+
+				supplier = new Supplier(supplierId, supplierPin, supplierFirstName, supplierLastName, companyName,
+						contactNo, email, loc);
+
 				addSupplierPanel.setVisible(false);
 				parentPanel.removeAll();
 				suppliersPanel();
@@ -718,7 +720,7 @@ public class ManagerPanel extends JFrame {
 		addSupplierPanel.add(lblAddSupplierDetails);
 		addSupplierPanel.setVisible(false);
 
-		cancelBtn.addActionListener(new ActionListener(){
+		cancelBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				addSupplierPanel.setVisible(false);
@@ -729,7 +731,6 @@ public class ManagerPanel extends JFrame {
 			}
 		});
 	}
-
 
 	private void viewSupplier() {
 		viewSupplier = new JPanel();
