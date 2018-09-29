@@ -28,8 +28,7 @@ import control.AddProductController;
 
 public class ManagerPanel extends JFrame {
 
-	private JPanel contentPane, parentPanel, sideBarPanel, dashboardPanel, todaySalesPanel, productsPanel,
-			customersPanel, suppliersPanel, salesPanel, reportPanel, employeesPanel, systemPanel, addProductPanel, addSupplierPanel, viewSupplier;
+	private JPanel contentPane, parentPanel, sideBarPanel, dashboardPanel, todaySalesPanel, productsPanel, suppliersPanel, salesPanel, reportPanel, systemPanel, addProductPanel, addSupplierPanel, viewSupplier;
  	private JTextField productIdField;
 	private JTextField productNameField;
 	private JTextField productPriceField;
@@ -64,12 +63,12 @@ public class ManagerPanel extends JFrame {
 		sideBarPanel();
 		dashboardPanel();
 		productsPanel();
-		customersPanel();
+//		customersPanel();
 		salesPanel();
 		suppliersPanel();
 		reportPanel();
-		employeesPanel();
-		systemPanel();
+//		employeesPanel();
+//		systemPanel();
 		addSupplier();
 		viewSupplier();
 
@@ -113,7 +112,7 @@ public class ManagerPanel extends JFrame {
 		productsLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		productsLabel.setForeground(Color.WHITE);
 		productsLabel.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 20));
-		productsLabel.setBounds(0, 217, 174, 37);
+		productsLabel.setBounds(0, 230, 174, 37);
 		sideBarPanel.add(productsLabel);
 		productsLabel.addMouseListener(new MouseAdapter() {
 			@Override
@@ -131,7 +130,7 @@ public class ManagerPanel extends JFrame {
 		salesLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		salesLabel.setForeground(new Color(255, 255, 255));
 		salesLabel.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 20));
-		salesLabel.setBounds(0, 290, 174, 37);
+		salesLabel.setBounds(0, 326, 174, 37);
 		sideBarPanel.add(salesLabel);
 		salesLabel.addMouseListener(new MouseAdapter() {
 			@Override
@@ -143,27 +142,11 @@ public class ManagerPanel extends JFrame {
 			}
 		});
 
-		JLabel customersLabel = new JLabel("CUSTOMERS", SwingConstants.CENTER);
-		customersLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		customersLabel.setForeground(Color.WHITE);
-		customersLabel.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 20));
-		customersLabel.setBounds(0, 371, 174, 37);
-		sideBarPanel.add(customersLabel);
-		customersLabel.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				parentPanel.removeAll();
-				parentPanel.add(customersPanel);
-				parentPanel.repaint();
-				parentPanel.revalidate();
-			}
-		});
-
 		JLabel supplierLabel = new JLabel("SUPPLIER", SwingConstants.CENTER);
 		supplierLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		supplierLabel.setForeground(Color.WHITE);
 		supplierLabel.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 20));
-		supplierLabel.setBounds(0, 448, 174, 37);
+		supplierLabel.setBounds(0, 437, 174, 37);
 		sideBarPanel.add(supplierLabel);
 		supplierLabel.addMouseListener(new MouseAdapter() {
 			@Override
@@ -178,44 +161,19 @@ public class ManagerPanel extends JFrame {
 		JLabel reportLabel = new JLabel("REPORT", SwingConstants.CENTER);
 		reportLabel.setForeground(Color.WHITE);
 		reportLabel.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 20));
-		reportLabel.setBounds(0, 525, 174, 37);
+		reportLabel.setBounds(0, 543, 174, 37);
 		sideBarPanel.add(reportLabel);
+
+		JLabel logoutLbl = new JLabel("LOGOUT", SwingConstants.CENTER);
+		logoutLbl.setForeground(Color.WHITE);
+		logoutLbl.setFont(new Font("Microsoft Sans Serif", Font.BOLD, 20));
+		logoutLbl.setBounds(-6, 691, 174, 37);
+		sideBarPanel.add(logoutLbl);
 		reportLabel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				parentPanel.removeAll();
 				parentPanel.add(reportPanel);
-				parentPanel.repaint();
-				parentPanel.revalidate();
-			}
-		});
-
-		JLabel employeesLabel = new JLabel("EMPLOYEES", SwingConstants.CENTER);
-		employeesLabel.setForeground(Color.WHITE);
-		employeesLabel.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 20));
-		employeesLabel.setBounds(0, 602, 174, 37);
-		sideBarPanel.add(employeesLabel);
-		employeesLabel.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				parentPanel.removeAll();
-				parentPanel.add(employeesPanel);
-				parentPanel.repaint();
-				parentPanel.revalidate();
-			}
-		});
-
-		JLabel systemLabel = new JLabel("SYSTEM", SwingConstants.CENTER);
-		systemLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		systemLabel.setForeground(Color.WHITE);
-		systemLabel.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 20));
-		systemLabel.setBounds(0, 679, 174, 37);
-		sideBarPanel.add(systemLabel);
-		systemLabel.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				parentPanel.removeAll();
-				parentPanel.add(systemPanel);
 				parentPanel.repaint();
 				parentPanel.revalidate();
 			}
@@ -409,12 +367,9 @@ public class ManagerPanel extends JFrame {
 
 	}
 
-	private void customersPanel() {
-		customersPanel = new JPanel();
-		customersPanel.setBackground(Color.BLACK);
-		parentPanel.add(customersPanel);
-
-	}
+//	private void customersPanel() {
+//
+//	}
 
 	private void salesPanel() {
 		salesPanel = new JPanel();
@@ -498,18 +453,15 @@ public class ManagerPanel extends JFrame {
 		parentPanel.add(suppliersPanel);
 	}
 
-	private void employeesPanel() {
-		employeesPanel = new JPanel();
-		employeesPanel.setBackground(Color.ORANGE);
-		parentPanel.add(employeesPanel);
+//	private void employeesPanel() {
+//
+//	}
 
-	}
-
-	private void systemPanel() {
-		systemPanel = new JPanel();
-		systemPanel.setBackground(Color.YELLOW);
-
-	}
+//	private void systemPanel() {
+//		systemPanel = new JPanel();
+//		systemPanel.setBackground(Color.YELLOW);
+//
+//	}
 
 	private void addProductPanel() {
 //		productsPanel();
@@ -783,8 +735,4 @@ public class ManagerPanel extends JFrame {
 		viewSupplier = new JPanel();
 		viewSupplier.setVisible(true);
 	}
-
-
-
-
 }
