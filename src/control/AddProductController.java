@@ -3,7 +3,13 @@ package control;
 import model.system.Product;
 import view.ManagerPanel;
 
-public class AddProductController {
+public class AddProductController   {
+
+
+	private String productName;
+	private int stockQty;
+	private String productID;
+	private double productPrice;
 
 	private Product productModel;
 	private ManagerPanel view;
@@ -18,7 +24,8 @@ public class AddProductController {
 			Product newProduct = new Product(productID, productName, productPrice, productQuantity);
 			products = addProduct(products, newProduct);
 
-			printProduct(newProduct);
+ 			printProduct(newProduct);
+ 			newProduct.toString();
 		} catch (NumberFormatException e) {
 			System.err.println("Incorrect Format!");
 		}
@@ -52,4 +59,10 @@ public class AddProductController {
 		return productModel.getStockQty();
 	}
 
+
+	@Override
+	public String toString() {
+		return String.format("Product ID: %s\r\nProduct Name: %s\r\nProduct Price: %s\r\nProduct Stock: %d\r\n",
+				productID, productName, productPrice, stockQty);
+	}
 }

@@ -322,7 +322,7 @@ public class ManagerPanel extends JFrame {
 		table.setModel(model);
 		table.setBackground(Color.LIGHT_GRAY);
 		table.setForeground(Color.black);
-		Font font = new Font("", 1, 22);
+		Font font = new Font("", 1, 15);
 		table.setFont(font);
 		table.setRowHeight(30);
 
@@ -559,12 +559,14 @@ public class ManagerPanel extends JFrame {
 ////				String productCategory = (String) productCategoryBox.getSelectedItem();
 //				int productQuantity = (int)productQuantityBox.getSelectedItem();
 
-//				addProduct.addItems(productIdField.getText(), productNameField.getText(), productPriceField.getText(), productQuantityBox.getSelectedIndex());
+				addProduct.addItems(productIdField.getText(), productNameField.getText(),
+						Double.parseDouble(productPriceField.getText()), productQuantityBox.getSelectedIndex());
 
 
 				parentPanel.removeAll();
 				productsPanel();
 				row[0] = productIdField.getText();
+//				row[0] = addProduct.getProductName();
 				row[1] = productNameField.getText();
 				row[2] = productPriceField.getText();
 				row[3] = productQuantityBox.getSelectedItem();
