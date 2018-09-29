@@ -25,7 +25,7 @@ public class INeedAssistanceLogin extends JFrame {
 	private JButton cancelBtn, loginBtn;
 	private JTextField textField;
 	private JPasswordField passwordField;
-	private EmployeeLoginController employeeLoginController = new EmployeeLoginController(this);
+//	private EmployeeLoginController employeeLoginController = new EmployeeLoginController(this);
 
 	public INeedAssistanceLogin() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -95,7 +95,7 @@ public class INeedAssistanceLogin extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String id = textField.getText();
 				char[] pw = passwordField.getPassword();
-				employeeLoginController.checkCredentials(id, pw);
+//				employeeLoginController.checkCredentials(id, pw);
 			}
 		});
 		loginBtn.setBounds(310, 200, 75, 35);

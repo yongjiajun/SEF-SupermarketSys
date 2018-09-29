@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRootPane;
 import javax.swing.border.EmptyBorder;
@@ -100,8 +101,8 @@ public class WelcomeScreen extends JFrame {
 		requireAssistanceBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				INeedAssistanceLogin inaLogin = new INeedAssistanceLogin();
-				inaLogin.setVisible(true);
+				JOptionPane.showConfirmDialog(null, "An employee is on their way to assist you.", "Assistance Required",
+						JOptionPane.PLAIN_MESSAGE, JOptionPane.PLAIN_MESSAGE);
 			}
 		});
 		requireAssistanceBtn.setBackground(new Color(102, 102, 102));

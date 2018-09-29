@@ -5,16 +5,13 @@ import view.INeedAssistanceLogin;
 
 public class EmployeeLoginController {
 
-	private INeedAssistanceLogin view;
 	private AccountManager accountManager;
-	private boolean loginPass = false;
 
-	public EmployeeLoginController(INeedAssistanceLogin view) {
-		this.view = view;
+	public EmployeeLoginController() {
 		accountManager = new AccountManager();
 	}
 
-	public void checkCredentials(String id, char[] pass) {
+	public boolean checkCredentials(String id, char[] pass) {
 		try {
 			id = id.toUpperCase();
 			switch (id.charAt(0)) {
@@ -23,8 +20,7 @@ public class EmployeeLoginController {
 				if (accountManager.getManager(id) != null) {
 					if (accountManager.getManager(id).getUserPIN().equals(new String(pass))) {
 						// Login Successful. Change view
-						loginPass = true;
-						view.dispose();
+						return true;
 					}
 				}
 	
@@ -34,8 +30,7 @@ public class EmployeeLoginController {
 				if (accountManager.getSalesStaff(id) != null) {
 					if (accountManager.getSalesStaff(id).getUserPIN().equals(new String(pass))) {
 						// Login Successful. Change view
-						loginPass = true;
-						view.dispose();
+						return true;
 					}
 				}
 				break;
@@ -43,9 +38,7 @@ public class EmployeeLoginController {
 		} catch (IndexOutOfBoundsException e) {
 			System.err.println("Must fill out the form");
 		}
-
-		view.setErrorMessageVisible(loginPass);
-		
+		return false;
 	}
 
 }

@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JRootPane;
@@ -59,7 +60,6 @@ public class LoginScreen extends JFrame {
 		idLabel.setBounds(450, 215, 25, 50);
 		mainPanel.add(idLabel);
 
-
 		JButton loginBtn = new JButton("Login");
 		JRootPane rootPane = contentPane.getRootPane();
 		rootPane.setDefaultButton(loginBtn);
@@ -96,12 +96,11 @@ public class LoginScreen extends JFrame {
 		dateTimePanel.add(loginTitle);
 
 		String date = new SimpleDateFormat("[dd/MM/yyyy] [hh:mm:ss]").format(new Date());
-        JLabel labelTime = new JLabel(date);
-        labelTime.setFont(new Font("Lucida Grande", Font.BOLD, 16));
-        labelTime.setForeground(Color.WHITE);
-        labelTime.setBounds(975, 9, 220, 30);
- 		dateTimePanel.add(labelTime);
-
+		JLabel labelTime = new JLabel(date);
+		labelTime.setFont(new Font("Lucida Grande", Font.BOLD, 16));
+		labelTime.setForeground(Color.WHITE);
+		labelTime.setBounds(975, 9, 220, 30);
+		dateTimePanel.add(labelTime);
 
 		JPanel assisstancePanel = new JPanel();
 		assisstancePanel.setForeground(new Color(102, 102, 102));
@@ -114,8 +113,8 @@ public class LoginScreen extends JFrame {
 		requireAssistanceBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				INeedAssistanceLogin inaLogin = new INeedAssistanceLogin();
-				inaLogin.setVisible(true);
+				JOptionPane.showConfirmDialog(null, "An employee is on their way to assist you.", "Assistance Required",
+						JOptionPane.PLAIN_MESSAGE, JOptionPane.PLAIN_MESSAGE);
 			}
 		});
 		requireAssistanceBtn.setBackground(new Color(102, 102, 102));
@@ -127,7 +126,7 @@ public class LoginScreen extends JFrame {
 		backBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
- 				WelcomeScreen welcomeScreen = new WelcomeScreen();
+				WelcomeScreen welcomeScreen = new WelcomeScreen();
 				welcomeScreen.setVisible(true);
 				dispose();
 				validate();

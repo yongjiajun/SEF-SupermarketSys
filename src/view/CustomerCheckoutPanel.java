@@ -7,19 +7,22 @@ import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JSeparator;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+
+import control.EmployeeLoginController;
 
 public class CustomerCheckoutPanel extends JFrame {
 
-	private JPanel contentPane;
-
+	private JPanel contentPane, mainPanel;
+	private JButton logoutBtn, finishAndPayBtn, removeItemBtn;
 
 	public CustomerCheckoutPanel() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -29,7 +32,7 @@ public class CustomerCheckoutPanel extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JPanel mainPanel = new JPanel();
+		mainPanel = new JPanel();
 		mainPanel.setBackground(new Color(30, 144, 255));
 		mainPanel.setBounds(0, 0, 1200, 750);
 		contentPane.add(mainPanel);
@@ -40,21 +43,6 @@ public class CustomerCheckoutPanel extends JFrame {
 		grocerySystemTitle.setFont(new Font("Lucida Grande", Font.BOLD, 25));
 		grocerySystemTitle.setBounds(806, 96, 188, 70);
 		mainPanel.add(grocerySystemTitle);
-
-		JButton selectItem = new JButton("Select Item");
-		selectItem.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-				LoginScreen login = new LoginScreen();
-				login.setVisible(true);
-				validate();
-				revalidate();
-
-			}
-		});
-		selectItem.setBounds(751, 390, 298, 43);
-		mainPanel.add(selectItem);
 
 		JPanel dateTimePanel = new JPanel();
 		dateTimePanel.setBackground(new Color(102, 102, 102));
@@ -69,7 +57,8 @@ public class CustomerCheckoutPanel extends JFrame {
 		welcomeLbl.setBounds(18, 8, 234, 30);
 		dateTimePanel.add(welcomeLbl);
 
-		// Need to fix so the time changes value overtime. Integrate ClockPanel if you know how
+		// Need to fix so the time changes value overtime. Integrate ClockPanel if you
+		// know how
 		String date = new SimpleDateFormat("[dd/MM/yyyy] [hh:mm:ss]").format(new Date());
 		JLabel labelTime = new JLabel(date);
 		labelTime.setFont(new Font("Lucida Grande", Font.BOLD, 16));
@@ -88,10 +77,42 @@ public class CustomerCheckoutPanel extends JFrame {
 		requireAssistanceBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				INeedAssistanceLogin inaLogin = new INeedAssistanceLogin();
-				inaLogin.setVisible(true);
+//				INeedAssistanceLogin inaLogin = new INeedAssistanceLogin();
+//				inaLogin.setVisible(true);
+
+				EmployeeLoginController employeeLoginController = new EmployeeLoginController();
+
+				JLabel idLabel = new JLabel("Username:");
+				JTextField id = new JTextField();
+
+				JLabel pwLabel = new JLabel("Password:");
+				JPasswordField pw = new JPasswordField();
+
+				Object[] array = {idLabel, id, pwLabel, pw };
+
+				int response;
+
+				do {
+					response = JOptionPane.showConfirmDialog(null, array, "Login", JOptionPane.OK_CANCEL_OPTION,
+							JOptionPane.PLAIN_MESSAGE);
+
+					if (response == JOptionPane.YES_OPTION) {
+						if (employeeLoginController.checkCredentials(id.getText(), pw.getPassword())) {
+							employeeLogin();
+							break;
+						}
+
+						else {
+							JOptionPane.showMessageDialog(null, "Login Failed. Please try again.");
+							id.setText("");
+							pw.setText("");
+						}
+					}
+
+				} while (response != JOptionPane.CANCEL_OPTION && response != JOptionPane.CLOSED_OPTION);
 			}
 		});
+
 		requireAssistanceBtn.setBackground(new Color(102, 102, 102));
 		requireAssistanceBtn.setOpaque(true);
 		requireAssistanceBtn.setBounds(970, 7, 219, 38);
@@ -101,8 +122,10 @@ public class CustomerCheckoutPanel extends JFrame {
 		cancelOrderBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int cancelResp = JOptionPane.showConfirmDialog(null, "Are you sure you want to cancel your order?", "Cancel Order", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE);
+				int cancelResp = JOptionPane.showConfirmDialog(null, "Are you sure you want to cancel your order?",
+						"Cancel Order", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE);
 				if (cancelResp == JOptionPane.YES_OPTION) {
+					employeeLogout();
 					WelcomeScreen welcomeScreen = new WelcomeScreen();
 					welcomeScreen.setVisible(true);
 					dispose();
@@ -114,17 +137,43 @@ public class CustomerCheckoutPanel extends JFrame {
 		cancelOrderBtn.setBounds(720, 7, 187, 38);
 		assisstancePanel.add(cancelOrderBtn);
 
-		JPanel imagePanel = new JPanel();
-		imagePanel.setBounds(66, 90, 471, 158);
-		mainPanel.add(imagePanel);
+		logoutBtn = new JButton("Logout");
+		logoutBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int cancelResp = JOptionPane.showConfirmDialog(null, "Are you sure you want to logout?", "Logout",
+						JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE);
+				if (cancelResp == JOptionPane.YES_OPTION) {
+					employeeLogout();
+				}
+			}
+		});
+		logoutBtn.setOpaque(true);
+		logoutBtn.setBackground(new Color(102, 102, 102));
+		logoutBtn.setBounds(18, 7, 187, 38);
+		logoutBtn.setVisible(false);
+		assisstancePanel.add(logoutBtn);
+
+		JButton selectItem = new JButton("Select Item");
+		selectItem.setBounds(751, 390, 298, 43);
+		mainPanel.add(selectItem);
 
 		JButton enterItemBtn = new JButton("Enter Item");
 		enterItemBtn.setBounds(751, 460, 298, 43);
 		mainPanel.add(enterItemBtn);
 
-		JButton btnFinishAndPay = new JButton("Finish and Pay");
-		btnFinishAndPay.setBounds(751, 539, 298, 43);
-		mainPanel.add(btnFinishAndPay);
+		finishAndPayBtn = new JButton("Finish and Pay");
+		finishAndPayBtn.setBounds(751, 539, 298, 43);
+		mainPanel.add(finishAndPayBtn);
+		
+		removeItemBtn = new JButton("Remove Item");
+		removeItemBtn.setBounds(751, 539, 298, 43);
+		removeItemBtn.setVisible(false);
+		mainPanel.add(removeItemBtn);
+		
+		JPanel imagePanel = new JPanel();
+		imagePanel.setBounds(66, 90, 471, 158);
+		mainPanel.add(imagePanel);
 
 		JPanel itemListPanel = new JPanel();
 		itemListPanel.setBounds(66, 283, 471, 357);
@@ -141,4 +190,19 @@ public class CustomerCheckoutPanel extends JFrame {
 		separator.setBackground(Color.BLACK);
 		separator.setForeground(Color.BLACK);
 	}
+
+	public void employeeLogin() {
+		logoutBtn.setVisible(true);
+		finishAndPayBtn.setVisible(false);
+		removeItemBtn.setVisible(true);
+		mainPanel.setBackground(new Color(25, 150, 125));
+	}
+
+	public void employeeLogout() {
+		logoutBtn.setVisible(false);
+		removeItemBtn.setVisible(false);
+		finishAndPayBtn.setVisible(true);
+		mainPanel.setBackground(new Color(30, 144, 255));
+	}
+
 }
