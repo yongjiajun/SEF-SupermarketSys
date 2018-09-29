@@ -417,7 +417,9 @@ public class ManagerPanel extends JFrame {
 	}
 
 	private void salesPanel() {
-
+		salesPanel = new JPanel();
+		salesPanel.setBackground(Color.GREEN);
+		parentPanel.add(salesPanel);
 	}
 
 	private void suppliersPanel() {
