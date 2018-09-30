@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -97,12 +98,12 @@ public class ManagerPanel extends JFrame {
 		lblNewLabel.setIcon(new ImageIcon(ManagerPanel.class.getResource("/images/Sef4.jpg")));
 		lblNewLabel.setBounds(50, 28, 74, 72);
 		sideBarPanel.add(lblNewLabel);
-
+			
 		JLabel dashboardLabel = new JLabel("DASHBOARD", SwingConstants.CENTER);
 		dashboardLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		dashboardLabel.setForeground(Color.WHITE);
 		dashboardLabel.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 20));
-		dashboardLabel.setBounds(0, 140, 174, 37);
+		dashboardLabel.setBounds(0, 163, 164, 37);
 		sideBarPanel.add(dashboardLabel);
 		dashboardLabel.addMouseListener(new MouseAdapter() {
 			@Override
@@ -118,7 +119,7 @@ public class ManagerPanel extends JFrame {
 		productsLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		productsLabel.setForeground(Color.WHITE);
 		productsLabel.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 20));
-		productsLabel.setBounds(0, 230, 174, 37);
+		productsLabel.setBounds(0, 263, 164, 37);
 		sideBarPanel.add(productsLabel);
 		productsLabel.addMouseListener(new MouseAdapter() {
 			@Override
@@ -136,7 +137,7 @@ public class ManagerPanel extends JFrame {
 		salesLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		salesLabel.setForeground(new Color(255, 255, 255));
 		salesLabel.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 20));
-		salesLabel.setBounds(0, 326, 174, 37);
+		salesLabel.setBounds(0, 363, 164, 37);
 		sideBarPanel.add(salesLabel);
 		salesLabel.addMouseListener(new MouseAdapter() {
 			@Override
@@ -152,7 +153,7 @@ public class ManagerPanel extends JFrame {
 		supplierLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		supplierLabel.setForeground(Color.WHITE);
 		supplierLabel.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 20));
-		supplierLabel.setBounds(0, 437, 174, 37);
+		supplierLabel.setBounds(0, 463, 164, 37);
 		sideBarPanel.add(supplierLabel);
 		supplierLabel.addMouseListener(new MouseAdapter() {
 			@Override
@@ -165,15 +166,33 @@ public class ManagerPanel extends JFrame {
 		});
 
 		JLabel reportLabel = new JLabel("REPORT", SwingConstants.CENTER);
+		reportLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		reportLabel.setForeground(Color.WHITE);
 		reportLabel.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 20));
-		reportLabel.setBounds(0, 543, 174, 37);
+		reportLabel.setBounds(0, 563, 164, 37);
 		sideBarPanel.add(reportLabel);
 
 		JLabel logoutLbl = new JLabel("LOGOUT", SwingConstants.CENTER);
+		logoutLbl.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		logoutLbl.setForeground(Color.WHITE);
 		logoutLbl.setFont(new Font("Microsoft Sans Serif", Font.BOLD, 20));
-		logoutLbl.setBounds(-6, 691, 174, 37);
+		logoutLbl.setBounds(0, 663, 164, 37);
+		logoutLbl.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int cancelResp = JOptionPane.showConfirmDialog(null, "Are you sure you want to logout?", "Logout",
+						JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE);
+				if (cancelResp == JOptionPane.YES_OPTION) {
+					WelcomeScreen welcomeScreen = new WelcomeScreen();
+					welcomeScreen.setVisible(true);
+					dispose();
+					validate();
+					revalidate();
+				}
+			}
+		});
+		
+		
 		sideBarPanel.add(logoutLbl);
 		salesPanel = new JPanel();
 		salesPanel.setBounds(0, 0, 1036, 750);
@@ -322,7 +341,7 @@ public class ManagerPanel extends JFrame {
 		table.setModel(model);
 		table.setBackground(Color.LIGHT_GRAY);
 		table.setForeground(Color.black);
-		Font font = new Font("", 1, 15);
+		Font font = new Font("", 1, 22);
 		table.setFont(font);
 		table.setRowHeight(30);
 
@@ -559,14 +578,12 @@ public class ManagerPanel extends JFrame {
 ////				String productCategory = (String) productCategoryBox.getSelectedItem();
 //				int productQuantity = (int)productQuantityBox.getSelectedItem();
 
-				addProduct.addItems(productIdField.getText(), productNameField.getText(),
-						Double.parseDouble(productPriceField.getText()), productQuantityBox.getSelectedIndex());
+//				addProduct.addItems(productIdField.getText(), productNameField.getText(), productPriceField.getText(), productQuantityBox.getSelectedIndex());
 
 
 				parentPanel.removeAll();
 				productsPanel();
 				row[0] = productIdField.getText();
-//				row[0] = addProduct.getProductName();
 				row[1] = productNameField.getText();
 				row[2] = productPriceField.getText();
 				row[3] = productQuantityBox.getSelectedItem();

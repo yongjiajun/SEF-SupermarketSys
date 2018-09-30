@@ -22,7 +22,7 @@ import control.EmployeeLoginController;
 public class CustomerCheckoutPanel extends JFrame {
 
 	private JPanel contentPane, mainPanel;
-	private JButton logoutBtn, finishAndPayBtn, removeItemBtn;
+	private JButton logoutBtn, finishAndPayBtn, removeItemBtn, requireAssistanceBtn;
 
 	public CustomerCheckoutPanel() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -73,7 +73,7 @@ public class CustomerCheckoutPanel extends JFrame {
 		mainPanel.add(assisstancePanel);
 		assisstancePanel.setLayout(null);
 
-		JButton requireAssistanceBtn = new JButton("I NEED ASSISTANCE");
+		requireAssistanceBtn = new JButton("I NEED ASSISTANCE");
 		requireAssistanceBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -195,6 +195,7 @@ public class CustomerCheckoutPanel extends JFrame {
 		logoutBtn.setVisible(true);
 		finishAndPayBtn.setVisible(false);
 		removeItemBtn.setVisible(true);
+		requireAssistanceBtn.setVisible(false);
 		mainPanel.setBackground(new Color(25, 150, 125));
 	}
 
@@ -202,6 +203,7 @@ public class CustomerCheckoutPanel extends JFrame {
 		logoutBtn.setVisible(false);
 		removeItemBtn.setVisible(false);
 		finishAndPayBtn.setVisible(true);
+		requireAssistanceBtn.setVisible(true);
 		mainPanel.setBackground(new Color(30, 144, 255));
 	}
 
