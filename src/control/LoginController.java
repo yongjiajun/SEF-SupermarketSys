@@ -8,15 +8,18 @@ import model.system.AccountManager;
 import view.CustomerCheckoutPanel;
 import view.LoginScreen;
 import view.ManagerPanel;
+import view.WelcomeScreen;
 
 public class LoginController {
 
 	private LoginScreen view;
 	private AccountManager accountManager;
-	private Boolean loginPass = false;
+	private Boolean loginPass;
+	private WelcomeScreen welcomeScreen;
 
 	public void checkCredentials(String id, char[] pass) {
 		try {
+			loginPass = false;
 			id = id.toUpperCase();
 			switch (id.charAt(0)) {
 			// Manager Login
@@ -26,8 +29,9 @@ public class LoginController {
 						loginPass = true;
 						Manager manager = accountManager.getManager(id);
 						ManagerPanel managerPanel = new ManagerPanel(manager);
+						managerPanel.setWelcomeScreen(welcomeScreen);
 						managerPanel.setVisible(true);
-						view.dispose();
+						view.setVisible(false);;
 					}
 				}
 	
@@ -48,9 +52,10 @@ public class LoginController {
 					if (accountManager.getCustomer(id).getUserPIN().equals(new String(pass))) {
 						loginPass = true;
 						Customer customer = accountManager.getCustomer(id);
-						CustomerCheckoutPanel customerCheckOutPanel = new CustomerCheckoutPanel(customer);
-						customerCheckOutPanel.setVisible(true);
-						view.dispose();
+						CustomerCheckoutPanel customerCheckoutPanel = new CustomerCheckoutPanel(customer);
+						customerCheckoutPanel.setWelcomeScreen(welcomeScreen);
+						customerCheckoutPanel.setVisible(true);
+						view.setVisible(false);
 					}
 				}
 				break;
@@ -69,6 +74,7 @@ public class LoginController {
 			System.err.println("Must fill out the form");
 		}
 		
+		view.clearField();
 		view.setErrorMessageVisible(loginPass);
 		
 	}
@@ -79,6 +85,10 @@ public class LoginController {
 	
 	public void setView(LoginScreen view) {
 		this.view = view;
+	}
+	
+	public void setWelcomeScreen(WelcomeScreen welcomeScreen) {
+		this.welcomeScreen = welcomeScreen;
 	}
 
 }

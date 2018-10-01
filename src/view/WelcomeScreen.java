@@ -15,6 +15,8 @@ import javax.swing.JPanel;
 import javax.swing.JRootPane;
 import javax.swing.border.EmptyBorder;
 
+import control.LoginController;
+
 public class WelcomeScreen extends JFrame {
 
 	private JPanel contentPane;
@@ -27,6 +29,8 @@ public class WelcomeScreen extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		setResizable(false);
+		
 
 		JPanel mainPanel = new JPanel();
 		mainPanel.setBackground(new Color(30, 144, 255));
@@ -53,10 +57,8 @@ public class WelcomeScreen extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				loginScreen.setVisible(true);
-				dispose();
-				validate();
-				revalidate();
-
+				loginScreen.setWelcomeScreen(getWelcomeScreen());
+				getWelcomeScreen().setVisible(false);
 			}
 		});
 		btnStart.setBounds(788, 465, 225, 81);
@@ -118,5 +120,10 @@ public class WelcomeScreen extends JFrame {
 	public void setLoginScreen(LoginScreen loginScreen) {
 		this.loginScreen = loginScreen;
 	}
+	
+	public WelcomeScreen getWelcomeScreen() {
+		return this;
+	}
+	
 
 }

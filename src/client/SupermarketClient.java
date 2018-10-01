@@ -6,6 +6,7 @@ import java.awt.EventQueue;
 import control.LoginController;
 import model.system.AccountManager;
 import model.system.ProductManager;
+import model.system.SalesManager;
 import view.LoginScreen;
 import view.WelcomeScreen;
 

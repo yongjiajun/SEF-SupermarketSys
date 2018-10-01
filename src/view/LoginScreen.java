@@ -18,8 +18,6 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import control.LoginController;
-import model.people.Customer;
-import model.people.User;
 
 public class LoginScreen extends JFrame {
 
@@ -28,6 +26,7 @@ public class LoginScreen extends JFrame {
 	private JPasswordField passwordField;
 	private JLabel errorMessage;
 	private LoginController loginController;
+	private WelcomeScreen welcomeScreen;
 
 	public LoginScreen() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -70,6 +69,7 @@ public class LoginScreen extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String id = textField.getText();
 				char[] pw = passwordField.getPassword();
+				loginController.setWelcomeScreen(welcomeScreen);
 				loginController.checkCredentials(id, pw);
 			}
 		});
@@ -127,11 +127,10 @@ public class LoginScreen extends JFrame {
 		backBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				WelcomeScreen welcomeScreen = new WelcomeScreen();
+				clearField();
+				errorMessage.setVisible(false);
+				getLoginScreen().setVisible(false);
 				welcomeScreen.setVisible(true);
-				dispose();
-				validate();
-				revalidate();
 			}
 		});
 		backBtn.setOpaque(true);
@@ -160,4 +159,21 @@ public class LoginScreen extends JFrame {
 	public void setLoginController(LoginController loginController) {
 		this.loginController = loginController;
 	}
+	
+	public void setWelcomeScreen(WelcomeScreen welcomeScreen) {
+		this.welcomeScreen = welcomeScreen;
+	}
+	
+	public LoginScreen getLoginScreen() {
+		return this;
+	}
+	
+	public void clearField() {
+		textField.setText("");
+		passwordField.setText("");
+	}
+	
+	
+	
+	
 }

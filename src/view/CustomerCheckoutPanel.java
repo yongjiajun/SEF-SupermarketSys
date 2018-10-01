@@ -30,6 +30,7 @@ public class CustomerCheckoutPanel extends JFrame {
 	private JPanel contentPane, mainPanel, enterItemPanel, selectItemPanel;
 	private JButton logoutBtn, finishAndPayBtn, removeItemBtn, requireAssistanceBtn, selectItemBtn, enterItemBtn;
 	private Customer customer;
+	private WelcomeScreen welcomeScreen;
 
 	public CustomerCheckoutPanel(Customer customer) {
 		this.customer = customer;
@@ -40,6 +41,7 @@ public class CustomerCheckoutPanel extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		setResizable(false);
 
 		mainPanel = new JPanel();
 		mainPanel.setBackground(new Color(30, 144, 255));
@@ -138,9 +140,10 @@ public class CustomerCheckoutPanel extends JFrame {
 						"Cancel Order", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE);
 				if (cancelResp == JOptionPane.YES_OPTION) {
 					employeeLogout();
-					WelcomeScreen welcomeScreen = new WelcomeScreen();
 					welcomeScreen.setVisible(true);
 					dispose();
+					validate();
+					revalidate();
 				}
 			}
 		});
@@ -375,6 +378,10 @@ public class CustomerCheckoutPanel extends JFrame {
 			removeItemBtn.setVisible(display);
 			finishAndPayBtn.setVisible(false);
 		}
+	}
+	
+	public void setWelcomeScreen(WelcomeScreen welcomeScreen) {
+		this.welcomeScreen = welcomeScreen;
 	}
 
 	

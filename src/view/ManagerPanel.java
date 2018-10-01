@@ -34,27 +34,19 @@ public class ManagerPanel extends JFrame {
 
 	private JPanel contentPane, parentPanel, sideBarPanel, dashboardPanel, todaySalesPanel, productsPanel,
 			suppliersPanel, salesPanel, reportPanel, systemPanel, addProductPanel, addSupplierPanel, viewSupplier;
-	private JTextField productIdField;
-	private JTextField productNameField;
-	private JTextField productPriceField;
+	private JTextField productIdField, productNameField, productPriceField, supplierIDField, supplierPinField,
+			supplierFirstNameField, supplierLastNameField, companyNameField, contactNoField, emailField, locationField;
 
 	private AddProductController addProduct = new AddProductController(this);
 	private Supplier supplier;
-
 	private JFrame frame;
 	private JTable table;
-	private JTextField supplierIDField;
-	private JTextField supplierPinField;
-	private JTextField supplierFirstNameField;
-	private JTextField supplierLastNameField;
-	private JTextField companyNameFiel;
-	private JTextField contactNoField;
-	private JTextField emailField;
-	private JTextField locationField;
-
+	private WelcomeScreen welcomeScreen;
 	private DefaultTableModel model;
+	private Manager manager;
 
 	public ManagerPanel(Manager manager) {
+		this.manager = manager;
 		setTitle("SEF Assignment");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1200, 750);
@@ -62,6 +54,7 @@ public class ManagerPanel extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		setResizable(false);
 
 		parentPanel = new JPanel();
 		parentPanel.setBounds(164, 0, 1036, 750);
@@ -98,7 +91,7 @@ public class ManagerPanel extends JFrame {
 		lblNewLabel.setIcon(new ImageIcon(ManagerPanel.class.getResource("/images/Sef4.jpg")));
 		lblNewLabel.setBounds(50, 28, 74, 72);
 		sideBarPanel.add(lblNewLabel);
-			
+
 		JLabel dashboardLabel = new JLabel("DASHBOARD", SwingConstants.CENTER);
 		dashboardLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		dashboardLabel.setForeground(Color.WHITE);
@@ -183,7 +176,6 @@ public class ManagerPanel extends JFrame {
 				int cancelResp = JOptionPane.showConfirmDialog(null, "Are you sure you want to logout?", "Logout",
 						JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE);
 				if (cancelResp == JOptionPane.YES_OPTION) {
-					WelcomeScreen welcomeScreen = new WelcomeScreen();
 					welcomeScreen.setVisible(true);
 					dispose();
 					validate();
@@ -191,8 +183,7 @@ public class ManagerPanel extends JFrame {
 				}
 			}
 		});
-		
-		
+
 		sideBarPanel.add(logoutLbl);
 		salesPanel = new JPanel();
 		salesPanel.setBounds(0, 0, 1036, 750);
@@ -222,7 +213,7 @@ public class ManagerPanel extends JFrame {
 		dashboardPanel.add(welcomeDateTimePanel);
 		welcomeDateTimePanel.setLayout(null);
 
-		JLabel welcomeLbl = new JLabel("Welcome, [ManagerName]");
+		JLabel welcomeLbl = new JLabel("Welcome, " + manager.getUserFName());
 		welcomeLbl.setFont(new Font("Lucida Grande", Font.BOLD, 20));
 		welcomeLbl.setForeground(Color.WHITE);
 		welcomeLbl.setBounds(18, 8, 400, 30);
@@ -346,7 +337,7 @@ public class ManagerPanel extends JFrame {
 		table.setRowHeight(30);
 
 		JScrollPane pane = new JScrollPane(table);
-		pane.setBounds(34,253,951,440);
+		pane.setBounds(34, 253, 951, 440);
 		productsPanel.add(pane);
 //		productsPanel.add(table);
 
@@ -580,7 +571,6 @@ public class ManagerPanel extends JFrame {
 
 //				addProduct.addItems(productIdField.getText(), productNameField.getText(), productPriceField.getText(), productQuantityBox.getSelectedIndex());
 
-
 				parentPanel.removeAll();
 				productsPanel();
 				row[0] = productIdField.getText();
@@ -681,10 +671,10 @@ public class ManagerPanel extends JFrame {
 		supplierLastNameField.setBounds(227, 311, 397, 32);
 		addSupplierPanel.add(supplierLastNameField);
 
-		companyNameFiel = new JTextField();
-		companyNameFiel.setColumns(10);
-		companyNameFiel.setBounds(227, 359, 397, 32);
-		addSupplierPanel.add(companyNameFiel);
+		companyNameField = new JTextField();
+		companyNameField.setColumns(10);
+		companyNameField.setBounds(227, 359, 397, 32);
+		addSupplierPanel.add(companyNameField);
 
 		contactNoField = new JTextField();
 		contactNoField.setColumns(10);
@@ -703,7 +693,6 @@ public class ManagerPanel extends JFrame {
 
 		JButton submitBtn = new JButton("Submit");
 
-
 		submitBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -711,7 +700,7 @@ public class ManagerPanel extends JFrame {
 				String supplierPin = supplierPinField.getText();
 				String supplierFirstName = supplierFirstNameField.getText();
 				String supplierLastName = supplierLastNameField.getText();
-				String companyName = companyNameFiel.getText();
+				String companyName = companyNameField.getText();
 				String contactNo = contactNoField.getText();
 				String email = emailField.getText();
 				String loc = locationField.getText();
@@ -754,5 +743,9 @@ public class ManagerPanel extends JFrame {
 	private void viewSupplier() {
 		viewSupplier = new JPanel();
 		viewSupplier.setVisible(true);
+	}
+
+	public void setWelcomeScreen(WelcomeScreen welcomeScreen) {
+		this.welcomeScreen = welcomeScreen;
 	}
 }
