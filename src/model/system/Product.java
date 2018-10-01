@@ -17,6 +17,8 @@ public class Product implements Serializable {
 	private String productID;
 	private double productPrice;
 	private int amountSold;
+	private int totalQtyRestocked = 0;
+	
 
 	// to be overwritten by methods
 	private boolean discountEligible = false;
@@ -149,8 +151,6 @@ public class Product implements Serializable {
 
 	public int getRestockLvl() {
 		return restockLvl;
-		// will be constantly monitored and restocks automatically
-		// restocks will be done by addStockQty(int qty)
 	}
 
 	public void setReorderQty(int qty) {
@@ -159,7 +159,6 @@ public class Product implements Serializable {
 
 	public int getReorderQty() {
 		return reorderQty;
-		// monitored
 	}
 	
 	public int getAmountSold()
@@ -170,7 +169,17 @@ public class Product implements Serializable {
 	public void addAmountSold(int quantity) {
 		this.amountSold += quantity;
 	}
-
+	
+	public int getTotalQtyRestocked() {
+		return totalQtyRestocked;
+	}
+	
+	public void restock()
+	{
+		addStockQty(reorderQty); 
+		totalQtyRestocked += reorderQty;
+	}
+	
 	@Override
 	public String toString() {
 		return String.format("Product ID: %s\r\nProduct Name: %s\r\nProduct Price: %s\r\nProduct Stock: %d\r\n",

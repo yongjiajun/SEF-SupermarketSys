@@ -145,7 +145,11 @@ public class Sale implements Serializable {
 		for (int i = 0; i < lineItems.size(); i++) {
 			Product tempProduct = lineItems.get(i).getProduct();
 			int quantity = lineItems.get(i).getProductQuantity();
-			tempProduct.reduceStockQty(quantity);	
+			tempProduct.reduceStockQty(quantity);
+			if (tempProduct.getStockQty() <= tempProduct.getRestockLvl())
+			{
+				tempProduct.restock();
+			}
 			tempProduct.addAmountSold(quantity);
 		}
 
