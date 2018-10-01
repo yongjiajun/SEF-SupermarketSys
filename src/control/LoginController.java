@@ -1,5 +1,9 @@
 package control;
 
+import model.people.Customer;
+import model.people.Manager;
+import model.people.SalesStaff;
+import model.people.Supplier;
 import model.system.AccountManager;
 import view.CustomerCheckoutPanel;
 import view.LoginScreen;
@@ -11,11 +15,6 @@ public class LoginController {
 	private AccountManager accountManager;
 	private Boolean loginPass = false;
 
-	public LoginController(LoginScreen view) {
-		this.view = view;
-		accountManager = new AccountManager();
-	}
-
 	public void checkCredentials(String id, char[] pass) {
 		try {
 			id = id.toUpperCase();
@@ -25,7 +24,8 @@ public class LoginController {
 				if (accountManager.getManager(id) != null) {
 					if (accountManager.getManager(id).getUserPIN().equals(new String(pass))) {
 						loginPass = true;
-						ManagerPanel managerPanel = new ManagerPanel();
+						Manager manager = accountManager.getManager(id);
+						ManagerPanel managerPanel = new ManagerPanel(manager);
 						managerPanel.setVisible(true);
 						view.dispose();
 					}
@@ -36,17 +36,19 @@ public class LoginController {
 			case 'S':
 				if (accountManager.getSalesStaff(id) != null) {
 					if (accountManager.getSalesStaff(id).getUserPIN().equals(new String(pass))) {
-						// Login Successful. Change view
 						loginPass = true;
+						SalesStaff salesStaff = accountManager.getSalesStaff(id);
 					}
 				}
 				break;
 			// Customer Login
 			case 'C':
+				
 				if (accountManager.getCustomer(id) != null) {
 					if (accountManager.getCustomer(id).getUserPIN().equals(new String(pass))) {
 						loginPass = true;
-						CustomerCheckoutPanel customerCheckOutPanel = new CustomerCheckoutPanel();
+						Customer customer = accountManager.getCustomer(id);
+						CustomerCheckoutPanel customerCheckOutPanel = new CustomerCheckoutPanel(customer);
 						customerCheckOutPanel.setVisible(true);
 						view.dispose();
 					}
@@ -56,8 +58,8 @@ public class LoginController {
 			case 'P':
 				if (accountManager.getSupplier(id) != null) {
 					if (accountManager.getSupplier(id).getUserPIN().equals(new String(pass))) {
-						// Login Successful. Change view
 						loginPass = true;
+						Supplier supplier = accountManager.getSupplier(id);
 					}
 				}
 	
@@ -69,6 +71,14 @@ public class LoginController {
 		
 		view.setErrorMessageVisible(loginPass);
 		
+	}
+	
+	public void setAccountManager(AccountManager am) {
+		this.accountManager = am;
+	}
+	
+	public void setView(LoginScreen view) {
+		this.view = view;
 	}
 
 }

@@ -18,6 +18,8 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import control.LoginController;
+import model.people.Customer;
+import model.people.User;
 
 public class LoginScreen extends JFrame {
 
@@ -25,7 +27,7 @@ public class LoginScreen extends JFrame {
 	private JTextField textField;
 	private JPasswordField passwordField;
 	private JLabel errorMessage;
-	private LoginController loginController = new LoginController(this);
+	private LoginController loginController;
 
 	public LoginScreen() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -69,7 +71,6 @@ public class LoginScreen extends JFrame {
 				String id = textField.getText();
 				char[] pw = passwordField.getPassword();
 				loginController.checkCredentials(id, pw);
-
 			}
 		});
 		loginBtn.setBounds(530, 350, 141, 56);
@@ -150,5 +151,13 @@ public class LoginScreen extends JFrame {
 
 	public void setErrorMessageVisible(Boolean value) {
 		errorMessage.setVisible(!value);
+	}
+	
+	public JTextField getIDTextField() {
+		return textField;
+	}
+	
+	public void setLoginController(LoginController loginController) {
+		this.loginController = loginController;
 	}
 }

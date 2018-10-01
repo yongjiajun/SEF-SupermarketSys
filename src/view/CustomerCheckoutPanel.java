@@ -23,13 +23,17 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import control.EmployeeLoginController;
+import model.people.Customer;
 
 public class CustomerCheckoutPanel extends JFrame {
 
 	private JPanel contentPane, mainPanel, enterItemPanel, selectItemPanel;
 	private JButton logoutBtn, finishAndPayBtn, removeItemBtn, requireAssistanceBtn, selectItemBtn, enterItemBtn;
+	private Customer customer;
 
-	public CustomerCheckoutPanel() {
+	public CustomerCheckoutPanel(Customer customer) {
+		this.customer = customer;
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1200, 750);
 		contentPane = new JPanel();
@@ -42,7 +46,6 @@ public class CustomerCheckoutPanel extends JFrame {
 		mainPanel.setBounds(0, 0, 1200, 750);
 		contentPane.add(mainPanel);
 		mainPanel.setLayout(null);
-
 
 		topBotPanel();
 		leftSection();
@@ -60,7 +63,7 @@ public class CustomerCheckoutPanel extends JFrame {
 		mainPanel.add(dateTimePanel);
 		dateTimePanel.setLayout(null);
 
-		JLabel welcomeLbl = new JLabel("Welcome, [getID]");
+		JLabel welcomeLbl = new JLabel("Welcome, " + customer.getUserFName());
 		welcomeLbl.setFont(new Font("Lucida Grande", Font.BOLD, 20));
 		welcomeLbl.setForeground(Color.WHITE);
 		welcomeLbl.setBounds(18, 8, 234, 30);
@@ -373,9 +376,6 @@ public class CustomerCheckoutPanel extends JFrame {
 			finishAndPayBtn.setVisible(false);
 		}
 	}
-
-	
-	
 
 	
 }

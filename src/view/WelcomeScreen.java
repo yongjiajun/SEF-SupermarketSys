@@ -18,6 +18,7 @@ import javax.swing.border.EmptyBorder;
 public class WelcomeScreen extends JFrame {
 
 	private JPanel contentPane;
+	private LoginScreen loginScreen;
 
 	public WelcomeScreen() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -51,8 +52,7 @@ public class WelcomeScreen extends JFrame {
 		btnStart.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				LoginScreen login = new LoginScreen();
-				login.setVisible(true);
+				loginScreen.setVisible(true);
 				dispose();
 				validate();
 				revalidate();
@@ -113,6 +113,10 @@ public class WelcomeScreen extends JFrame {
 		JPanel imagePanel = new JPanel();
 		imagePanel.setBounds(75, 105, 450, 520);
 		mainPanel.add(imagePanel);
+	}
+	
+	public void setLoginScreen(LoginScreen loginScreen) {
+		this.loginScreen = loginScreen;
 	}
 
 }

@@ -11,7 +11,6 @@ import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -28,6 +27,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import control.AddProductController;
+import model.people.Manager;
 import model.people.Supplier;
 
 public class ManagerPanel extends JFrame {
@@ -54,7 +54,7 @@ public class ManagerPanel extends JFrame {
 
 	private DefaultTableModel model;
 
-	public ManagerPanel() {
+	public ManagerPanel(Manager manager) {
 		setTitle("SEF Assignment");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1200, 750);
