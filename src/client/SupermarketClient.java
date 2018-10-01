@@ -21,7 +21,7 @@ public class SupermarketClient {
 				SalesManager sr = new SalesManager();
 				try {
 					LoginController loginController = new LoginController();
-					loginController.setAccountManager(am);
+//					loginController.setAccountManager(am);
 					
 					LoginScreen loginScreen = new LoginScreen();
 					loginScreen.setLoginController(loginController);

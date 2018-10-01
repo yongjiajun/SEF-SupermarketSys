@@ -40,7 +40,7 @@ public class AccountManager {
 		if (customers.containsKey(id)) {
 			return customers.get(id);
 		} else {
-			System.out.print("Customer " + id + " not found in database!");
+			System.out.println("Customer " + id + " not found in database!");
 			return null;
 		}
 	}
@@ -49,7 +49,7 @@ public class AccountManager {
 		if (salesStaffs.containsKey(username)) {
 			return salesStaffs.get(username);
 		} else {
-			System.out.print("Staff " + username + " not found in database!");
+			System.out.println("Staff " + username + " not found in database!");
 			return null;
 		}
 	}
@@ -58,7 +58,7 @@ public class AccountManager {
 		if (managers.containsKey(username)) {
 			return managers.get(username);
 		} else {
-			System.out.print("Manager " + username + " not found in database!");
+			System.out.println("Manager " + username + " not found in database!");
 			return null;
 		}
 	}
@@ -67,7 +67,7 @@ public class AccountManager {
 		if (suppliers.containsKey(username)) {
 			return suppliers.get(username);
 		} else {
-			System.out.print("Supplier " + username + " not found in database!");
+			System.out.println("Supplier " + username + " not found in database!");
 			return null;
 		}
 	}
@@ -75,7 +75,7 @@ public class AccountManager {
 	public boolean addCustomer(Customer customer) {
 		String temp = customer.getUserID();
 		if (customers.containsKey(temp)) {
-			System.out.print("Customer exists " + temp + " in database!");
+			System.out.println("Customer exists " + temp + " in database!");
 			return false;
 		} else {
 			customers.put(temp, customer);
@@ -86,7 +86,7 @@ public class AccountManager {
 	public boolean addSalesStaff(SalesStaff salesStaff) {
 		String temp = salesStaff.getUserID();
 		if (salesStaffs.containsKey(temp)) {
-			System.out.print("Sales staff " + temp + " exists in database!");
+			System.out.println("Sales staff " + temp + " exists in database!");
 			return false;
 		} else {
 			salesStaffs.put(temp, salesStaff);
@@ -97,7 +97,7 @@ public class AccountManager {
 	public boolean addManager(Manager manager) {
 		String temp = manager.getUserID();
 		if (managers.containsKey(temp)) {
-			System.out.print("Manager " + temp + " exists in database!");
+			System.out.println("Manager " + temp + " exists in database!");
 			return false;
 		} else {
 			managers.put(temp, manager);
@@ -108,7 +108,7 @@ public class AccountManager {
 	public boolean addSupplier(Supplier supplier) {
 		String temp = supplier.getUserID();
 		if (suppliers.containsKey(temp)) {
-			System.out.print("Supplier " + temp + " exists in database!");
+			System.out.println("Supplier " + temp + " exists in database!");
 			return false;
 		} else {
 			suppliers.put(temp, supplier);
@@ -122,7 +122,7 @@ public class AccountManager {
 			customers.remove(temp);
 			return true;
 		} else {
-			System.out.print("Customer " + temp + " doesn't exist in database!");
+			System.out.println("Customer " + temp + " doesn't exist in database!");
 			return false;
 		}
 	}
@@ -133,7 +133,7 @@ public class AccountManager {
 			customers.remove(temp);
 			return true;
 		} else {
-			System.out.print("Sales staff " + temp + " doesn't exist in database!");
+			System.out.println("Sales staff " + temp + " doesn't exist in database!");
 			return false;
 		}
 	}
@@ -144,7 +144,7 @@ public class AccountManager {
 			managers.remove(temp);
 			return true;
 		} else {
-			System.out.print("Manager " + temp + " doesn't exist in database!");
+			System.out.println("Manager " + temp + " doesn't exist in database!");
 			return false;
 		}
 	}
@@ -155,7 +155,7 @@ public class AccountManager {
 			suppliers.remove(temp);
 			return true;
 		} else {
-			System.out.print("Supplier " + temp + " doesn't exist in database!");
+			System.out.println("Supplier " + temp + " doesn't exist in database!");
 			return false;
 		}
 	}
@@ -231,6 +231,13 @@ public class AccountManager {
 		managers = new HashMap<String, Manager>();
 		suppliers = new HashMap<String, Supplier>();
 		System.out.println("Users reset!");
+	}
+	
+	// Print amount of users in .ser file
+	public void printSize() {
+		System.out.println("Customers: " + customers.size());
+		System.out.println("SalesStaffs: " + salesStaffs.size());
+		System.out.println("Managers: " + managers.size());
 	}
 
 }

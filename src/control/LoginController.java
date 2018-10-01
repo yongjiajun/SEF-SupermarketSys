@@ -16,6 +16,11 @@ public class LoginController {
 	private AccountManager accountManager;
 	private Boolean loginPass;
 	private WelcomeScreen welcomeScreen;
+	
+	// Originally no constructor
+	public LoginController() {
+		accountManager = new AccountManager();
+	}
 
 	public void checkCredentials(String id, char[] pass) {
 		try {

@@ -1,14 +1,16 @@
 package control;
 
 import model.system.AccountManager;
-import view.INeedAssistanceLogin;
+import view.CustomerCheckoutPanel;
 
 public class EmployeeLoginController {
 
 	private AccountManager accountManager;
+	private CustomerCheckoutPanel view;
 
-	public EmployeeLoginController() {
+	public EmployeeLoginController(CustomerCheckoutPanel customerCheckoutPanel) {
 		accountManager = new AccountManager();
+		this.view = customerCheckoutPanel;
 	}
 
 	public boolean checkCredentials(String id, char[] pass) {
@@ -20,6 +22,7 @@ public class EmployeeLoginController {
 				if (accountManager.getManager(id) != null) {
 					if (accountManager.getManager(id).getUserPIN().equals(new String(pass))) {
 						// Login Successful. Change view
+						view.getWelcomeLbl().setText("Welcome, " + accountManager.getManager(id).getUserFName());
 						return true;
 					}
 				}
@@ -30,6 +33,7 @@ public class EmployeeLoginController {
 				if (accountManager.getSalesStaff(id) != null) {
 					if (accountManager.getSalesStaff(id).getUserPIN().equals(new String(pass))) {
 						// Login Successful. Change view
+						view.getWelcomeLbl().setText("Welcome, " + accountManager.getSalesStaff(id).getUserFName());
 						return true;
 					}
 				}

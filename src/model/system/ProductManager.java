@@ -10,92 +10,82 @@ import java.util.HashMap;
 public class ProductManager {
 
 	private HashMap<String, Product> products = new HashMap<String, Product>();
-	
-	public ProductManager()
-	{
+
+	public ProductManager() {
 		initialiseProducts();
 	}
-	
-	private void initialiseProducts()
-	{
+
+	public void initialiseProducts() {
 		try {
-	         FileInputStream fileIn = new FileInputStream("database/products.ser");
-	         ObjectInputStream objectIn = new ObjectInputStream(fileIn);
-	         products = (HashMap<String, Product>) objectIn.readObject();
-	         System.out.println("Products are loaded from database!");
-	         objectIn.close();
-	         fileIn.close();
-	      } catch (IOException i) {
-	         i.printStackTrace();
-	         return;
-	      } catch (ClassNotFoundException c) {
-	         System.out.println("Product class not found");
-	         c.printStackTrace();
-	         return;
-	      }
+			FileInputStream fileIn = new FileInputStream("database/products.ser");
+			ObjectInputStream objectIn = new ObjectInputStream(fileIn);
+			products = (HashMap<String, Product>) objectIn.readObject();
+			System.out.println("Products are loaded from database!");
+			objectIn.close();
+			fileIn.close();
+		} catch (IOException i) {
+			i.printStackTrace();
+			return;
+		} catch (ClassNotFoundException c) {
+			System.out.println("Product class not found");
+			c.printStackTrace();
+			return;
+		}
 	}
-	
+
 	// always call this function after adding/modifying products / before shutdown
-	public void saveProducts()
-	{
+	public void saveProducts() {
 		try {
-	         FileOutputStream fileOut = new FileOutputStream("database/products.ser");
-	         ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
-	         objectOut.writeObject(products);
-	         objectOut.close();
-	         fileOut.close();
-	         System.out.println("Products are saved to database!");
-	      } catch (IOException i) {
-	         i.printStackTrace();
-	      }
+			FileOutputStream fileOut = new FileOutputStream("database/products.ser");
+			ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+			objectOut.writeObject(products);
+			objectOut.close();
+			fileOut.close();
+			System.out.println("Products are saved to database!");
+		} catch (IOException i) {
+			i.printStackTrace();
+		}
 	}
-	
-	public boolean addProduct(Product product)
-	{
-		if (products.containsKey(product.getProductId()))
-		{
+
+	public boolean addProduct(Product product) {
+		if (products.containsKey(product.getProductId())) {
 			System.out.println("Product " + product.getProductId() + " already exists in database!");
 			return false;
-		}
-		else
-		{
+		} else {
 			products.put(product.getProductId(), product);
 			System.out.println("Product " + product.getProductId() + " added into database!");
 			return true;
 		}
 	}
-	
-	public boolean removeProduct(String productID)
-	{
-		if (products.containsKey(productID))
-		{
+
+	public boolean removeProduct(String productID) {
+		if (products.containsKey(productID)) {
 			products.remove(productID);
 			return true;
-		}
-		else
-		{
+		} else {
 			System.out.println("Product " + productID + " doesn't exist in database!");
 			return false;
 		}
 	}
-	
+
 	public Product getProduct(String productID) {
-		if (products.containsKey(productID))
-		{
+		if (products.containsKey(productID)) {
 			return products.get(productID);
-		}
-		else
-		{
+		} else {
 			System.out.println("Product " + productID + " doesn't exist in database!");
 			return null; // UI Verification!
 		}
 	}
-	
+
 	// DEBUG ONLY, call this before saving!
-	public void resetProducts()
-	{
+	public void resetProducts() {
 		products = new HashMap<String, Product>();
 		System.out.println("Products reset!");
 	}
-	
+
+	// Print amount of users in .ser file
+	public void printSize() {
+		System.out.println("Products: " + products.size());
+	}
+
 }
