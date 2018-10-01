@@ -20,8 +20,6 @@ public class SupermarketClient {
 				AccountManager am = new AccountManager();
 				SalesManager sr = new SalesManager();
 				try {
-					pm.initialiseProducts();
-
 					LoginController loginController = new LoginController();
 					loginController.setAccountManager(am);
 					

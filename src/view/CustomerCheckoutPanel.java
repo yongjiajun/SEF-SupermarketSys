@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -31,10 +33,11 @@ public class CustomerCheckoutPanel extends JFrame {
 	private JButton logoutBtn, finishAndPayBtn, removeItemBtn, requireAssistanceBtn, selectItemBtn, enterItemBtn;
 	private Customer customer;
 	private WelcomeScreen welcomeScreen;
+	private JTextField idTextField, nameTextField, weightTextField, quantityTextField;
 
 	public CustomerCheckoutPanel(Customer customer) {
 		this.customer = customer;
-		
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1200, 750);
 		contentPane = new JPanel();
@@ -56,7 +59,7 @@ public class CustomerCheckoutPanel extends JFrame {
 		enterItemPanel();
 
 	}
-	
+
 	public void topBotPanel() {
 		JPanel dateTimePanel = new JPanel();
 		dateTimePanel.setBackground(new Color(102, 102, 102));
@@ -107,22 +110,20 @@ public class CustomerCheckoutPanel extends JFrame {
 				int response;
 
 				do {
-					response = JOptionPane.showConfirmDialog(null, array, "Login", JOptionPane.OK_CANCEL_OPTION,
-							JOptionPane.PLAIN_MESSAGE);
+					response = JOptionPane.showConfirmDialog(null, array, "Employee Login",
+							JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
 					if (response == JOptionPane.YES_OPTION) {
 						if (employeeLoginController.checkCredentials(id.getText(), pw.getPassword())) {
 							employeeLogin();
 							break;
-						}
-
+						} 
 						else {
 							JOptionPane.showMessageDialog(null, "Login Failed. Please try again.");
 							id.setText("");
 							pw.setText("");
 						}
 					}
-
 				} while (response != JOptionPane.CANCEL_OPTION && response != JOptionPane.CLOSED_OPTION);
 			}
 		});
@@ -165,7 +166,7 @@ public class CustomerCheckoutPanel extends JFrame {
 		});
 		logoutBtn.setOpaque(true);
 		logoutBtn.setBackground(new Color(102, 102, 102));
-		logoutBtn.setBounds(18, 7, 187, 38);
+		logoutBtn.setBounds(18, 7, 150, 38);
 		logoutBtn.setVisible(false);
 		assisstancePanel.add(logoutBtn);
 	}
@@ -174,7 +175,7 @@ public class CustomerCheckoutPanel extends JFrame {
 		JPanel imagePanel = new JPanel();
 		imagePanel.setBounds(66, 90, 471, 158);
 		mainPanel.add(imagePanel);
-		
+
 		JPanel itemListPanel = new JPanel();
 		itemListPanel.setBounds(66, 283, 471, 357);
 		mainPanel.add(itemListPanel);
@@ -190,14 +191,14 @@ public class CustomerCheckoutPanel extends JFrame {
 		separator.setBackground(Color.BLACK);
 		separator.setForeground(Color.BLACK);
 	}
-	
+
 	public void rightSection() {
 		JLabel grocerySystemTitle = new JLabel("Kostco Market");
 		grocerySystemTitle.setForeground(new Color(255, 255, 255));
 		grocerySystemTitle.setFont(new Font("Lucida Grande", Font.BOLD, 25));
 		grocerySystemTitle.setBounds(806, 96, 188, 70);
 		mainPanel.add(grocerySystemTitle);
-		
+
 		selectItemBtn = new JButton("Select Item");
 		selectItemBtn.setBounds(751, 390, 298, 43);
 		selectItemBtn.addActionListener(new ActionListener() {
@@ -208,7 +209,7 @@ public class CustomerCheckoutPanel extends JFrame {
 			}
 		});
 		mainPanel.add(selectItemBtn);
-		
+
 		enterItemBtn = new JButton("Enter Item");
 		enterItemBtn.setBounds(751, 460, 298, 43);
 		enterItemBtn.addActionListener(new ActionListener() {
@@ -216,6 +217,10 @@ public class CustomerCheckoutPanel extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				enterItemPanel.setVisible(true);
 				displayButtons(false);
+				idTextField.setText("");
+				nameTextField.setText("");
+				quantityTextField.setText("");
+				weightTextField.setText("");
 			}
 		});
 		mainPanel.add(enterItemBtn);
@@ -229,7 +234,7 @@ public class CustomerCheckoutPanel extends JFrame {
 		removeItemBtn.setVisible(false);
 		mainPanel.add(removeItemBtn);
 	}
-	
+
 	public void enterItemPanel() {
 		enterItemPanel = new JPanel();
 		enterItemPanel.setBounds(701, 200, 398, 400);
@@ -244,12 +249,25 @@ public class CustomerCheckoutPanel extends JFrame {
 		enterItemLbl.setFont(new Font("Lucida Grande", Font.BOLD, 22));
 		enterItemPanel.add(enterItemLbl);
 
+		JLabel errorMessage = new JLabel();
+		errorMessage.setFont(new Font("Lucida Grande", Font.PLAIN, 14));
+		errorMessage.setForeground(Color.RED);
+		errorMessage.setBounds(25, 293, 350, 30);
+		errorMessage.setHorizontalAlignment(JLabel.CENTER);
+		errorMessage.setVisible(false);
+		enterItemPanel.add(errorMessage);
+
 		JLabel idLbl = new JLabel("ID", SwingConstants.CENTER);
 		idLbl.setBounds(48, 70, 76, 22);
 		idLbl.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
 		enterItemPanel.add(idLbl);
 
-		JTextField idTextField = new JTextField();
+		idTextField = new JTextField();
+		idTextField.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				errorMessage.setVisible(false);
+			}
+		});
 		idTextField.setBounds(149, 65, 163, 32);
 		enterItemPanel.add(idTextField);
 
@@ -258,26 +276,41 @@ public class CustomerCheckoutPanel extends JFrame {
 		nameLbl.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
 		enterItemPanel.add(nameLbl);
 
-		JTextField nameTextField = new JTextField();
+		nameTextField = new JTextField();
+		nameTextField.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				errorMessage.setVisible(false);
+			}
+		});
 		nameTextField.setBounds(149, 125, 163, 32);
 		enterItemPanel.add(nameTextField);
 
 		JLabel weightLbl = new JLabel("Weight", SwingConstants.CENTER);
-		weightLbl.setBounds(48, 200, 76, 22);
+		weightLbl.setBounds(48, 190, 76, 22);
 		weightLbl.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
 		enterItemPanel.add(weightLbl);
 
-		JTextField weightTextField = new JTextField();
-		weightTextField.setBounds(149, 195, 163, 32);
+		weightTextField = new JTextField();
+		weightTextField.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				errorMessage.setVisible(false);
+			}
+		});
+		weightTextField.setBounds(149, 185, 163, 32);
 		enterItemPanel.add(weightTextField);
 
 		JLabel quantityLbl = new JLabel("Quantity", SwingConstants.CENTER);
-		quantityLbl.setBounds(48, 270, 76, 22);
+		quantityLbl.setBounds(48, 250, 76, 22);
 		quantityLbl.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
 		enterItemPanel.add(quantityLbl);
 
-		JTextField quantityTextField = new JTextField();
-		quantityTextField.setBounds(149, 265, 163, 32);
+		quantityTextField = new JTextField();
+		quantityTextField.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				errorMessage.setVisible(false);
+			}
+		});
+		quantityTextField.setBounds(149, 245, 163, 32);
 		enterItemPanel.add(quantityTextField);
 
 		JButton cancelBtn = new JButton("Cancel");
@@ -286,6 +319,7 @@ public class CustomerCheckoutPanel extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				enterItemPanel.setVisible(false);
 				displayButtons(true);
+				errorMessage.setVisible(false);
 			}
 		});
 		cancelBtn.setBounds(25, 339, 122, 38);
@@ -294,7 +328,25 @@ public class CustomerCheckoutPanel extends JFrame {
 		JButton addBtn = new JButton("Add");
 		addBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// Add item to item list
+				boolean error = false;
+				try {
+					int id = Integer.parseInt(idTextField.getText());
+					String name = nameTextField.getText();
+					double weight = Double.parseDouble(weightTextField.getText());
+					int quantity = Integer.parseInt(quantityTextField.getText());
+				} catch (NumberFormatException e1) {
+					System.err.println(e1);
+					errorMessage.setText("Please enter all information correctly");
+					errorMessage.setVisible(true);
+					error = true;
+				}
+
+				if (!error) {
+					// Add items to the leftPanel
+					errorMessage.setVisible(false);
+					enterItemPanel.setVisible(false);
+					displayButtons(true);
+				}
 			}
 		});
 		addBtn.setBounds(251, 339, 122, 38);
@@ -309,10 +361,10 @@ public class CustomerCheckoutPanel extends JFrame {
 		selectItemPanel.setLayout(null);
 		selectItemPanel.setVisible(false);
 		mainPanel.add(selectItemPanel);
-		
+
 		JTextArea itemTextArea = new JTextArea();
 		itemTextArea.setEditable(false);
-		
+
 		JScrollPane itemScrollPane = new JScrollPane(itemTextArea);
 		itemScrollPane.setPreferredSize(new Dimension(264, 200));
 		itemScrollPane.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -320,18 +372,18 @@ public class CustomerCheckoutPanel extends JFrame {
 		itemScrollPane.setVisible(true);
 		itemScrollPane.setBounds(25, 25, 348, 300);
 		selectItemPanel.add(itemScrollPane);
-		
+
 		JLabel quantityLbl = new JLabel("Quantity");
 		quantityLbl.setBounds(30, 341, 76, 22);
 		quantityLbl.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
 		selectItemPanel.add(quantityLbl);
-		
+
 		JTextField quantityTextField = new JTextField();
 		quantityTextField.setBounds(125, 336, 60, 32);
 		quantityTextField.setText("1");
 		quantityTextField.setHorizontalAlignment(JTextField.CENTER);
 		selectItemPanel.add(quantityTextField);
-		
+
 		JButton cancelBtn = new JButton("Cancel");
 		cancelBtn.addActionListener(new ActionListener() {
 			@Override
@@ -352,7 +404,7 @@ public class CustomerCheckoutPanel extends JFrame {
 		addBtn.setBounds(251, 381, 122, 38);
 		selectItemPanel.add(addBtn);
 	}
-	
+
 	public void employeeLogin() {
 		logoutBtn.setVisible(true);
 		finishAndPayBtn.setVisible(false);
@@ -360,7 +412,6 @@ public class CustomerCheckoutPanel extends JFrame {
 		requireAssistanceBtn.setVisible(false);
 		mainPanel.setBackground(new Color(25, 150, 125));
 	}
-	
 
 	public void employeeLogout() {
 		logoutBtn.setVisible(false);
@@ -379,10 +430,9 @@ public class CustomerCheckoutPanel extends JFrame {
 			finishAndPayBtn.setVisible(false);
 		}
 	}
-	
+
 	public void setWelcomeScreen(WelcomeScreen welcomeScreen) {
 		this.welcomeScreen = welcomeScreen;
 	}
 
-	
 }
