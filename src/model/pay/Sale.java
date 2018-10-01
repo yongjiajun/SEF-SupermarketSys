@@ -11,7 +11,7 @@ import java.util.*;
 
 import model.people.Customer;
 import model.system.Product;
-import model.system.SalesRecord;
+import model.system.SalesManager;
 
 public class Sale implements Serializable {
 
@@ -139,7 +139,7 @@ public class Sale implements Serializable {
 		calcLoyaltyPtsEarned();
 	}
 
-	public void pay(SalesRecord sr) {
+	public void pay(SalesManager sr) {
 		this.paid = true;
 		// deduct product stock
 		for (int i = 0; i < lineItems.size(); i++) {

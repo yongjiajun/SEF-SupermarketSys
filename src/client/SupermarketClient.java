@@ -6,7 +6,7 @@ import java.awt.EventQueue;
 import model.pay.Sale;
 import model.system.AccountManager;
 import model.system.ProductManager;
-import model.system.SalesRecord;
+import model.system.SalesManager;
 import view.WelcomeScreen;
 
 public class SupermarketClient {
@@ -17,7 +17,7 @@ public class SupermarketClient {
 			public void run() {
 				ProductManager pm = new ProductManager();
 				AccountManager am = new AccountManager();
-				SalesRecord sr = new SalesRecord();
+				SalesManager sr = new SalesManager();
 				try {
 					WelcomeScreen welcomeScreen = new WelcomeScreen();
 					welcomeScreen.setVisible(true);
@@ -28,6 +28,10 @@ public class SupermarketClient {
 				// run codes on exit
 				 Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
 				        public void run() {
+				        	pm.resetProducts();
+				        	am.resetUsers();
+				        	sr.resetSales();
+				        	// how u reset bois
 				        	pm.saveProducts();
 							am.saveUsers();	
 							sr.saveSales();

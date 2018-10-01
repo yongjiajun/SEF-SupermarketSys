@@ -9,10 +9,10 @@ import java.util.ArrayList;
 
 import model.pay.Sale;
 
-public class SalesRecord {
+public class SalesManager {
 
 	// for manager!
-	public SalesRecord()
+	public SalesManager()
 	{
 		initialiseSales();
 	}
@@ -89,5 +89,11 @@ public class SalesRecord {
 	      } catch (IOException i) {
 	         i.printStackTrace();
 	      }
+	}
+	
+	// DEBUG ONLY, call this before saving!
+	public void resetSales()
+	{
+		sales = new ArrayList<Sale>();
 	}
 }

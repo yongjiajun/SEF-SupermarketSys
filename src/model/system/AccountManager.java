@@ -228,5 +228,14 @@ public class AccountManager {
 	         i.printStackTrace();
 	      }
 	}
+	
+	// DEBUG ONLY, call this before saving!
+	public void resetUsers()
+	{
+		customers = new HashMap<String, Customer>();
+		salesStaffs = new HashMap<String, SalesStaff>();
+		managers = new HashMap<String, Manager>();
+		suppliers = new HashMap<String, Supplier>();
+	}
 
 }

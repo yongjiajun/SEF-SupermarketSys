@@ -91,4 +91,10 @@ public class ProductManager {
 		}
 	}
 	
+	// DEBUG ONLY, call this before saving!
+	public void resetProducts()
+	{
+		products = new HashMap<String, Product>();
+	}
+	
 }
