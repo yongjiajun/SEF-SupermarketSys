@@ -28,10 +28,6 @@ public class SupermarketClient {
 				// run codes on exit
 				 Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
 				        public void run() {
-				        	pm.resetProducts();
-				        	am.resetUsers();
-				        	sr.resetSales();
-				        	// how u reset bois
 				        	pm.saveProducts();
 							am.saveUsers();	
 							sr.saveSales();

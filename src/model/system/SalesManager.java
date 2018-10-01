@@ -95,5 +95,6 @@ public class SalesManager {
 	public void resetSales()
 	{
 		sales = new ArrayList<Sale>();
+		System.out.println("Sales reset!");
 	}
 }

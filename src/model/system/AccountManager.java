@@ -236,6 +236,7 @@ public class AccountManager {
 		salesStaffs = new HashMap<String, SalesStaff>();
 		managers = new HashMap<String, Manager>();
 		suppliers = new HashMap<String, Supplier>();
+		System.out.println("Users reset!");
 	}
 
 }

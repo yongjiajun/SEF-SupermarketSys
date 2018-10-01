@@ -95,6 +95,7 @@ public class ProductManager {
 	public void resetProducts()
 	{
 		products = new HashMap<String, Product>();
+		System.out.println("Products reset!");
 	}
 	
 }
