@@ -1,28 +1,20 @@
 package model.pay;
 
-import model.people.Customer;
-
 public class CreditCard {
 
 	private String creditCardID;
-	private String cardHolderID; // for verification
 	private String pin;
 	private double balance;
 	private int loyaltyPoints;
 
-	public CreditCard(String creditCardID, Customer cardHolder, String pin) {
+	public CreditCard(String creditCardID, String pin) {
 		this.creditCardID = creditCardID;
-		this.cardHolderID = cardHolder.getUserID();
 		this.pin = pin;
 		this.balance = 0;
 	}
 
 	public String getCreditCardID() {
 		return creditCardID;
-	}
-
-	public String getCardHolderID() {
-		return cardHolderID;
 	}
 
 	public String getPin() {

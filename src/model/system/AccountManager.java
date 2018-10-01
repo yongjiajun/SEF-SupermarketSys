@@ -27,19 +27,19 @@ public class AccountManager {
 
 	public AccountManager() {
 		// TODO remove these and have dummy users in the database
-		Customer c1 = new Customer("C123", "1234", "Alpha", "Bravo");
-		addCustomer(c1);
-
-		Manager m1 = new Manager("M123", "1234", "Charlie", "Delta");
-		addManager(m1);
-
-		SalesStaff s1 = new SalesStaff("S123", "1234", "Echo", "Foxtrot");
-		addSalesStaff(s1);
-
-		Supplier p1 = new Supplier("P123", "1234", "Golf", "Hotel", "CompName", "CompPhone", "CompEmail",
-				"CompLocation");
-		addSupplier(p1);
-
+//		Customer c1 = new Customer("C123", "1234", "Alpha", "Bravo");
+//		addCustomer(c1);
+//
+//		Manager m1 = new Manager("M123", "1234", "Charlie", "Delta");
+//		addManager(m1);
+//
+//		SalesStaff s1 = new SalesStaff("S123", "1234", "Echo", "Foxtrot");
+//		addSalesStaff(s1);
+//
+//		Supplier p1 = new Supplier("P123", "1234", "Golf", "Hotel", "CompName", "CompPhone", "CompEmail",
+//				"CompLocation");
+//		addSupplier(p1);
+		initialiseUsers();
 	}
 
 	public Customer getCustomer(String id) {
@@ -166,7 +166,7 @@ public class AccountManager {
 		}
 	}
 
-	public void initialiseUsers()
+	private void initialiseUsers()
 	{
 		try {
 	         FileInputStream fileInCustomer = new FileInputStream("database/customers.ser");

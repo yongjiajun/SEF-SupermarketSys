@@ -16,6 +16,7 @@ public class Product implements Serializable {
 	private int stockQty;
 	private String productID;
 	private double productPrice;
+	private int amountSold;
 
 	// to be overwritten by methods
 	private boolean discountEligible = false;
@@ -159,6 +160,15 @@ public class Product implements Serializable {
 	public int getReorderQty() {
 		return reorderQty;
 		// monitored
+	}
+	
+	public int getAmountSold()
+	{
+		return amountSold;
+	}
+	
+	public void addAmountSold(int quantity) {
+		this.amountSold += quantity;
 	}
 
 	@Override

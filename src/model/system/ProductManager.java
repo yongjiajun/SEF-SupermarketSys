@@ -10,8 +10,13 @@ import java.util.HashMap;
 public class ProductManager {
 
 	private HashMap<String, Product> products = new HashMap<String, Product>();
-
-	public void initialiseProducts()
+	
+	public ProductManager()
+	{
+		initialiseProducts();
+	}
+	
+	private void initialiseProducts()
 	{
 		try {
 	         FileInputStream fileIn = new FileInputStream("database/products.ser");

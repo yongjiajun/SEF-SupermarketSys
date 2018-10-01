@@ -2,7 +2,6 @@ package model.pay;
 
 import model.system.Product;
 
-//	private List <Integer, Product> productInformation = new HashMap<Integer,Product>();
 public class SalesLineItem {
 
 	private int quantity;

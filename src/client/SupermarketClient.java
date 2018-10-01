@@ -3,8 +3,10 @@ package client;
 
 import java.awt.EventQueue;
 
+import model.pay.Sale;
 import model.system.AccountManager;
 import model.system.ProductManager;
+import model.system.SalesRecord;
 import view.WelcomeScreen;
 
 public class SupermarketClient {
@@ -15,9 +17,8 @@ public class SupermarketClient {
 			public void run() {
 				ProductManager pm = new ProductManager();
 				AccountManager am = new AccountManager();
+				SalesRecord sr = new SalesRecord();
 				try {
-					pm.initialiseProducts();
-					am.initialiseUsers();
 					WelcomeScreen welcomeScreen = new WelcomeScreen();
 					welcomeScreen.setVisible(true);
 				} catch (Exception e) {
@@ -29,6 +30,7 @@ public class SupermarketClient {
 				        public void run() {
 				        	pm.saveProducts();
 							am.saveUsers();	
+							sr.saveSales();
 				        }
 				    }, "Shutdown-thread"));
 				
