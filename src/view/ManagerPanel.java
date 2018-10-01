@@ -33,13 +33,12 @@ import model.people.Supplier;
 public class ManagerPanel extends JFrame {
 
 	private JPanel contentPane, parentPanel, sideBarPanel, dashboardPanel, todaySalesPanel, productsPanel,
-			suppliersPanel, salesPanel, reportPanel, systemPanel, addProductPanel, addSupplierPanel, viewSupplier;
+			suppliersPanel, salesPanel, reportPanel, addProductPanel, addSupplierPanel, viewSupplier;
 	private JTextField productIdField, productNameField, productPriceField, supplierIDField, supplierPinField,
 			supplierFirstNameField, supplierLastNameField, companyNameField, contactNoField, emailField, locationField;
 
 	private AddProductController addProduct = new AddProductController(this);
 	private Supplier supplier;
-	private JFrame frame;
 	private JTable table;
 	private WelcomeScreen welcomeScreen;
 	private DefaultTableModel model;
@@ -64,22 +63,14 @@ public class ManagerPanel extends JFrame {
 		sideBarPanel();
 		dashboardPanel();
 		productsPanel();
-//		customersPanel();
 		salesPanel();
 		suppliersPanel();
 		reportPanel();
-//		employeesPanel();
-//		systemPanel();
 		addSupplier();
 		viewSupplier();
-
 		addProductPanel();
-//		removeProductPanel();
-//		modifyProductPanel();
-
 	}
-
-//
+	
 	private void sideBarPanel() {
 		sideBarPanel = new JPanel();
 		sideBarPanel.setBackground(Color.DARK_GRAY);
@@ -88,7 +79,7 @@ public class ManagerPanel extends JFrame {
 		sideBarPanel.setLayout(null);
 
 		JLabel lblNewLabel = new JLabel("", SwingConstants.CENTER);
-		lblNewLabel.setIcon(new ImageIcon(ManagerPanel.class.getResource("/images/Sef4.jpg")));
+		lblNewLabel.setIcon(new ImageIcon(ManagerPanel.class.getResource("/images/Sef4.png")));
 		lblNewLabel.setBounds(50, 28, 74, 72);
 		sideBarPanel.add(lblNewLabel);
 
