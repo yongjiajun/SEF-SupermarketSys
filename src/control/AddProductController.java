@@ -18,6 +18,7 @@ public class AddProductController   {
 
 	public AddProductController(ManagerPanel view) {
 		this.view = view;
+//		pm.resetProducts();
 	}
 
 	public void addItems(String productID, String productName, double productPrice, int productQuantity) {

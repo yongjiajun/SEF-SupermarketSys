@@ -43,6 +43,10 @@ public class ManagerPanel extends JFrame {
 	private WelcomeScreen welcomeScreen;
 	private DefaultTableModel model;
 	private Manager manager;
+	private JTextField productNamefield;
+	private JTextField productPricefield;
+	private JTextField productQuantityField;
+	private JTextField productiDfield;
 
 	public ManagerPanel(Manager manager) {
 		this.manager = manager;
@@ -68,8 +72,9 @@ public class ManagerPanel extends JFrame {
 		reportPanel();
 		addSupplier();
 		viewSupplier();
-		addProductPanel();
+//		addProductPanel();
 	}
+
 
 	private void sideBarPanel() {
 		sideBarPanel = new JPanel();
@@ -287,9 +292,6 @@ public class ManagerPanel extends JFrame {
 	}
 
 	private void productsPanel() {
-//		salesPanel = new JPanel();
-//		salesPanel.setBackground(Color.BLUE);
-//		parentPanel.add(salesPanel);
 
 		productsPanel = new JPanel();
 		productsPanel.setBackground(new Color(0, 128, 128));
@@ -311,6 +313,60 @@ public class ManagerPanel extends JFrame {
 		JComboBox actionBox = new JComboBox(actionNames);
 		actionBox.setBounds(833, 23, 166, 40);
 		panel.add(actionBox);
+
+		JLabel IDLbl = new JLabel("ID");
+		IDLbl.setBounds(105, 6, 99, 16);
+		panel.add(IDLbl);
+
+		JLabel producTNmeLbl = new JLabel("Name");
+		producTNmeLbl.setBounds(216, 6, 99, 16);
+		panel.add(producTNmeLbl);
+
+		JLabel productPriceLbl = new JLabel("Price");
+		productPriceLbl.setBounds(347, 6, 99, 16);
+		panel.add(productPriceLbl);
+
+		JLabel productQuantityLbl = new JLabel("Quantity");
+		productQuantityLbl.setBounds(469, 6, 99, 16);
+		panel.add(productQuantityLbl);
+
+		productNamefield = new JTextField();
+		productNamefield.setBounds(185, 52, 130, 26);
+		panel.add(productNamefield);
+		productNamefield.setColumns(10);
+
+		productPricefield = new JTextField();
+		productPricefield.setColumns(10);
+		productPricefield.setBounds(327, 52, 99, 26);
+		panel.add(productPricefield);
+
+		productQuantityField = new JTextField();
+		productQuantityField.setColumns(10);
+		productQuantityField.setBounds(438, 52, 130, 26);
+		panel.add(productQuantityField);
+
+		productiDfield = new JTextField();
+		productiDfield.setColumns(10);
+		productiDfield.setBounds(99, 52, 72, 26);
+		panel.add(productiDfield);
+
+		JButton addBtn = new JButton("Add");
+		Object[] row = new Object[4];
+		addBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				row[0] = productiDfield.getText();
+				row[1] = productNamefield.getText();
+				row[2] = productPricefield.getText();
+				row[3] = productQuantityField.getText();
+				model.addRow(row);
+
+				addProduct.addItems(productiDfield.getText(), productNamefield.getText(), Double.parseDouble(productPricefield.getText()), Integer.parseInt(productQuantityField.getText()));
+
+				}
+		});
+		addBtn.setBounds(603, 29, 117, 29);
+		panel.add(addBtn);
 
 		table = new JTable();
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -341,7 +397,7 @@ public class ManagerPanel extends JFrame {
 				switch (selectedActiom) {
 				case 0:
 					productsPanel.removeAll();
-					addProductPanel();
+//					addProductPanel();
 					addProductPanel.setVisible(true);
 					productsPanel.add(addProductPanel);
 					productsPanel.repaint();
@@ -396,8 +452,6 @@ public class ManagerPanel extends JFrame {
 		supplierMainPanel.setLayout(null);
 		suppliersPanel.add(supplierMainPanel);
 
-//		public Supplier(String supplierID, String supplierPIN, String supplierFName, String supplierLName,
-//				String supplierCompanyName, String supplierContactNo, String supplierEmail, String supplierLocation) {
 		Object[] columns = { "ID", "First Name", "Last Name", "Company Name", "Contact No", "Email", "Location" };
 		model.setColumnIdentifiers(columns);
 
@@ -434,128 +488,119 @@ public class ManagerPanel extends JFrame {
 	}
 
 
-	private void addProductPanel() {
-//		productsPanel();
-
-		addProductPanel = new JPanel();
-		parentPanel.add(addProductPanel, "name_379884347646550");
-		addProductPanel.setVisible(true);
-		addProductPanel.setBackground(new Color(0, 128, 128));
-		addProductPanel.setLayout(null);
-
-		JLabel lblProductDetail = new JLabel("Product Detail");
-		lblProductDetail.setFont(new Font("Lucida Grande", Font.BOLD, 20));
-		lblProductDetail.setBounds(16, 6, 188, 38);
-		addProductPanel.add(lblProductDetail);
-
-		JPanel panel = new JPanel();
-		panel.setLayout(null);
-		panel.setBackground(Color.GRAY);
-		panel.setBounds(6, 67, 1030, 84);
-		addProductPanel.add(panel);
-
-		JButton btnSave = new JButton("Save");
-		btnSave.setBounds(682, 28, 117, 29);
-		panel.add(btnSave);
-
-		JButton btnCancel = new JButton("Cancel");
-		btnCancel.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				addProductPanel.setVisible(false);
-				parentPanel.removeAll();
-				productsPanel();
-				parentPanel.repaint();
-				parentPanel.revalidate();
-			}
-		});
-		btnCancel.setBounds(826, 28, 117, 29);
-		panel.add(btnCancel);
-
-		JLabel productIdLabel = new JLabel("ID *");
-		productIdLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		productIdLabel.setBounds(120, 216, 84, 31);
-		addProductPanel.add(productIdLabel);
-
-		JLabel lblName = new JLabel("Name *");
-		lblName.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		lblName.setBounds(120, 270, 84, 31);
-		addProductPanel.add(lblName);
-
-		JLabel lblPrice = new JLabel("Price *");
-		lblPrice.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		lblPrice.setBounds(120, 324, 84, 31);
-		addProductPanel.add(lblPrice);
-
-		JLabel lblQuantity = new JLabel("Quantity *");
-		lblQuantity.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		lblQuantity.setBounds(120, 388, 101, 31);
-		addProductPanel.add(lblQuantity);
-
-
-		productIdField = new JTextField();
-		productIdField.setBounds(265, 216, 256, 31);
-		addProductPanel.add(productIdField);
-		productIdField.setColumns(10);
-
-		productNameField = new JTextField();
-		productNameField.setColumns(10);
-		productNameField.setBounds(265, 275, 256, 31);
-		addProductPanel.add(productNameField);
-
-		productPriceField = new JTextField();
-		productPriceField.setColumns(10);
-		productPriceField.setBounds(265, 329, 93, 31);
-		addProductPanel.add(productPriceField);
-
-		JComboBox productQuantityBox = new JComboBox();
-		for (int i = 0; i <= 99; i++) {
-			productQuantityBox.addItem(new Integer(i));
-		}
-
-		productQuantityBox.setBounds(265, 394, 93, 27);
-		addProductPanel.add(productQuantityBox);
-
-		JButton btnSubmit = new JButton("Submit");
-
-		Object[] row = new Object[4];
-		btnSubmit.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-//					 (Product productID, Product productName, Product productPrice,
-//				Product productCategory, Product productQuantity)
-//				System.out.println();
-//				String productID = productIdField.getText();
-//				String productName = productNameField.getText();
-//				double productPrice = Double.parseDouble(productPriceField.getText());
-////			String productCategory = (String) productCategoryBox.getSelectedItem();
-//				int productQuantity = (int)productQuantityBox.getSelectedItem();
-
-
-				parentPanel.removeAll();
-//				addProductPanel.removeAll();
-
-				parentPanel.repaint();
-				parentPanel.revalidate();
-				productsPanel();
-				row[0] = productIdField.getText();
-				row[1] = productNameField.getText();
-				row[2] = productPriceField.getText();
-				row[3] = productQuantityBox.getSelectedItem();
-				model.addRow(row);
-
-
-
-				addProduct.addItems(productIdField.getText(), productNameField.getText(), Double.parseDouble(productPriceField.getText()), productQuantityBox.getSelectedIndex());
-
-			}
-		});
-
-		btnSubmit.setBounds(140, 579, 131, 44);
-		addProductPanel.add(btnSubmit);
-		addProductPanel.setVisible(false);
-	}
+//	private void addProductPanel() {
+////		productsPanel();
+//
+//		addProductPanel = new JPanel();
+//		parentPanel.add(addProductPanel, "name_379884347646550");
+//		addProductPanel.setVisible(true);
+//		addProductPanel.setBackground(new Color(0, 128, 128));
+//		addProductPanel.setLayout(null);
+//
+//		JLabel lblProductDetail = new JLabel("Product Detail");
+//		lblProductDetail.setFont(new Font("Lucida Grande", Font.BOLD, 20));
+//		lblProductDetail.setBounds(16, 6, 188, 38);
+//		addProductPanel.add(lblProductDetail);
+//
+//		JPanel panel = new JPanel();
+//		panel.setLayout(null);
+//		panel.setBackground(Color.GRAY);
+//		panel.setBounds(6, 67, 1030, 84);
+//		addProductPanel.add(panel);
+//
+//		JButton btnSave = new JButton("Save");
+//		btnSave.setBounds(682, 28, 117, 29);
+//		panel.add(btnSave);
+//
+//		JButton btnCancel = new JButton("Cancel");
+//		btnCancel.addActionListener(new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				addProductPanel.setVisible(false);
+//				parentPanel.removeAll();
+//				productsPanel();
+//				parentPanel.repaint();
+//				parentPanel.revalidate();
+//			}
+//		});
+//		btnCancel.setBounds(826, 28, 117, 29);
+//		panel.add(btnCancel);
+//
+//		JLabel productIdLabel = new JLabel("ID *");
+//		productIdLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
+//		productIdLabel.setBounds(120, 216, 84, 31);
+//		addProductPanel.add(productIdLabel);
+//
+//		JLabel lblName = new JLabel("Name *");
+//		lblName.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
+//		lblName.setBounds(120, 270, 84, 31);
+//		addProductPanel.add(lblName);
+//
+//		JLabel lblPrice = new JLabel("Price *");
+//		lblPrice.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
+//		lblPrice.setBounds(120, 324, 84, 31);
+//		addProductPanel.add(lblPrice);
+//
+//		JLabel lblQuantity = new JLabel("Quantity *");
+//		lblQuantity.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
+//		lblQuantity.setBounds(120, 388, 101, 31);
+//		addProductPanel.add(lblQuantity);
+//
+//
+//		productIdField = new JTextField();
+//		productIdField.setBounds(265, 216, 256, 31);
+//		addProductPanel.add(productIdField);
+//		productIdField.setColumns(10);
+//
+//		productNameField = new JTextField();
+//		productNameField.setColumns(10);
+//		productNameField.setBounds(265, 275, 256, 31);
+//		addProductPanel.add(productNameField);
+//
+//		productPriceField = new JTextField();
+//		productPriceField.setColumns(10);
+//		productPriceField.setBounds(265, 329, 93, 31);
+//		addProductPanel.add(productPriceField);
+//
+//		JComboBox productQuantityBox = new JComboBox();
+//		for (int i = 0; i <= 99; i++) {
+//			productQuantityBox.addItem(new Integer(i));
+//		}
+//
+//		productQuantityBox.setBounds(265, 394, 93, 27);
+//		addProductPanel.add(productQuantityBox);
+//
+//		JButton btnSubmit = new JButton("Submit");
+//
+//		Object[] row = new Object[4];
+//		btnSubmit.addActionListener(new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//
+//
+//				parentPanel.removeAll();
+////				addProductPanel.removeAll();
+//
+//				parentPanel.repaint();
+//				parentPanel.revalidate();
+//				productsPanel();
+//				row[0] = productIdField.getText();
+//				row[1] = productNameField.getText();
+//				row[2] = productPriceField.getText();
+//				row[3] = productQuantityBox.getSelectedItem();
+//				model.addRow(row);
+//
+//
+//
+//				addProduct.addItems(productIdField.getText(), productNameField.getText(), Double.parseDouble(productPriceField.getText()), productQuantityBox.getSelectedIndex());
+//
+//			}
+//		});
+//
+//		btnSubmit.setBounds(140, 579, 131, 44);
+//		addProductPanel.add(btnSubmit);
+//		addProductPanel.setVisible(false);
+//	}
 
 	private void modifyProductPanel() {
 
@@ -717,5 +762,21 @@ public class ManagerPanel extends JFrame {
 
 	public void setWelcomeScreen(WelcomeScreen welcomeScreen) {
 		this.welcomeScreen = welcomeScreen;
+	}
+
+
+
+	public JTextField getSupplierIDField() {
+		return supplierIDField;
+	}
+
+
+	public JTextField getSupplierFirstNameField() {
+		return supplierFirstNameField;
+	}
+
+
+	public JTextField getSupplierLastNameField() {
+		return supplierLastNameField;
 	}
 }
