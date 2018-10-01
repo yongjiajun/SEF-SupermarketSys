@@ -19,7 +19,7 @@ import control.LoginController;
 
 public class WelcomeScreen extends JFrame {
 
-	private JPanel contentPane;
+	private JPanel contentPane, mainPanel;
 	private LoginScreen loginScreen;
 
 	public WelcomeScreen() {
@@ -30,46 +30,19 @@ public class WelcomeScreen extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		setResizable(false);
-		
 
-		JPanel mainPanel = new JPanel();
+		mainPanel = new JPanel();
 		mainPanel.setBackground(new Color(30, 144, 255));
 		mainPanel.setBounds(0, 0, 1200, 750);
 		contentPane.add(mainPanel);
 		mainPanel.setLayout(null);
 
-		JLabel grocerySystemTitle = new JLabel("Welcome to Kostco");
-		grocerySystemTitle.setForeground(new Color(255, 255, 255));
-		grocerySystemTitle.setFont(new Font("Lucida Grande", Font.BOLD, 25));
-		grocerySystemTitle.setBounds(777, 98, 245, 65);
-		mainPanel.add(grocerySystemTitle);
+		topBotPanel();
+		leftContent();
+		rightContent();
+	}
 
-		JLabel checkoutDescription = new JLabel("<html><div style='text-align: center;'>Self Service Checkout<br>(Members Only)<html>");
-		checkoutDescription.setForeground(Color.WHITE);
-		checkoutDescription.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		checkoutDescription.setBounds(797, 217, 208, 50);
-		mainPanel.add(checkoutDescription);
-
-		JButton btnStart = new JButton("START");
-		JRootPane rootPane = contentPane.getRootPane();
-		rootPane.setDefaultButton(btnStart);
-		btnStart.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				loginScreen.setVisible(true);
-				loginScreen.setWelcomeScreen(getWelcomeScreen());
-				getWelcomeScreen().setVisible(false);
-			}
-		});
-		btnStart.setBounds(788, 465, 225, 81);
-		mainPanel.add(btnStart);
-
-		JLabel startDescription = new JLabel("Press \"Start\" to begin Self Service");
-		startDescription.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
-		startDescription.setForeground(new Color(255, 255, 255));
-		startDescription.setBounds(772, 437, 264, 24);
-		mainPanel.add(startDescription);
-
+	public void topBotPanel() {
 		JPanel dateTimePanel = new JPanel();
 		dateTimePanel.setBackground(new Color(102, 102, 102));
 		dateTimePanel.setForeground(new Color(102, 102, 102));
@@ -83,14 +56,14 @@ public class WelcomeScreen extends JFrame {
 		welcomeLbl.setBounds(548, 8, 104, 30);
 		dateTimePanel.add(welcomeLbl);
 
-		//Need to fix so the time changes value overtime. Integrate ClockPanel if you know how
+		// Need to fix so the time changes value overtime. Integrate ClockPanel if you
+		// know how
 		String date = new SimpleDateFormat("[dd/MM/yyyy] [hh:mm:ss]").format(new Date());
-        JLabel labelTime = new JLabel(date);
-        labelTime.setFont(new Font("Lucida Grande", Font.BOLD, 16));
-        labelTime.setForeground(Color.WHITE);
-        labelTime.setBounds(975, 9, 220, 30);
- 		dateTimePanel.add(labelTime);
-
+		JLabel labelTime = new JLabel(date);
+		labelTime.setFont(new Font("Lucida Grande", Font.BOLD, 16));
+		labelTime.setForeground(Color.WHITE);
+		labelTime.setBounds(975, 9, 220, 30);
+		dateTimePanel.add(labelTime);
 
 		JPanel assisstancePanel = new JPanel();
 		assisstancePanel.setForeground(new Color(102, 102, 102));
@@ -111,19 +84,56 @@ public class WelcomeScreen extends JFrame {
 		requireAssistanceBtn.setOpaque(true);
 		requireAssistanceBtn.setBounds(970, 7, 219, 38);
 		assisstancePanel.add(requireAssistanceBtn);
+	}
 
+	public void leftContent() {
 		JPanel imagePanel = new JPanel();
 		imagePanel.setBounds(75, 105, 450, 520);
 		mainPanel.add(imagePanel);
 	}
 	
+	public void rightContent() {
+		JLabel grocerySystemTitle = new JLabel("Welcome to Kostco");
+		grocerySystemTitle.setForeground(new Color(255, 255, 255));
+		grocerySystemTitle.setFont(new Font("Lucida Grande", Font.BOLD, 25));
+		grocerySystemTitle.setBounds(777, 98, 245, 65);
+		mainPanel.add(grocerySystemTitle);
+		
+		JLabel checkoutDescription = new JLabel(
+				"<html><div style='text-align: center;'>Self Service Checkout<br>(Members Only)<html>");
+		checkoutDescription.setForeground(Color.WHITE);
+		checkoutDescription.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
+		checkoutDescription.setBounds(797, 217, 208, 50);
+		mainPanel.add(checkoutDescription);
+		
+		JLabel startDescription = new JLabel("Press \"Start\" to begin Self Service");
+		startDescription.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
+		startDescription.setForeground(new Color(255, 255, 255));
+		startDescription.setBounds(772, 437, 264, 24);
+		mainPanel.add(startDescription);
+		
+		JButton btnStart = new JButton("START");
+		JRootPane rootPane = contentPane.getRootPane();
+		rootPane.setDefaultButton(btnStart);
+		btnStart.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				loginScreen.setVisible(true);
+				loginScreen.setWelcomeScreen(getWelcomeScreen());
+				getWelcomeScreen().setVisible(false);
+			}
+		});
+		btnStart.setBounds(788, 465, 225, 81);
+		mainPanel.add(btnStart);
+	}
+	
+	
 	public void setLoginScreen(LoginScreen loginScreen) {
 		this.loginScreen = loginScreen;
 	}
-	
+
 	public WelcomeScreen getWelcomeScreen() {
 		return this;
 	}
-	
 
 }

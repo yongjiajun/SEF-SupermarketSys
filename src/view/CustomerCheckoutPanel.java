@@ -152,7 +152,7 @@ public class CustomerCheckoutPanel extends JFrame {
 		cancelOrderBtn.setBounds(720, 7, 187, 38);
 		assisstancePanel.add(cancelOrderBtn);
 
-		logoutBtn = new JButton("Logout");
+		logoutBtn = new JButton("LOGOUT");
 		logoutBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
