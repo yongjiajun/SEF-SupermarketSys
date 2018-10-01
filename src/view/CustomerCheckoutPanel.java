@@ -1,28 +1,33 @@
 package view;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import control.EmployeeLoginController;
 
 public class CustomerCheckoutPanel extends JFrame {
 
-	private JPanel contentPane, mainPanel;
-	private JButton logoutBtn, finishAndPayBtn, removeItemBtn, requireAssistanceBtn;
+	private JPanel contentPane, mainPanel, enterItemPanel, selectItemPanel;
+	private JButton logoutBtn, finishAndPayBtn, removeItemBtn, requireAssistanceBtn, selectItemBtn, enterItemBtn;
 
 	public CustomerCheckoutPanel() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -38,12 +43,16 @@ public class CustomerCheckoutPanel extends JFrame {
 		contentPane.add(mainPanel);
 		mainPanel.setLayout(null);
 
-		JLabel grocerySystemTitle = new JLabel("Kostco Market");
-		grocerySystemTitle.setForeground(new Color(255, 255, 255));
-		grocerySystemTitle.setFont(new Font("Lucida Grande", Font.BOLD, 25));
-		grocerySystemTitle.setBounds(806, 96, 188, 70);
-		mainPanel.add(grocerySystemTitle);
 
+		topBotPanel();
+		leftSection();
+		rightSection();
+		selectItemPanel();
+		enterItemPanel();
+
+	}
+	
+	public void topBotPanel() {
 		JPanel dateTimePanel = new JPanel();
 		dateTimePanel.setBackground(new Color(102, 102, 102));
 		dateTimePanel.setForeground(new Color(102, 102, 102));
@@ -88,7 +97,7 @@ public class CustomerCheckoutPanel extends JFrame {
 				JLabel pwLabel = new JLabel("Password:");
 				JPasswordField pw = new JPasswordField();
 
-				Object[] array = {idLabel, id, pwLabel, pw };
+				Object[] array = { idLabel, id, pwLabel, pw };
 
 				int response;
 
@@ -118,7 +127,7 @@ public class CustomerCheckoutPanel extends JFrame {
 		requireAssistanceBtn.setBounds(970, 7, 219, 38);
 		assisstancePanel.add(requireAssistanceBtn);
 
-		JButton cancelOrderBtn = new JButton("Cancel Order");
+		JButton cancelOrderBtn = new JButton("CANCEL ORDER");
 		cancelOrderBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -153,28 +162,13 @@ public class CustomerCheckoutPanel extends JFrame {
 		logoutBtn.setBounds(18, 7, 187, 38);
 		logoutBtn.setVisible(false);
 		assisstancePanel.add(logoutBtn);
+	}
 
-		JButton selectItem = new JButton("Select Item");
-		selectItem.setBounds(751, 390, 298, 43);
-		mainPanel.add(selectItem);
-
-		JButton enterItemBtn = new JButton("Enter Item");
-		enterItemBtn.setBounds(751, 460, 298, 43);
-		mainPanel.add(enterItemBtn);
-
-		finishAndPayBtn = new JButton("Finish and Pay");
-		finishAndPayBtn.setBounds(751, 539, 298, 43);
-		mainPanel.add(finishAndPayBtn);
-		
-		removeItemBtn = new JButton("Remove Item");
-		removeItemBtn.setBounds(751, 539, 298, 43);
-		removeItemBtn.setVisible(false);
-		mainPanel.add(removeItemBtn);
-		
+	public void leftSection() {
 		JPanel imagePanel = new JPanel();
 		imagePanel.setBounds(66, 90, 471, 158);
 		mainPanel.add(imagePanel);
-
+		
 		JPanel itemListPanel = new JPanel();
 		itemListPanel.setBounds(66, 283, 471, 357);
 		mainPanel.add(itemListPanel);
@@ -190,7 +184,169 @@ public class CustomerCheckoutPanel extends JFrame {
 		separator.setBackground(Color.BLACK);
 		separator.setForeground(Color.BLACK);
 	}
+	
+	public void rightSection() {
+		JLabel grocerySystemTitle = new JLabel("Kostco Market");
+		grocerySystemTitle.setForeground(new Color(255, 255, 255));
+		grocerySystemTitle.setFont(new Font("Lucida Grande", Font.BOLD, 25));
+		grocerySystemTitle.setBounds(806, 96, 188, 70);
+		mainPanel.add(grocerySystemTitle);
+		
+		selectItemBtn = new JButton("Select Item");
+		selectItemBtn.setBounds(751, 390, 298, 43);
+		selectItemBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				selectItemPanel.setVisible(true);
+				displayButtons(false);
+			}
+		});
+		mainPanel.add(selectItemBtn);
+		
+		enterItemBtn = new JButton("Enter Item");
+		enterItemBtn.setBounds(751, 460, 298, 43);
+		enterItemBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				enterItemPanel.setVisible(true);
+				displayButtons(false);
+			}
+		});
+		mainPanel.add(enterItemBtn);
 
+		finishAndPayBtn = new JButton("Finish and Pay");
+		finishAndPayBtn.setBounds(751, 530, 298, 43);
+		mainPanel.add(finishAndPayBtn);
+
+		removeItemBtn = new JButton("Remove Item");
+		removeItemBtn.setBounds(751, 530, 298, 43);
+		removeItemBtn.setVisible(false);
+		mainPanel.add(removeItemBtn);
+	}
+	
+	public void enterItemPanel() {
+		enterItemPanel = new JPanel();
+		enterItemPanel.setBounds(701, 200, 398, 400);
+		enterItemPanel.setBackground(Color.WHITE);
+		enterItemPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		enterItemPanel.setLayout(null);
+		enterItemPanel.setVisible(false);
+		mainPanel.add(enterItemPanel);
+
+		JLabel enterItemLbl = new JLabel("Enter Item Info");
+		enterItemLbl.setBounds(115, 10, 170, 20);
+		enterItemLbl.setFont(new Font("Lucida Grande", Font.BOLD, 22));
+		enterItemPanel.add(enterItemLbl);
+
+		JLabel idLbl = new JLabel("ID", SwingConstants.CENTER);
+		idLbl.setBounds(48, 70, 76, 22);
+		idLbl.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
+		enterItemPanel.add(idLbl);
+
+		JTextField idTextField = new JTextField();
+		idTextField.setBounds(149, 65, 163, 32);
+		enterItemPanel.add(idTextField);
+
+		JLabel nameLbl = new JLabel("Name", SwingConstants.CENTER);
+		nameLbl.setBounds(48, 130, 76, 22);
+		nameLbl.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
+		enterItemPanel.add(nameLbl);
+
+		JTextField nameTextField = new JTextField();
+		nameTextField.setBounds(149, 125, 163, 32);
+		enterItemPanel.add(nameTextField);
+
+		JLabel weightLbl = new JLabel("Weight", SwingConstants.CENTER);
+		weightLbl.setBounds(48, 200, 76, 22);
+		weightLbl.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
+		enterItemPanel.add(weightLbl);
+
+		JTextField weightTextField = new JTextField();
+		weightTextField.setBounds(149, 195, 163, 32);
+		enterItemPanel.add(weightTextField);
+
+		JLabel quantityLbl = new JLabel("Quantity", SwingConstants.CENTER);
+		quantityLbl.setBounds(48, 270, 76, 22);
+		quantityLbl.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
+		enterItemPanel.add(quantityLbl);
+
+		JTextField quantityTextField = new JTextField();
+		quantityTextField.setBounds(149, 265, 163, 32);
+		enterItemPanel.add(quantityTextField);
+
+		JButton cancelBtn = new JButton("Cancel");
+		cancelBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				enterItemPanel.setVisible(false);
+				displayButtons(true);
+			}
+		});
+		cancelBtn.setBounds(25, 339, 122, 38);
+		enterItemPanel.add(cancelBtn);
+
+		JButton addBtn = new JButton("Add");
+		addBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// Add item to item list
+			}
+		});
+		addBtn.setBounds(251, 339, 122, 38);
+		enterItemPanel.add(addBtn);
+	}
+
+	public void selectItemPanel() {
+		selectItemPanel = new JPanel();
+		selectItemPanel.setBounds(701, 200, 398, 442);
+		selectItemPanel.setBackground(Color.WHITE);
+		selectItemPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		selectItemPanel.setLayout(null);
+		selectItemPanel.setVisible(false);
+		mainPanel.add(selectItemPanel);
+		
+		JTextArea itemTextArea = new JTextArea();
+		itemTextArea.setEditable(false);
+		
+		JScrollPane itemScrollPane = new JScrollPane(itemTextArea);
+		itemScrollPane.setPreferredSize(new Dimension(264, 200));
+		itemScrollPane.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		itemScrollPane.setBackground(Color.RED);
+		itemScrollPane.setVisible(true);
+		itemScrollPane.setBounds(25, 25, 348, 300);
+		selectItemPanel.add(itemScrollPane);
+		
+		JLabel quantityLbl = new JLabel("Quantity");
+		quantityLbl.setBounds(30, 341, 76, 22);
+		quantityLbl.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
+		selectItemPanel.add(quantityLbl);
+		
+		JTextField quantityTextField = new JTextField();
+		quantityTextField.setBounds(125, 336, 60, 32);
+		quantityTextField.setText("1");
+		quantityTextField.setHorizontalAlignment(JTextField.CENTER);
+		selectItemPanel.add(quantityTextField);
+		
+		JButton cancelBtn = new JButton("Cancel");
+		cancelBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				selectItemPanel.setVisible(false);
+				displayButtons(true);
+			}
+		});
+		cancelBtn.setBounds(25, 381, 122, 38);
+		selectItemPanel.add(cancelBtn);
+
+		JButton addBtn = new JButton("Add");
+		addBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// Add item to item list
+			}
+		});
+		addBtn.setBounds(251, 381, 122, 38);
+		selectItemPanel.add(addBtn);
+	}
+	
 	public void employeeLogin() {
 		logoutBtn.setVisible(true);
 		finishAndPayBtn.setVisible(false);
@@ -198,6 +354,7 @@ public class CustomerCheckoutPanel extends JFrame {
 		requireAssistanceBtn.setVisible(false);
 		mainPanel.setBackground(new Color(25, 150, 125));
 	}
+	
 
 	public void employeeLogout() {
 		logoutBtn.setVisible(false);
@@ -207,4 +364,18 @@ public class CustomerCheckoutPanel extends JFrame {
 		mainPanel.setBackground(new Color(30, 144, 255));
 	}
 
+	public void displayButtons(Boolean display) {
+		enterItemBtn.setVisible(display);
+		selectItemBtn.setVisible(display);
+		finishAndPayBtn.setVisible(display);
+		if (logoutBtn.isVisible()) {
+			removeItemBtn.setVisible(display);
+			finishAndPayBtn.setVisible(false);
+		}
+	}
+
+	
+	
+
+	
 }
