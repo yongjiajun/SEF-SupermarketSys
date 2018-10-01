@@ -1,5 +1,6 @@
 /client/
-/model/
 /control/
-/view/
+/images/
+/model/
 /test/
+/view/

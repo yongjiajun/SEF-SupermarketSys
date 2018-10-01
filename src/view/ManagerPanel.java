@@ -70,7 +70,7 @@ public class ManagerPanel extends JFrame {
 		viewSupplier();
 		addProductPanel();
 	}
-	
+
 	private void sideBarPanel() {
 		sideBarPanel = new JPanel();
 		sideBarPanel.setBackground(Color.DARK_GRAY);
@@ -416,13 +416,7 @@ public class ManagerPanel extends JFrame {
 					suppliersPanel.repaint();
 					suppliersPanel.revalidate();
 					break;
-//				case 3:
-//					viewSupplier();
-//					addSupplierPanel.setVisible(true);
-//					suppliersPanel.add(addSupplierPanel);
-//					suppliersPanel.repaint();
-//					suppliersPanel.revalidate();
-//					break;
+
 
 				}
 
@@ -439,15 +433,6 @@ public class ManagerPanel extends JFrame {
 		parentPanel.add(suppliersPanel);
 	}
 
-//	private void employeesPanel() {
-//
-//	}
-
-//	private void systemPanel() {
-//		systemPanel = new JPanel();
-//		systemPanel.setBackground(Color.YELLOW);
-//
-//	}
 
 	private void addProductPanel() {
 //		productsPanel();
@@ -502,20 +487,11 @@ public class ManagerPanel extends JFrame {
 		lblPrice.setBounds(120, 324, 84, 31);
 		addProductPanel.add(lblPrice);
 
-//		JLabel lblCategory = new JLabel("Category *");
-//		lblCategory.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-//		lblCategory.setBounds(120, 377, 101, 31);
-//		addProductPanel.add(lblCategory);
-
 		JLabel lblQuantity = new JLabel("Quantity *");
 		lblQuantity.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
 		lblQuantity.setBounds(120, 388, 101, 31);
 		addProductPanel.add(lblQuantity);
 
-//		JLabel lblStatus = new JLabel("Status *");
-//		lblStatus.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-//		lblStatus.setBounds(120, 504, 101, 31);
-//		addProductPanel.add(lblStatus);
 
 		productIdField = new JTextField();
 		productIdField.setBounds(265, 216, 256, 31);
@@ -540,10 +516,6 @@ public class ManagerPanel extends JFrame {
 		productQuantityBox.setBounds(265, 394, 93, 27);
 		addProductPanel.add(productQuantityBox);
 
-//		JComboBox productEnabledBox = new JComboBox();
-//		productEnabledBox.setBounds(265, 510, 93, 27);
-//		addProductPanel.add(productEnabledBox);
-
 		JButton btnSubmit = new JButton("Submit");
 
 		Object[] row = new Object[4];
@@ -557,20 +529,26 @@ public class ManagerPanel extends JFrame {
 //				String productID = productIdField.getText();
 //				String productName = productNameField.getText();
 //				double productPrice = Double.parseDouble(productPriceField.getText());
-////				String productCategory = (String) productCategoryBox.getSelectedItem();
+////			String productCategory = (String) productCategoryBox.getSelectedItem();
 //				int productQuantity = (int)productQuantityBox.getSelectedItem();
 
-//				addProduct.addItems(productIdField.getText(), productNameField.getText(), productPriceField.getText(), productQuantityBox.getSelectedIndex());
 
 				parentPanel.removeAll();
+//				addProductPanel.removeAll();
+
+				parentPanel.repaint();
+				parentPanel.revalidate();
 				productsPanel();
 				row[0] = productIdField.getText();
 				row[1] = productNameField.getText();
 				row[2] = productPriceField.getText();
 				row[3] = productQuantityBox.getSelectedItem();
 				model.addRow(row);
-				parentPanel.repaint();
-				parentPanel.revalidate();
+
+
+
+				addProduct.addItems(productIdField.getText(), productNameField.getText(), Double.parseDouble(productPriceField.getText()), productQuantityBox.getSelectedIndex());
+
 			}
 		});
 
@@ -727,6 +705,7 @@ public class ManagerPanel extends JFrame {
 				suppliersPanel();
 				parentPanel.repaint();
 				parentPanel.revalidate();
+
 			}
 		});
 	}

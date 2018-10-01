@@ -1,10 +1,12 @@
 package control;
 
 import model.system.Product;
+import model.system.ProductManager;
 import view.ManagerPanel;
 
 public class AddProductController   {
 
+	ProductManager pm = new ProductManager();
 
 	private String productName;
 	private int stockQty;
@@ -26,7 +28,10 @@ public class AddProductController   {
 
  			printProduct(newProduct);
  			newProduct.toString();
-		} catch (NumberFormatException e) {
+
+ 			pm.addProduct(newProduct);
+ 			pm.saveProducts();
+ 		} catch (NumberFormatException e) {
 			System.err.println("Incorrect Format!");
 		}
 	}
