@@ -19,10 +19,12 @@ public class AddProductController   {
 	public AddProductController(ManagerPanel view) {
 		this.view = view;
 //		pm.resetProducts();
+		pm.printSize();
 	}
 
-	public void addItems(String productID, String productName, double productPrice, int productQuantity) {
+	public void addRemoveModifyProduct(String productID, String productName, double productPrice, int productQuantity, boolean remove) {
 		try {
+			if (remove == false) {
 			Product[] products = new Product[0];
 			Product newProduct = new Product(productID, productName, productPrice, productQuantity);
 			products = addProduct(products, newProduct);
@@ -32,6 +34,12 @@ public class AddProductController   {
 
  			pm.addProduct(newProduct);
  			pm.saveProducts();
+			}
+			else if (remove == true){
+			pm.removeProduct(productID);
+			pm.saveProducts();
+			}
+
  		} catch (NumberFormatException e) {
 			System.err.println("Incorrect Format!");
 		}

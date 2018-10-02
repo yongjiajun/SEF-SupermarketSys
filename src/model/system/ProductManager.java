@@ -61,6 +61,7 @@ public class ProductManager {
 	public boolean removeProduct(String productID) {
 		if (products.containsKey(productID)) {
 			products.remove(productID);
+			System.out.println("Product " + productID + " Removed from the database!");
 			return true;
 		} else {
 			System.out.println("Product " + productID + " doesn't exist in database!");
