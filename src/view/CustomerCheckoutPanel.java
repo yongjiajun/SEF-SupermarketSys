@@ -257,8 +257,8 @@ public class CustomerCheckoutPanel extends JFrame {
 		enterItemIDPanel.setVisible(false);
 		mainPanel.add(enterItemIDPanel);
 
-		JLabel enterItemLbl = new JLabel("Enter Item ID and Weight");
-		enterItemLbl.setBounds(57, 25, 284, 30);
+		JLabel enterItemLbl = new JLabel("Enter Item ID and Quantity");
+		enterItemLbl.setBounds(47, 25, 304, 30);
 		enterItemLbl.setFont(new Font("Lucida Grande", Font.BOLD, 22));
 		enterItemIDPanel.add(enterItemLbl);
 
@@ -349,8 +349,8 @@ public class CustomerCheckoutPanel extends JFrame {
 		enterItemNamePanel.setVisible(false);
 		mainPanel.add(enterItemNamePanel);
 
-		JLabel enterItemLbl = new JLabel("Enter Item ID and Quantity");
-		enterItemLbl.setBounds(48, 25, 302, 30);
+		JLabel enterItemLbl = new JLabel("Enter Item Name and Weight");
+		enterItemLbl.setBounds(37, 25, 324, 30);
 		enterItemLbl.setFont(new Font("Lucida Grande", Font.BOLD, 22));
 		enterItemNamePanel.add(enterItemLbl);
 
@@ -408,8 +408,8 @@ public class CustomerCheckoutPanel extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				boolean error = false;
 				try {
-					String id = idTextField.getText();
-					int quantity = Integer.parseInt(quantityTextField.getText());
+					String name = nameTextField.getText();
+					double weight = Double.parseDouble(weightTextField.getText());
 				} catch (NumberFormatException e1) {
 					System.err.println(e1);
 					errorMessage.setText("Please enter all information correctly");
