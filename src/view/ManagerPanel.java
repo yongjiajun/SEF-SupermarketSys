@@ -37,6 +37,7 @@ public class ManagerPanel extends JFrame {
 	private JTextField productIdField, productNameField, productPriceField, supplierIDField, supplierPinField,
 			supplierFirstNameField, supplierLastNameField, companyNameField, contactNoField, emailField, locationField;
 
+	public static final String DOLLAR_SIGN = "$";
 	private AddProductController addProduct = new AddProductController(this);
 	private Supplier supplier;
 	private JTable table;
@@ -74,7 +75,6 @@ public class ManagerPanel extends JFrame {
 		viewSupplier();
 //		addProductPanel();
 	}
-
 
 	private void sideBarPanel() {
 		sideBarPanel = new JPanel();
@@ -303,75 +303,112 @@ public class ManagerPanel extends JFrame {
 		productsTitle.setBounds(19, 6, 188, 38);
 		productsPanel.add(productsTitle);
 
-		JPanel panel = new JPanel();
-		panel.setBackground(new Color(128, 128, 128));
-		panel.setBounds(6, 78, 1030, 84);
-		productsPanel.add(panel);
-		panel.setLayout(null);
+		JPanel productPanelSection = new JPanel();
+		productPanelSection.setBackground(new Color(128, 128, 128));
+		productPanelSection.setBounds(6, 78, 1030, 84);
+		productsPanel.add(productPanelSection);
+		productPanelSection.setLayout(null);
+//		productPanelSection.setVisible(false);
 
 		String[] actionNames = { "Add Item", "Remove Item", "Modify Item" };
-		JComboBox actionBox = new JComboBox(actionNames);
-		actionBox.setBounds(833, 23, 166, 40);
-		panel.add(actionBox);
 
 		JLabel IDLbl = new JLabel("ID");
 		IDLbl.setBounds(105, 6, 99, 16);
-		panel.add(IDLbl);
+		productPanelSection.add(IDLbl);
 
 		JLabel producTNmeLbl = new JLabel("Name");
 		producTNmeLbl.setBounds(216, 6, 99, 16);
-		panel.add(producTNmeLbl);
+		productPanelSection.add(producTNmeLbl);
 
 		JLabel productPriceLbl = new JLabel("Price");
 		productPriceLbl.setBounds(347, 6, 99, 16);
-		panel.add(productPriceLbl);
+		productPanelSection.add(productPriceLbl);
 
 		JLabel productQuantityLbl = new JLabel("Quantity");
 		productQuantityLbl.setBounds(469, 6, 99, 16);
-		panel.add(productQuantityLbl);
+		productPanelSection.add(productQuantityLbl);
 
 		productNamefield = new JTextField();
 		productNamefield.setBounds(185, 52, 130, 26);
-		panel.add(productNamefield);
+		productPanelSection.add(productNamefield);
 		productNamefield.setColumns(10);
 
 		productPricefield = new JTextField();
 		productPricefield.setColumns(10);
 		productPricefield.setBounds(327, 52, 99, 26);
-		panel.add(productPricefield);
+		productPanelSection.add(productPricefield);
 
 		productQuantityField = new JTextField();
 		productQuantityField.setColumns(10);
 		productQuantityField.setBounds(438, 52, 130, 26);
-		panel.add(productQuantityField);
+		productPanelSection.add(productQuantityField);
 
 		productiDfield = new JTextField();
 		productiDfield.setColumns(10);
 		productiDfield.setBounds(99, 52, 72, 26);
-		panel.add(productiDfield);
+		productPanelSection.add(productiDfield);
 
-		JButton addBtn = new JButton("Add");
+		JButton AddButton = new JButton("Add");
+		JButton ModifyButton = new JButton("Modify");
+		ModifyButton.setBounds(742, 23, 117, 29);
+		productPanelSection.add(ModifyButton);
+
+
 		Object[] row = new Object[4];
-		addBtn.addActionListener(new ActionListener() {
+
+		AddButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				row[0] = productiDfield.getText();
 				row[1] = productNamefield.getText();
-				row[2] = productPricefield.getText();
+				row[2] = DOLLAR_SIGN + productPricefield.getText();
 				row[3] = productQuantityField.getText();
 				model.addRow(row);
 
-				addProduct.addItems(productiDfield.getText(), productNamefield.getText(), Double.parseDouble(productPricefield.getText()), Integer.parseInt(productQuantityField.getText()));
+				addProduct.addItems(productiDfield.getText(), productNamefield.getText(),
+						Double.parseDouble(productPricefield.getText()),
+						Integer.parseInt(productQuantityField.getText()));
+
+			}
+		});
+
+
+		ModifyButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int getSelectedRow = table.getSelectedRow();
+
+				if (getSelectedRow >= 0) {
+ 					model.setValueAt(productiDfield.getText(), getSelectedRow, 0);
+					model.setValueAt(productNamefield.getText(), getSelectedRow, 1);
+					model.setValueAt(DOLLAR_SIGN + productPricefield.getText(), getSelectedRow, 2);
+					model.setValueAt(productQuantityField.getText(), getSelectedRow, 3);
 
 				}
+			}
 		});
-		addBtn.setBounds(603, 29, 117, 29);
-		panel.add(addBtn);
+
+		AddButton.setBounds(613, 23, 117, 29);
+		productPanelSection.add(AddButton);
+
+
+
+		JButton removeBtn = new JButton("Remove");
+		removeBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int getSelectedRow = table.getSelectedRow();
+				if (getSelectedRow >= 0) {
+					model.removeRow(getSelectedRow);
+				}
+			}
+		});
+		removeBtn.setBounds(871, 23, 117, 29);
+		productPanelSection.add(removeBtn);
 
 		table = new JTable();
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.setBounds(19, 208, 1008, 460);
-		// addProduct.addItems(productID, productName, productPrice, productQuantity);
 
 		Object[] columns = { "ID", "Name", "Price", "Quantity" };
 		model = new DefaultTableModel();
@@ -386,37 +423,8 @@ public class ManagerPanel extends JFrame {
 		JScrollPane pane = new JScrollPane(table);
 		pane.setBounds(34, 253, 951, 440);
 		productsPanel.add(pane);
-//		productsPanel.add(table);
 
-		ActionListener actionListener = new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent actionEvent) {
-//		    	  Add Item
-				int selectedActiom = actionBox.getSelectedIndex();
 
-				switch (selectedActiom) {
-				case 0:
-					productsPanel.removeAll();
-//					addProductPanel();
-					addProductPanel.setVisible(true);
-					productsPanel.add(addProductPanel);
-					productsPanel.repaint();
-					productsPanel.revalidate();
-					break;
-
-				case 1:
-					removeProductPanel();
-					break;
-
-				case 2:
-
-					break;
-				}
-			}
-
-		};
-
-		actionBox.addActionListener(actionListener);
 //
 	}
 
@@ -471,7 +479,6 @@ public class ManagerPanel extends JFrame {
 					suppliersPanel.revalidate();
 					break;
 
-
 				}
 
 			}
@@ -486,7 +493,6 @@ public class ManagerPanel extends JFrame {
 		reportPanel.setBackground(Color.PINK);
 		parentPanel.add(suppliersPanel);
 	}
-
 
 //	private void addProductPanel() {
 ////		productsPanel();
@@ -764,17 +770,13 @@ public class ManagerPanel extends JFrame {
 		this.welcomeScreen = welcomeScreen;
 	}
 
-
-
 	public JTextField getSupplierIDField() {
 		return supplierIDField;
 	}
 
-
 	public JTextField getSupplierFirstNameField() {
 		return supplierFirstNameField;
 	}
-
 
 	public JTextField getSupplierLastNameField() {
 		return supplierLastNameField;
