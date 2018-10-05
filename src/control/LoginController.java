@@ -16,7 +16,7 @@ public class LoginController {
 	private AccountManager accountManager;
 	private Boolean loginPass;
 	private WelcomeScreen welcomeScreen;
-	
+
 	// Originally no constructor
 	public LoginController() {
 		accountManager = new AccountManager();
@@ -39,7 +39,7 @@ public class LoginController {
 						view.setVisible(false);;
 					}
 				}
-	
+
 				break;
 			// SalesStaff Login
 			case 'S':
@@ -52,7 +52,7 @@ public class LoginController {
 				break;
 			// Customer Login
 			case 'C':
-				
+
 				if (accountManager.getCustomer(id) != null) {
 					if (accountManager.getCustomer(id).getUserPIN().equals(new String(pass))) {
 						loginPass = true;
@@ -72,26 +72,26 @@ public class LoginController {
 						Supplier supplier = accountManager.getSupplier(id);
 					}
 				}
-	
+
 				break;
 			}
 		} catch(IndexOutOfBoundsException e) {
 			System.err.println("Must fill out the form");
 		}
-		
+
 		view.clearField();
 		view.setErrorMessageVisible(loginPass);
-		
+
 	}
-	
+
 	public void setAccountManager(AccountManager am) {
 		this.accountManager = am;
 	}
-	
+
 	public void setView(LoginScreen view) {
 		this.view = view;
 	}
-	
+
 	public void setWelcomeScreen(WelcomeScreen welcomeScreen) {
 		this.welcomeScreen = welcomeScreen;
 	}

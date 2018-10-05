@@ -192,7 +192,7 @@ public class AccountManager {
 	         return;
 	      }
 	}
-	
+
 	// always call this function before shutdown
 	public void saveUsers()
 	{
@@ -222,7 +222,7 @@ public class AccountManager {
 	         i.printStackTrace();
 	      }
 	}
-	
+
 	// DEBUG ONLY, call this before saving!
 	public void resetUsers()
 	{
@@ -232,7 +232,7 @@ public class AccountManager {
 		suppliers = new HashMap<String, Supplier>();
 		System.out.println("Users reset!");
 	}
-	
+
 	// Print amount of users in .ser file
 	public void printSize() {
 		System.out.println("Customers: " + customers.size());
