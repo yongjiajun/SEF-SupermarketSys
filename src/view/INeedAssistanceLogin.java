@@ -16,6 +16,8 @@ import javax.swing.JRootPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import control.EmployeeLoginController;
+
 public class INeedAssistanceLogin extends JFrame {
 
 	private JPanel contentPane, mainPanel;

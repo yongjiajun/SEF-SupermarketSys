@@ -16,7 +16,7 @@ public class SalesManager {
 	{
 		initialiseSales();
 	}
-
+	
 	private ArrayList <Sale> sales = new ArrayList<Sale>();
 
 	// iterate through!!!
@@ -27,7 +27,7 @@ public class SalesManager {
 	public void addSale(Sale sale) {
 		sales.add(sale);
 	}
-
+	
 	public Sale getSaleViaOrderID(long orderID)
 	{
 		for (int i = 0; i < sales.size(); i++)
@@ -39,7 +39,7 @@ public class SalesManager {
 		}
 		return null;
 	}
-
+	
 	public Sale getSales(Sale sale)
 	{
 		for (int i = 0; i < sales.size(); i++)
@@ -51,13 +51,13 @@ public class SalesManager {
 		}
 		return null;
 	}
-
+	
 	// get/search first then remove
 	public void removeSale(Sale sale)
 	{
 		sales.remove(sale);
 	}
-
+	
 	private void initialiseSales()
 	{
 		try {
@@ -76,7 +76,7 @@ public class SalesManager {
 	         return;
 	      }
 	}
-
+	
 	public void saveSales()
 	{
 		try {
@@ -90,7 +90,7 @@ public class SalesManager {
 	         i.printStackTrace();
 	      }
 	}
-
+	
 	// DEBUG ONLY, call this before saving!
 	public void resetSales()
 	{

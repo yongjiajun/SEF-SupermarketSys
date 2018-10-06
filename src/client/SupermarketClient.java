@@ -10,7 +10,7 @@ import model.system.SalesManager;
 import view.LoginScreen;
 import view.WelcomeScreen;
 
-public class SupermarketClient {
+public class SupermarketClient {	
 
 	public static void main(String[] arg) {
 		EventQueue.invokeLater(new Runnable() {
@@ -22,30 +22,29 @@ public class SupermarketClient {
 				try {
 					LoginController loginController = new LoginController();
 //					loginController.setAccountManager(am);
-
+					
 					LoginScreen loginScreen = new LoginScreen();
 					loginScreen.setLoginController(loginController);
-
+					
 					loginController.setView(loginScreen);
-
+					
 					WelcomeScreen welcomeScreen = new WelcomeScreen();
 					welcomeScreen.setLoginScreen(loginScreen);
 					welcomeScreen.setVisible(true);
-
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-
+				
 				// run codes on exit
 				Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
-			        @Override
-					public void run() {
+			        public void run() {
 			        	pm.saveProducts();
-						am.saveUsers();
+						am.saveUsers();	
 						sr.saveSales();
 			        }
 			    }, "Shutdown-thread"));
-
+				
 			}
 		});
 

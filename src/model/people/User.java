@@ -13,7 +13,6 @@ public abstract class User implements Serializable {
 		this.userLName = userLName;
 	}
 
-
 	public String getUserID() {
 		return userID;
 	}

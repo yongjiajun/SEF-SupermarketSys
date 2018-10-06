@@ -23,7 +23,7 @@ public class Customer extends User{
 	public void deductLoyaltyPts(int pts) {
 		this.loyaltyPts -= pts;
 	}
-
+	
 	// if hasCreditCard == false, user will be prompted to create 1 after logging in!
 	public boolean hasCreditCard()
 	{
@@ -32,12 +32,12 @@ public class Customer extends User{
 		else
 			return true;
 	}
-
+	
 	public CreditCard getCreditCard()
 	{
 		return creditCard;
 	}
-
+	
 	public void setCreditCard(CreditCard creditCard)
 	{
 		this.creditCard = creditCard;

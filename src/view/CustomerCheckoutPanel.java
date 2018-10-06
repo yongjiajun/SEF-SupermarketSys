@@ -240,7 +240,6 @@ public class CustomerCheckoutPanel extends JFrame {
 		removeItemBtn.setBounds(751, 530, 298, 43);
 		removeItemBtn.setVisible(false);
 		removeItemBtn.addActionListener(new ActionListener() {
-			@Override
 			public void actionPerformed(ActionEvent e) {
 				removeItemPanel.setVisible(true);
 				displayButtons(false);
@@ -279,12 +278,10 @@ public class CustomerCheckoutPanel extends JFrame {
 		idTextField = new JTextField();
 		idTextField.setBounds(149, 75, 163, 32);
 		idTextField.addFocusListener(new java.awt.event.FocusAdapter() {
-			@Override
 			public void focusGained(java.awt.event.FocusEvent evt) {
 				errorMessage.setVisible(false);
 			}
 
-			@Override
 			public void focusLost(java.awt.event.FocusEvent evt) {
 				idTextField.setText(idTextField.getText().toUpperCase());
 			}
@@ -299,7 +296,6 @@ public class CustomerCheckoutPanel extends JFrame {
 		quantityTextField = new JTextField();
 		quantityTextField.setBounds(149, 127, 163, 32);
 		quantityTextField.addFocusListener(new java.awt.event.FocusAdapter() {
-			@Override
 			public void focusGained(java.awt.event.FocusEvent evt) {
 				errorMessage.setVisible(false);
 			}
@@ -321,7 +317,6 @@ public class CustomerCheckoutPanel extends JFrame {
 		JButton addBtn = new JButton("Add");
 		addBtn.setBounds(251, 207, 122, 38);
 		addBtn.addActionListener(new ActionListener() {
-			@Override
 			public void actionPerformed(ActionEvent e) {
 				boolean error = false;
 				try {
@@ -375,7 +370,6 @@ public class CustomerCheckoutPanel extends JFrame {
 		nameTextField = new JTextField();
 		nameTextField.setBounds(149, 75, 163, 32);
 		nameTextField.addFocusListener(new java.awt.event.FocusAdapter() {
-			@Override
 			public void focusGained(java.awt.event.FocusEvent evt) {
 				errorMessage.setVisible(false);
 			}
@@ -390,7 +384,6 @@ public class CustomerCheckoutPanel extends JFrame {
 		weightTextField = new JTextField();
 		weightTextField.setBounds(149, 127, 163, 32);
 		weightTextField.addFocusListener(new java.awt.event.FocusAdapter() {
-			@Override
 			public void focusGained(java.awt.event.FocusEvent evt) {
 				errorMessage.setVisible(false);
 			}
@@ -412,7 +405,6 @@ public class CustomerCheckoutPanel extends JFrame {
 		JButton addBtn = new JButton("Add");
 		addBtn.setBounds(251, 207, 122, 38);
 		addBtn.addActionListener(new ActionListener() {
-			@Override
 			public void actionPerformed(ActionEvent e) {
 				boolean error = false;
 				try {
@@ -481,7 +473,6 @@ public class CustomerCheckoutPanel extends JFrame {
 		JButton addBtn = new JButton("Add");
 		addBtn.setBounds(251, 381, 122, 38);
 		addBtn.addActionListener(new ActionListener() {
-			@Override
 			public void actionPerformed(ActionEvent e) {
 				// Add item to item list
 			}
@@ -522,7 +513,6 @@ public class CustomerCheckoutPanel extends JFrame {
 		JButton removeBtn = new JButton("Remove");
 		removeBtn.setBounds(251, 381, 122, 38);
 		removeBtn.addActionListener(new ActionListener() {
-			@Override
 			public void actionPerformed(ActionEvent e) {
 				// Remove item from item list
 			}

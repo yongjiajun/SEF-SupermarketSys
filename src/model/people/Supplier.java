@@ -1,9 +1,8 @@
 package model.people;
 
 public class Supplier extends User{
-
-	private String  supplierCompanyName, supplierContactNo, supplierEmail, supplierLocation;
-
+	
+	private String supplierCompanyName, supplierContactNo, supplierEmail, supplierLocation;
 
 	public Supplier(String supplierID, String supplierPIN, String supplierFName, String supplierLName,
 			String supplierCompanyName, String supplierContactNo, String supplierEmail, String supplierLocation) {
@@ -13,8 +12,6 @@ public class Supplier extends User{
 		this.supplierEmail = supplierEmail;
 		this.supplierLocation = supplierLocation;
 	}
-
-
 
 	public String getSupplierCompanyName() {
 		return supplierCompanyName;

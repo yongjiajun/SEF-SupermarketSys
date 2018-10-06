@@ -48,11 +48,6 @@ public class ManagerPanel extends JFrame {
 	private JTextField productPricefield;
 	private JTextField productQuantityField;
 	private JTextField productiDfield;
-	private JTextField supplierIdField;
-	private JTextField supplierCompanyNameField;
-	private JTextField suplpierContactNoField;
-	private JTextField supplierEmailField;
-	private JTextField supplierLocationField;
 
 	public ManagerPanel(Manager manager) {
 		this.manager = manager;
@@ -471,72 +466,13 @@ public class ManagerPanel extends JFrame {
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
 		panel.setBackground(Color.GRAY);
-		panel.setBounds(6, 55, 1030, 98);
+		panel.setBounds(6, 69, 1030, 84);
 		suppliersPanel.add(panel);
 
 		String[] actionNames = { "Add Supplier", "Remove Supplier", "Edit Supplier Details" };
-
-		JLabel supplierIDLbl = new JLabel("Supplier ID");
-		supplierIDLbl.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		supplierIDLbl.setBounds(6, 6, 111, 26);
-		panel.add(supplierIDLbl);
-
-		JLabel companyName = new JLabel("Company Name");
-		companyName.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		companyName.setBounds(126, 6, 142, 26);
-		panel.add(companyName);
-
-		JLabel supplierContactNo = new JLabel("Contact Number");
-		supplierContactNo.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		supplierContactNo.setBounds(292, 6, 130, 26);
-		panel.add(supplierContactNo);
-
-		JLabel supplierEmail = new JLabel("Email");
-		supplierEmail.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		supplierEmail.setBounds(510, 6, 111, 26);
-		panel.add(supplierEmail);
-
-		JLabel supplierLocation = new JLabel("Location");
-		supplierLocation.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		supplierLocation.setBounds(720, 6, 111, 26);
-		panel.add(supplierLocation);
-
-		supplierIdField = new JTextField();
-		supplierIdField.setBounds(6, 52, 84, 26);
-		panel.add(supplierIdField);
-		supplierIdField.setColumns(10);
-
-		supplierCompanyNameField = new JTextField();
-		supplierCompanyNameField.setColumns(10);
-		supplierCompanyNameField.setBounds(113, 52, 142, 26);
-		panel.add(supplierCompanyNameField);
-
-		suplpierContactNoField = new JTextField();
-		suplpierContactNoField.setColumns(10);
-		suplpierContactNoField.setBounds(280, 52, 130, 26);
-		panel.add(suplpierContactNoField);
-
-		supplierEmailField = new JTextField();
-		supplierEmailField.setColumns(10);
-		supplierEmailField.setBounds(445, 52, 176, 26);
-		panel.add(supplierEmailField);
-
-		supplierLocationField = new JTextField();
-		supplierLocationField.setColumns(10);
-		supplierLocationField.setBounds(656, 52, 204, 26);
-		panel.add(supplierLocationField);
-
-		JButton btnAdd = new JButton("Add");
-		btnAdd.setBounds(890, 7, 117, 29);
-		panel.add(btnAdd);
-
-		JButton removeBtn = new JButton("Remove");
-		removeBtn.setBounds(890, 37, 117, 29);
-		panel.add(removeBtn);
-
-		JButton modifyBtn = new JButton("Modify");
-		modifyBtn.setBounds(890, 63, 117, 29);
-		panel.add(modifyBtn);
+		JComboBox comboBox = new JComboBox(actionNames);
+		comboBox.setBounds(833, 23, 166, 40);
+		panel.add(comboBox);
 
 		JPanel supplierMainPanel = new JPanel();
 		supplierMainPanel.setBounds(6, 192, 1012, 496);
@@ -546,6 +482,28 @@ public class ManagerPanel extends JFrame {
 		Object[] columns = { "ID", "First Name", "Last Name", "Company Name", "Contact No", "Email", "Location" };
 		model.setColumnIdentifiers(columns);
 
+		ActionListener actionListener = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent actionEvent) {
+				int selectedAction = comboBox.getSelectedIndex();
+
+				switch (selectedAction) {
+				case 0:
+
+					suppliersPanel.removeAll();
+					addSupplier();
+					addSupplierPanel.setVisible(true);
+					suppliersPanel.add(addSupplierPanel);
+					suppliersPanel.repaint();
+					suppliersPanel.revalidate();
+					break;
+
+				}
+
+			}
+		};
+
+		comboBox.addActionListener(actionListener);
 
 	}
 

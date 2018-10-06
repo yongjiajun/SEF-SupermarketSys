@@ -15,6 +15,8 @@ import javax.swing.JPanel;
 import javax.swing.JRootPane;
 import javax.swing.border.EmptyBorder;
 
+import control.LoginController;
+
 public class WelcomeScreen extends JFrame {
 
 	private JPanel contentPane, mainPanel;
@@ -89,27 +91,27 @@ public class WelcomeScreen extends JFrame {
 		imagePanel.setBounds(75, 105, 450, 520);
 		mainPanel.add(imagePanel);
 	}
-
+	
 	public void rightContent() {
 		JLabel grocerySystemTitle = new JLabel("Welcome to Kostco");
 		grocerySystemTitle.setForeground(new Color(255, 255, 255));
 		grocerySystemTitle.setFont(new Font("Lucida Grande", Font.BOLD, 25));
 		grocerySystemTitle.setBounds(777, 98, 245, 65);
 		mainPanel.add(grocerySystemTitle);
-
+		
 		JLabel checkoutDescription = new JLabel(
 				"<html><div style='text-align: center;'>Self Service Checkout<br>(Members Only)<html>");
 		checkoutDescription.setForeground(Color.WHITE);
 		checkoutDescription.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
 		checkoutDescription.setBounds(797, 217, 208, 50);
 		mainPanel.add(checkoutDescription);
-
+		
 		JLabel startDescription = new JLabel("Press \"Start\" to begin Self Service");
 		startDescription.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
 		startDescription.setForeground(new Color(255, 255, 255));
 		startDescription.setBounds(772, 437, 264, 24);
 		mainPanel.add(startDescription);
-
+		
 		JButton btnStart = new JButton("START");
 		JRootPane rootPane = contentPane.getRootPane();
 		rootPane.setDefaultButton(btnStart);
@@ -124,8 +126,8 @@ public class WelcomeScreen extends JFrame {
 		btnStart.setBounds(788, 465, 225, 81);
 		mainPanel.add(btnStart);
 	}
-
-
+	
+	
 	public void setLoginScreen(LoginScreen loginScreen) {
 		this.loginScreen = loginScreen;
 	}
