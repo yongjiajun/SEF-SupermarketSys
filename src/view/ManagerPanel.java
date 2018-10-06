@@ -27,6 +27,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import control.AddProductController;
+import control.AddSupplierController;
 import model.people.Manager;
 
 public class ManagerPanel extends JFrame {
@@ -35,11 +36,16 @@ public class ManagerPanel extends JFrame {
 			suppliersPanel, salesPanel, reportPanel, viewSupplier;
 
 	public static final String DOLLAR_SIGN = "$";
+
 	private AddProductController addProduct = new AddProductController(this);
+	private AddSupplierController addSupplier = new AddSupplierController(this);
+
 	private JTable table;
 	private WelcomeScreen welcomeScreen;
 	private DefaultTableModel model;
 	private Manager manager;
+
+
 	private JTextField productNamefield;
 	private JTextField productPricefield;
 	private JTextField productQuantityField;
@@ -502,6 +508,14 @@ public class ManagerPanel extends JFrame {
 
 				supplyModel.addRow(row);
 
+//				addProduct.addRemoveModifyProduct(productiDfield.getText(), productNamefield.getText(),
+//						Double.parseDouble(productPricefield.getText()),
+//						Integer.parseInt(productQuantityField.getText()), true);
+//			}
+
+//				Supplier newSupplier = new Supplier(supplierID,"", "", "", companyName, contactNo, email, location);
+				addSupplier.addRemoveUpdateSupplier(supplierID.getText(), "","","", supplierCompanyNameField.getText(), supplierContactNoField.getText(), supplierEmailField.getText(), supplierLocationField.getText(), false);
+
 			}
 		});
 		addBtn.setBounds(894, 7, 117, 29);
@@ -514,6 +528,9 @@ public class ManagerPanel extends JFrame {
 				int getSelectedRow = supplierTable.getSelectedRow();
 				if (getSelectedRow >= 0) {
 					supplyModel.removeRow(getSelectedRow);
+
+					addSupplier.addRemoveUpdateSupplier(supplierID.getText(), "","","", supplierCompanyNameField.getText(), supplierContactNoField.getText(), supplierEmailField.getText(), supplierLocationField.getText(), true);
+
 				}
 
 			}
@@ -534,6 +551,9 @@ public class ManagerPanel extends JFrame {
 					supplyModel.setValueAt(supplierContactNoField.getText(), getSelectedRow, 2);
 					supplyModel.setValueAt(supplierEmailField.getText(), getSelectedRow, 3);
 					supplyModel.setValueAt(supplierLocationField.getText(), getSelectedRow, 4);
+
+					addSupplier.addRemoveUpdateSupplier(supplierID.getText(), "","","", supplierCompanyNameField.getText(), supplierContactNoField.getText(), supplierEmailField.getText(), supplierLocationField.getText(), false);
+
 
 				}
 

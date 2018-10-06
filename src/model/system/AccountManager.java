@@ -149,16 +149,26 @@ public class AccountManager {
 		}
 	}
 
-	public boolean removeSupplier(Supplier supplier) {
-		String temp = supplier.getUserID();
-		if (suppliers.containsValue(supplier)) {
-			suppliers.remove(temp);
+	public boolean removeSupplier(String supplierID) {
+		if (suppliers.containsKey(supplierID)) {
+			suppliers.remove(supplierID);
+			System.out.println("Supplier " + supplierID + " removed from the database!");
 			return true;
-		} else {
-			System.out.println("Supplier " + temp + " doesn't exist in database!");
+		}else {
+			System.out.println("Supplier " + supplierID + " doesn't exist in the database!");
 			return false;
 		}
 	}
+//	public boolean removeSupplier(Supplier supplier) {
+//		String temp = supplier.getUserID();
+//		if (suppliers.containsValue(supplier)) {
+//			suppliers.remove(temp);
+//			return true;
+//		} else {
+//			System.out.println("Supplier " + temp + " doesn't exist in database!");
+//			return false;
+//		}
+//	}
 
 	private void initialiseUsers()
 	{
@@ -192,7 +202,7 @@ public class AccountManager {
 	         return;
 	      }
 	}
-	
+
 	// always call this function before shutdown
 	public void saveUsers()
 	{
@@ -222,7 +232,7 @@ public class AccountManager {
 	         i.printStackTrace();
 	      }
 	}
-	
+
 	// DEBUG ONLY, call this before saving!
 	public void resetUsers()
 	{
@@ -232,7 +242,7 @@ public class AccountManager {
 		suppliers = new HashMap<String, Supplier>();
 		System.out.println("Users reset!");
 	}
-	
+
 	// Print amount of users in .ser file
 	public void printSize() {
 		System.out.println("Customers: " + customers.size());

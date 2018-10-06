@@ -1,7 +1,7 @@
 package model.people;
 
 public class Supplier extends User{
-	
+
 	private String supplierCompanyName, supplierContactNo, supplierEmail, supplierLocation;
 
 	public Supplier(String supplierID, String supplierPIN, String supplierFName, String supplierLName,
@@ -12,6 +12,12 @@ public class Supplier extends User{
 		this.supplierEmail = supplierEmail;
 		this.supplierLocation = supplierLocation;
 	}
+
+//	public Supplier(String supplierID, String supplierCompanyName, String supplierContactNo, String supplierEmail, String supplierLocation) {
+//		super(supplierID);
+//		this.supplierCompanyName
+//	}
+
 
 	public String getSupplierCompanyName() {
 		return supplierCompanyName;
