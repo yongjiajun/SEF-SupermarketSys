@@ -28,19 +28,16 @@ import javax.swing.table.DefaultTableModel;
 
 import control.AddProductController;
 import model.people.Manager;
-import model.people.Supplier;
 
 public class ManagerPanel extends JFrame {
 
 	private JPanel contentPane, parentPanel, sideBarPanel, dashboardPanel, todaySalesPanel, productsPanel,
 			suppliersPanel, salesPanel, reportPanel, addProductPanel, addSupplierPanel, viewSupplier;
-	private JTextField productIdField, productNameField, productPriceField, supplierIDField, supplierPinField,
-			supplierFirstNameField, supplierLastNameField, companyNameField, contactNoField, emailField, locationField;
+	private JTextField productIdField, productNameField, productPriceField;
 
 	public static final String DOLLAR_SIGN = "$";
 	private AddProductController addProduct = new AddProductController(this);
-	private Supplier supplier;
-	private JTable table;
+ 	private JTable table;
 	private WelcomeScreen welcomeScreen;
 	private DefaultTableModel model;
 	private Manager manager;
@@ -48,6 +45,12 @@ public class ManagerPanel extends JFrame {
 	private JTextField productPricefield;
 	private JTextField productQuantityField;
 	private JTextField productiDfield;
+	private JTextField supplierIDField;
+	private JTextField supplierCompanyNameField;
+	private JTextField supplierContactNoField;
+	private JTextField supplierEmailField;
+	private JTextField supplierLocationField;
+	private JTable supplierTable;
 
 	public ManagerPanel(Manager manager) {
 		this.manager = manager;
@@ -71,7 +74,7 @@ public class ManagerPanel extends JFrame {
 		salesPanel();
 		suppliersPanel();
 		reportPanel();
-		addSupplier();
+//		addSupplier();
 		viewSupplier();
 //		addProductPanel();
 	}
@@ -308,9 +311,7 @@ public class ManagerPanel extends JFrame {
 		productPanelSection.setBounds(6, 56, 1030, 106);
 		productsPanel.add(productPanelSection);
 		productPanelSection.setLayout(null);
-//		productPanelSection.setVisible(false);
 
-		String[] actionNames = { "Add Item", "Remove Item", "Modify Item" };
 
 		JLabel IDLbl = new JLabel("ID");
 		IDLbl.setBounds(22, 6, 99, 16);
@@ -440,7 +441,7 @@ public class ManagerPanel extends JFrame {
 		table.setRowHeight(30);
 
 		JScrollPane pane = new JScrollPane(table);
-		pane.setBounds(34, 253, 951, 440);
+		pane.setBounds(19, 181, 989, 528);
 		productsPanel.add(pane);
 
 
@@ -451,6 +452,8 @@ public class ManagerPanel extends JFrame {
 	}
 
 	private void suppliersPanel() {
+ 		DefaultTableModel supplyModel = new DefaultTableModel();
+
 		suppliersPanel = new JPanel();
 		suppliersPanel.setBackground(new Color(0, 128, 128));
 		parentPanel.add(suppliersPanel);
@@ -461,49 +464,144 @@ public class ManagerPanel extends JFrame {
 		supplierLabel.setBounds(6, 21, 156, 36);
 		suppliersPanel.add(supplierLabel);
 
-		DefaultTableModel model = new DefaultTableModel();
 
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
 		panel.setBackground(Color.GRAY);
-		panel.setBounds(6, 69, 1030, 84);
+		panel.setBounds(6, 54, 1030, 99);
 		suppliersPanel.add(panel);
 
-		String[] actionNames = { "Add Supplier", "Remove Supplier", "Edit Supplier Details" };
-		JComboBox comboBox = new JComboBox(actionNames);
-		comboBox.setBounds(833, 23, 166, 40);
-		panel.add(comboBox);
+		JLabel supplierID = new JLabel("ID");
+		supplierID.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		supplierID.setBounds(12, 6, 22, 27);
+		panel.add(supplierID);
 
-		JPanel supplierMainPanel = new JPanel();
-		supplierMainPanel.setBounds(6, 192, 1012, 496);
-		supplierMainPanel.setLayout(null);
-		suppliersPanel.add(supplierMainPanel);
+		JLabel supplierCompanyName = new JLabel("Company Name");
+		supplierCompanyName.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		supplierCompanyName.setBounds(96, 6, 123, 27);
+		panel.add(supplierCompanyName);
 
-		Object[] columns = { "ID", "First Name", "Last Name", "Company Name", "Contact No", "Email", "Location" };
-		model.setColumnIdentifiers(columns);
+		JLabel supplierContactNo = new JLabel("Contact Number");
+		supplierContactNo.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		supplierContactNo.setBounds(262, 6, 123, 27);
+		panel.add(supplierContactNo);
 
-		ActionListener actionListener = new ActionListener() {
+		JLabel supplierEmail = new JLabel("Email");
+		supplierEmail.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		supplierEmail.setBounds(488, 6, 123, 27);
+		panel.add(supplierEmail);
+
+		JLabel supplierLocation = new JLabel("Location");
+		supplierLocation.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		supplierLocation.setBounds(699, 6, 77, 27);
+		panel.add(supplierLocation);
+
+		JButton addBtn = new JButton("Add");
+
+		Object[] row = new Object[5];
+		addBtn.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent actionEvent) {
-				int selectedAction = comboBox.getSelectedIndex();
+			public void actionPerformed(ActionEvent e) {
+				row[0] = supplierIDField.getText();
+				row[1] = supplierCompanyNameField.getText();
+				row[2] = supplierContactNoField.getText();
+				row[3] = supplierEmailField.getText();
+				row[4] = supplierLocationField.getText();
 
-				switch (selectedAction) {
-				case 0:
+				supplyModel.addRow(row);
 
-					suppliersPanel.removeAll();
-					addSupplier();
-					addSupplierPanel.setVisible(true);
-					suppliersPanel.add(addSupplierPanel);
-					suppliersPanel.repaint();
-					suppliersPanel.revalidate();
-					break;
+
+			}
+		});
+		addBtn.setBounds(894, 7, 117, 29);
+		panel.add(addBtn);
+
+		JButton removeBtn = new JButton("Remove");
+		removeBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int getSelectedRow = supplierTable.getSelectedRow();
+				if (getSelectedRow >= 0) {
+					supplyModel.removeRow(getSelectedRow);
+				}
+
+			}
+		});
+		removeBtn.setBounds(894, 39, 117, 29);
+		panel.add(removeBtn);
+
+		JButton updateBtn = new JButton("Update");
+		updateBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				int getSelectedRow = supplierTable.getSelectedRow();
+
+				if (getSelectedRow >= 0) {
+ 					supplyModel.setValueAt(supplierIDField.getText(), getSelectedRow, 0);
+ 					supplyModel.setValueAt(supplierCompanyNameField.getText(), getSelectedRow, 1);
+ 					supplyModel.setValueAt(supplierContactNoField.getText(), getSelectedRow, 2);
+ 					supplyModel.setValueAt(supplierEmailField.getText(), getSelectedRow, 3);
+ 					supplyModel.setValueAt(supplierLocationField.getText(), getSelectedRow, 4);
+
 
 				}
 
 			}
-		};
+		});
+		updateBtn.setBounds(894, 70, 117, 29);
+		panel.add(updateBtn);
 
-		comboBox.addActionListener(actionListener);
+		supplierIDField = new JTextField();
+		supplierIDField.setBounds(0, 56, 57, 26);
+		panel.add(supplierIDField);
+		supplierIDField.setColumns(10);
+
+		supplierCompanyNameField = new JTextField();
+		supplierCompanyNameField.setColumns(10);
+		supplierCompanyNameField.setBounds(84, 56, 144, 26);
+		panel.add(supplierCompanyNameField);
+
+		supplierContactNoField = new JTextField();
+		supplierContactNoField.setColumns(10);
+		supplierContactNoField.setBounds(262, 56, 137, 26);
+		panel.add(supplierContactNoField);
+
+		supplierEmailField = new JTextField();
+		supplierEmailField.setColumns(10);
+		supplierEmailField.setBounds(466, 56, 145, 26);
+		panel.add(supplierEmailField);
+
+		supplierLocationField = new JTextField();
+		supplierLocationField.setColumns(10);
+		supplierLocationField.setBounds(649, 56, 201, 26);
+		panel.add(supplierLocationField);
+
+		supplierTable = new JTable();
+//		supplierTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+//		supplierTable.setPreferredScrollableViewportSize(Toolkit.getDefaultToolkit().getScreenSize());
+		supplierTable.setShowHorizontalLines(true);
+		supplierTable.setBounds(17, 224, 991, 469);
+
+		Object[] columns = { "ID", "Company Name", "Contact No", "Email", "Location" };
+  		supplyModel.setColumnIdentifiers(columns);
+ 		supplierTable.setModel(supplyModel);
+ 		supplierTable.setBackground(Color.LIGHT_GRAY);
+ 		supplierTable.setForeground(Color.black);
+ 		Font font = new Font("", 1, 16);
+ 		supplierTable.setFont(font);
+ 		supplierTable.setRowHeight(30);
+
+ 		JScrollPane pane = new JScrollPane(supplierTable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+ 		pane.setBounds(17, 190, 992, 518);
+ 		suppliersPanel.add(pane);
+
+
+
+
+
+
+
 
 	}
 
@@ -513,158 +611,9 @@ public class ManagerPanel extends JFrame {
 		parentPanel.add(suppliersPanel);
 	}
 
-	private void modifyProductPanel() {
 
-	}
 
-	private void removeProductPanel() {
 
-//		Retrieve items - temporary variable
-		String[] items = { "Apple", "Banana", "Kiwi" };
-		JComboBox combo = new JComboBox(items);
-		String[] options = { "Cancel", "Remove" };
-		String title = "Remove Item";
-		int selection = JOptionPane.showOptionDialog(null, combo, title, JOptionPane.DEFAULT_OPTION,
-				JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
-	}
-
-	private void addSupplier() {
-
-		addSupplierPanel = new JPanel();
-		parentPanel.add(addSupplierPanel, "name_379884347646550");
-		addSupplierPanel.setVisible(true);
-		addSupplierPanel.setBackground(new Color(0, 128, 128));
-		addSupplierPanel.setLayout(null);
-
-		JLabel supplierID = new JLabel("Supplier ID");
-		supplierID.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		supplierID.setBounds(58, 150, 112, 36);
-		addSupplierPanel.add(supplierID);
-
-		JLabel supplierPin = new JLabel("Pin");
-		supplierPin.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		supplierPin.setBounds(58, 200, 112, 36);
-		addSupplierPanel.add(supplierPin);
-
-		JLabel supplierFirstName = new JLabel("First Name");
-		supplierFirstName.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		supplierFirstName.setBounds(58, 251, 112, 36);
-		addSupplierPanel.add(supplierFirstName);
-
-		JLabel supplierLastName = new JLabel("Last Name");
-		supplierLastName.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		supplierLastName.setBounds(58, 305, 112, 36);
-		addSupplierPanel.add(supplierLastName);
-
-		JLabel companyName = new JLabel("Company Name");
-		companyName.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		companyName.setBounds(58, 353, 147, 36);
-		addSupplierPanel.add(companyName);
-
-		JLabel supplierContactNo = new JLabel("Contact Number");
-		supplierContactNo.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		supplierContactNo.setBounds(58, 409, 147, 36);
-		addSupplierPanel.add(supplierContactNo);
-
-		JLabel supplierEmail = new JLabel("Email");
-		supplierEmail.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		supplierEmail.setBounds(58, 461, 112, 36);
-		addSupplierPanel.add(supplierEmail);
-
-		JLabel supplierLocation = new JLabel("Location");
-		supplierLocation.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		supplierLocation.setBounds(58, 513, 112, 36);
-		addSupplierPanel.add(supplierLocation);
-
-		supplierIDField = new JTextField();
-		supplierIDField.setBounds(227, 153, 397, 32);
-		addSupplierPanel.add(supplierIDField);
-		supplierIDField.setColumns(10);
-
-		supplierPinField = new JTextField();
-		supplierPinField.setColumns(10);
-		supplierPinField.setBounds(227, 206, 397, 32);
-		addSupplierPanel.add(supplierPinField);
-
-		supplierFirstNameField = new JTextField();
-		supplierFirstNameField.setColumns(10);
-		supplierFirstNameField.setBounds(227, 257, 397, 32);
-		addSupplierPanel.add(supplierFirstNameField);
-
-		supplierLastNameField = new JTextField();
-		supplierLastNameField.setColumns(10);
-		supplierLastNameField.setBounds(227, 311, 397, 32);
-		addSupplierPanel.add(supplierLastNameField);
-
-		companyNameField = new JTextField();
-		companyNameField.setColumns(10);
-		companyNameField.setBounds(227, 359, 397, 32);
-		addSupplierPanel.add(companyNameField);
-
-		contactNoField = new JTextField();
-		contactNoField.setColumns(10);
-		contactNoField.setBounds(227, 409, 397, 32);
-		addSupplierPanel.add(contactNoField);
-
-		emailField = new JTextField();
-		emailField.setColumns(10);
-		emailField.setBounds(227, 467, 397, 32);
-		addSupplierPanel.add(emailField);
-
-		locationField = new JTextField();
-		locationField.setColumns(10);
-		locationField.setBounds(227, 519, 397, 32);
-		addSupplierPanel.add(locationField);
-
-		JButton submitBtn = new JButton("Submit");
-
-		submitBtn.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				String supplierId = supplierIDField.getText();
-				String supplierPin = supplierPinField.getText();
-				String supplierFirstName = supplierFirstNameField.getText();
-				String supplierLastName = supplierLastNameField.getText();
-				String companyName = companyNameField.getText();
-				String contactNo = contactNoField.getText();
-				String email = emailField.getText();
-				String loc = locationField.getText();
-
-				supplier = new Supplier(supplierId, supplierPin, supplierFirstName, supplierLastName, companyName,
-						contactNo, email, loc);
-
-				addSupplierPanel.setVisible(false);
-				parentPanel.removeAll();
-				suppliersPanel();
-				parentPanel.repaint();
-				parentPanel.revalidate();
-			}
-		});
-		submitBtn.setBounds(67, 620, 117, 29);
-		addSupplierPanel.add(submitBtn);
-
-		JButton cancelBtn = new JButton("Cancel");
-		cancelBtn.setBounds(236, 620, 117, 29);
-		addSupplierPanel.add(cancelBtn);
-
-		JLabel lblAddSupplierDetails = new JLabel("Add Supplier Details");
-		lblAddSupplierDetails.setFont(new Font("Lucida Grande", Font.BOLD, 17));
-		lblAddSupplierDetails.setBounds(31, 32, 211, 55);
-		addSupplierPanel.add(lblAddSupplierDetails);
-		addSupplierPanel.setVisible(false);
-
-		cancelBtn.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				addSupplierPanel.setVisible(false);
-				parentPanel.removeAll();
-				suppliersPanel();
-				parentPanel.repaint();
-				parentPanel.revalidate();
-
-			}
-		});
-	}
 
 	private void viewSupplier() {
 		viewSupplier = new JPanel();
@@ -675,15 +624,4 @@ public class ManagerPanel extends JFrame {
 		this.welcomeScreen = welcomeScreen;
 	}
 
-	public JTextField getSupplierIDField() {
-		return supplierIDField;
-	}
-
-	public JTextField getSupplierFirstNameField() {
-		return supplierFirstNameField;
-	}
-
-	public JTextField getSupplierLastNameField() {
-		return supplierLastNameField;
-	}
 }
