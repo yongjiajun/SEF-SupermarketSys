@@ -278,25 +278,94 @@ public class ManagerPanel extends JFrame {
 		label_2.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
 		grossProfit1Box.add(label_2);
 
-		JLabel lblNewLabel_1 = new JLabel("New label");
-		lblNewLabel_1.setBounds(72, 130, 61, 16);
-		todaySalesPanel.add(lblNewLabel_1);
+		JLabel grossProfit = new JLabel("Gross Profit");
+		grossProfit.setBounds(72, 130, 95, 16);
+		todaySalesPanel.add(grossProfit);
 
-		JLabel label = new JLabel("New label");
-		label.setBounds(249, 130, 61, 16);
-		todaySalesPanel.add(label);
+		JLabel lblNetProfit = new JLabel("Net Profit");
+		lblNetProfit.setBounds(249, 130, 95, 16);
+		todaySalesPanel.add(lblNetProfit);
 
 		JPanel topSellingProductBox = new JPanel();
 		topSellingProductBox.setBounds(44, 356, 396, 351);
 		dashboardPanel.add(topSellingProductBox);
+		topSellingProductBox.setLayout(null);
+
+		JLabel topSellingProductsLbl = new JLabel("Top Selling Products");
+		topSellingProductsLbl.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		topSellingProductsLbl.setBounds(6, 6, 352, 51);
+		topSellingProductBox.add(topSellingProductsLbl);
+
+		JLabel lblNewLabel_2 = new JLabel("1.  Milk");
+		lblNewLabel_2.setBounds(6, 86, 136, 26);
+		topSellingProductBox.add(lblNewLabel_2);
+
+		JLabel lblEggs = new JLabel("2.  Wholemeal Bread");
+		lblEggs.setBounds(6, 139, 136, 26);
+		topSellingProductBox.add(lblEggs);
+
+		JLabel lblCoke = new JLabel("3.  Coke");
+		lblCoke.setBounds(6, 205, 136, 26);
+		topSellingProductBox.add(lblCoke);
+
+		JLabel lblSugar = new JLabel("4.  Sugar");
+		lblSugar.setBounds(6, 271, 136, 26);
+		topSellingProductBox.add(lblSugar);
+
+		JLabel lblIcecream = new JLabel("5.  Icecream");
+		lblIcecream.setBounds(6, 319, 136, 26);
+		topSellingProductBox.add(lblIcecream);
 
 		JPanel dashboardDisplaySomething = new JPanel();
 		dashboardDisplaySomething.setBounds(603, 96, 363, 335);
 		dashboardPanel.add(dashboardDisplaySomething);
+		dashboardDisplaySomething.setLayout(null);
+
+		JLabel employeesWorkingLbl = new JLabel("Employee Roster");
+		employeesWorkingLbl.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		employeesWorkingLbl.setBounds(6, 6, 352, 51);
+		dashboardDisplaySomething.add(employeesWorkingLbl);
+
+		JLabel lblPeter = new JLabel("1.  Peter - Support Staff");
+		lblPeter.setBounds(16, 70, 207, 26);
+		dashboardDisplaySomething.add(lblPeter);
+
+		JLabel lblJackson = new JLabel("2.  Jackson - Warehouse Staff");
+		lblJackson.setBounds(16, 128, 241, 26);
+		dashboardDisplaySomething.add(lblJackson);
+
+		JLabel lblKonrad = new JLabel("3.  Konrad - Sales Staff");
+		lblKonrad.setBounds(16, 189, 241, 26);
+		dashboardDisplaySomething.add(lblKonrad);
+
+		JLabel lblAdrian = new JLabel("4. Adrian - Manager");
+		lblAdrian.setBounds(16, 247, 136, 26);
+		dashboardDisplaySomething.add(lblAdrian);
+
+		JLabel lblCharlie = new JLabel("5. Charlie - Manager");
+		lblCharlie.setBounds(16, 303, 136, 26);
+		dashboardDisplaySomething.add(lblCharlie);
 
 		JPanel dashBoardDisplaySomething2 = new JPanel();
 		dashBoardDisplaySomething2.setBounds(603, 515, 363, 192);
 		dashboardPanel.add(dashBoardDisplaySomething2);
+		dashBoardDisplaySomething2.setLayout(null);
+
+		JLabel customerLoggedInLbl = new JLabel("Customers currently logged in:");
+		customerLoggedInLbl.setBounds(6, 6, 351, 36);
+		dashBoardDisplaySomething2.add(customerLoggedInLbl);
+
+		JLabel customer1lbl = new JLabel("1.  c3605044");
+		customer1lbl.setBounds(6, 54, 132, 25);
+		dashBoardDisplaySomething2.add(customer1lbl);
+
+		JLabel lblC = new JLabel("2.  c3605044");
+		lblC.setBounds(6, 101, 132, 25);
+		dashBoardDisplaySomething2.add(lblC);
+
+		JLabel lblC_1 = new JLabel("3.  c3605044");
+		lblC_1.setBounds(6, 146, 132, 25);
+		dashBoardDisplaySomething2.add(lblC_1);
 	}
 
 	private void productsPanel() {
