@@ -32,12 +32,11 @@ import model.people.Manager;
 public class ManagerPanel extends JFrame {
 
 	private JPanel contentPane, parentPanel, sideBarPanel, dashboardPanel, todaySalesPanel, productsPanel,
-			suppliersPanel, salesPanel, reportPanel, addProductPanel, addSupplierPanel, viewSupplier;
-	private JTextField productIdField, productNameField, productPriceField;
+			suppliersPanel, salesPanel, reportPanel, viewSupplier;
 
 	public static final String DOLLAR_SIGN = "$";
 	private AddProductController addProduct = new AddProductController(this);
- 	private JTable table;
+	private JTable table;
 	private WelcomeScreen welcomeScreen;
 	private DefaultTableModel model;
 	private Manager manager;
@@ -312,7 +311,6 @@ public class ManagerPanel extends JFrame {
 		productsPanel.add(productPanelSection);
 		productPanelSection.setLayout(null);
 
-
 		JLabel IDLbl = new JLabel("ID");
 		IDLbl.setBounds(22, 6, 99, 16);
 		productPanelSection.add(IDLbl);
@@ -387,14 +385,13 @@ public class ManagerPanel extends JFrame {
 			}
 		});
 
-
 		updateButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int getSelectedRow = table.getSelectedRow();
 
 				if (getSelectedRow >= 0) {
- 					model.setValueAt(productiDfield.getText(), getSelectedRow, 0);
+					model.setValueAt(productiDfield.getText(), getSelectedRow, 0);
 					model.setValueAt(productNamefield.getText(), getSelectedRow, 1);
 					model.setValueAt(DOLLAR_SIGN + productPricefield.getText(), getSelectedRow, 2);
 					model.setValueAt(productQuantityField.getText(), getSelectedRow, 3);
@@ -405,8 +402,6 @@ public class ManagerPanel extends JFrame {
 
 		AddButton.setBounds(888, 1, 117, 29);
 		productPanelSection.add(AddButton);
-
-
 
 		JButton removeBtn = new JButton("Remove");
 		removeBtn.addActionListener(new ActionListener() {
@@ -424,7 +419,6 @@ public class ManagerPanel extends JFrame {
 		});
 		removeBtn.setBounds(888, 71, 117, 29);
 		productPanelSection.add(removeBtn);
-
 
 		table = new JTable();
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -444,7 +438,6 @@ public class ManagerPanel extends JFrame {
 		pane.setBounds(19, 181, 989, 528);
 		productsPanel.add(pane);
 
-
 //
 	}
 
@@ -452,7 +445,7 @@ public class ManagerPanel extends JFrame {
 	}
 
 	private void suppliersPanel() {
- 		DefaultTableModel supplyModel = new DefaultTableModel();
+		DefaultTableModel supplyModel = new DefaultTableModel();
 
 		suppliersPanel = new JPanel();
 		suppliersPanel.setBackground(new Color(0, 128, 128));
@@ -463,7 +456,6 @@ public class ManagerPanel extends JFrame {
 		supplierLabel.setFont(new Font("Lucida Grande", Font.BOLD, 15));
 		supplierLabel.setBounds(6, 21, 156, 36);
 		suppliersPanel.add(supplierLabel);
-
 
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
@@ -510,7 +502,6 @@ public class ManagerPanel extends JFrame {
 
 				supplyModel.addRow(row);
 
-
 			}
 		});
 		addBtn.setBounds(894, 7, 117, 29);
@@ -538,12 +529,11 @@ public class ManagerPanel extends JFrame {
 				int getSelectedRow = supplierTable.getSelectedRow();
 
 				if (getSelectedRow >= 0) {
- 					supplyModel.setValueAt(supplierIDField.getText(), getSelectedRow, 0);
- 					supplyModel.setValueAt(supplierCompanyNameField.getText(), getSelectedRow, 1);
- 					supplyModel.setValueAt(supplierContactNoField.getText(), getSelectedRow, 2);
- 					supplyModel.setValueAt(supplierEmailField.getText(), getSelectedRow, 3);
- 					supplyModel.setValueAt(supplierLocationField.getText(), getSelectedRow, 4);
-
+					supplyModel.setValueAt(supplierIDField.getText(), getSelectedRow, 0);
+					supplyModel.setValueAt(supplierCompanyNameField.getText(), getSelectedRow, 1);
+					supplyModel.setValueAt(supplierContactNoField.getText(), getSelectedRow, 2);
+					supplyModel.setValueAt(supplierEmailField.getText(), getSelectedRow, 3);
+					supplyModel.setValueAt(supplierLocationField.getText(), getSelectedRow, 4);
 
 				}
 
@@ -584,24 +574,18 @@ public class ManagerPanel extends JFrame {
 		supplierTable.setBounds(17, 224, 991, 469);
 
 		Object[] columns = { "ID", "Company Name", "Contact No", "Email", "Location" };
-  		supplyModel.setColumnIdentifiers(columns);
- 		supplierTable.setModel(supplyModel);
- 		supplierTable.setBackground(Color.LIGHT_GRAY);
- 		supplierTable.setForeground(Color.black);
- 		Font font = new Font("", 1, 16);
- 		supplierTable.setFont(font);
- 		supplierTable.setRowHeight(30);
+		supplyModel.setColumnIdentifiers(columns);
+		supplierTable.setModel(supplyModel);
+		supplierTable.setBackground(Color.LIGHT_GRAY);
+		supplierTable.setForeground(Color.black);
+		Font font = new Font("", 1, 16);
+		supplierTable.setFont(font);
+		supplierTable.setRowHeight(30);
 
- 		JScrollPane pane = new JScrollPane(supplierTable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
- 		pane.setBounds(17, 190, 992, 518);
- 		suppliersPanel.add(pane);
-
-
-
-
-
-
-
+		JScrollPane pane = new JScrollPane(supplierTable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		pane.setBounds(17, 190, 992, 518);
+		suppliersPanel.add(pane);
 
 	}
 
@@ -610,10 +594,6 @@ public class ManagerPanel extends JFrame {
 		reportPanel.setBackground(Color.PINK);
 		parentPanel.add(suppliersPanel);
 	}
-
-
-
-
 
 	private void viewSupplier() {
 		viewSupplier = new JPanel();
