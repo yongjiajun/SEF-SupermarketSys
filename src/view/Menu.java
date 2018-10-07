@@ -49,7 +49,7 @@ public class Menu {
 		String pin = sc.nextLine(); 
 		
 		User user = am.verify(userName, pin);
-		if (user == null || user instanceof SalesStaff)
+		if (user == null || user instanceof SalesStaff || user instanceof Supplier) // as Supplier doesnt have to login!
 		{
 			System.out.println("Login failed! Please try again.");
 			sc.nextLine();
@@ -59,10 +59,6 @@ public class Menu {
 		if (user instanceof Manager)
 		{
 			System.out.println("\nWelcome Manager " + user.getUserID());
-		}
-		else if (user instanceof Supplier)
-		{
-			System.out.println("\nWelcome Supplier " + user.getUserID());
 		}
 		else if (user instanceof Customer)
 		{
