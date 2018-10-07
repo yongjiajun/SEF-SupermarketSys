@@ -1,8 +1,10 @@
 package view;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
+import model.pay.CreditCard;
 import model.pay.Sale;
 import model.pay.SalesLineItem;
 import model.people.Customer;
@@ -31,13 +33,18 @@ public class Menu {
 	
 	public void displayMainMenu()
 	{
-		System.out.println("Welcome to Kostko!");
-		System.out.println("------------------\n");
+		System.out.println("\n\nWelcome to Kostko!");
+		System.out.println("------------------");
 		
-		System.out.println("Please login to continue:");
+		System.out.println("Please login to continue or type \"quit\" to quit:");
 		System.out.print("\nUsername:");
 		Scanner sc = new Scanner(System.in);
 		String userName = sc.nextLine(); 
+		if (userName.equalsIgnoreCase("quit"))
+		{
+			System.out.println("Good bye!\n");
+			return;
+		}
 		System.out.print("\nPassword:");
 		String pin = sc.nextLine(); 
 		
@@ -51,19 +58,19 @@ public class Menu {
 		}
 		if (user instanceof Manager)
 		{
-			System.out.println("Welcome Manager " + user.getUserID());
+			System.out.println("\nWelcome Manager " + user.getUserID());
 		}
 		else if (user instanceof SalesStaff)
 		{
-			System.out.println("Welcome Staff " + user.getUserID());
+			System.out.println("\nWelcome Staff " + user.getUserID());
 		}
 		else if (user instanceof Supplier)
 		{
-			System.out.println("Welcome Supplier " + user.getUserID());
+			System.out.println("\nWelcome Supplier " + user.getUserID());
 		}
 		else if (user instanceof Customer)
 		{
-			System.out.println("Welcome Customer " + user.getUserID());
+			System.out.println("\nWelcome Customer " + user.getUserID());
 			Sale sale = new Sale((Customer) user);
 			customerView((Customer) user, sale);
 		}		
@@ -72,23 +79,506 @@ public class Menu {
 	
 	private void customerView(Customer user, Sale sale)
 	{
-		System.out.println("You have " + sale.getItemsInCart() + "items in your cart.");
+		System.out.println("You have " + sale.getItemsInCart() + " items in your cart.");
 		if (sale.getItemsInCart() > 0)
 		{
-			ArrayList<SalesLineItem> lineItems = sale.getSalesLineItems();
-			System.out.println("ID\tName\tQuantity\tPrice");
-			for (int i = 0; i < sale.getItemsInCart(); i++)
-			{
-				Product tempProduct = lineItems.get(i).getProduct();
-				SalesLineItem lineItem = lineItems.get(i);
-				System.out.println(tempProduct.getProductId() + '\t' + tempProduct.getProductName() + '\t' + .;
-			}
+			displayCart(sale);
+			System.out.println("Total Price: $" + sale.getTotalPrice());
 		}
 		System.out.println("-------------------------------------");
-		System.out.println("Select one of the following options:");
+		System.out.println("Select one of the following options (1-5):");
 		System.out.println("1. Enter ID and Quantity");
 		System.out.println("2. Enter Item Name and Weight");
 		System.out.println("3. Select Item from List");
-		System.out.println("4. Cancel Order");
+		System.out.println("4. Finish and Pay");
+		System.out.println("5. Cancel Order");
+		System.out.println("6. I Need Assistance");
+		Scanner sc = new Scanner(System.in);
+		int menuIndex = sc.nextInt();
+		sc.nextLine();
+		if (menuIndex == 1)
+		{
+			addProductByID(sale);
+			customerView(user, sale);
+			return;
+		}
+		else if (menuIndex == 2)
+		{
+			addProductByName(sale);
+			customerView(user, sale);
+			return;
+		}
+		else if (menuIndex == 3)
+		{
+			selectItemFromList(sale);
+			customerView(user, sale);
+			return;
+		}
+		else if (menuIndex == 4)
+		{
+			if (!(sale.getItemsInCart() > 0))
+			{
+				System.out.println("No items in cart! Please add item!");
+				customerView(user, sale);
+				return;
+			}
+			boolean success = finishAndPay(sale, (Customer) user);
+			if (success == false)
+			{
+				customerView(user, sale);
+				return;
+			}
+			else
+			{
+				System.out.println("Thanks for shopping with us! See you soon!");
+				displayMainMenu();
+				return;
+			}
+		}
+		else if(menuIndex == 5)
+		{
+			System.out.println("Are you sure you would like to cancel the order? (Y/N)");
+			String yes = sc.nextLine();
+			if (yes.equalsIgnoreCase("n"))
+			{
+				customerView(user, sale);
+				return;
+			}
+			else
+			{
+				System.out.println("You've been logged out! See you soon!");
+				displayMainMenu();
+				return;
+			}
+		}
+		else if(menuIndex == 6)
+		{
+			System.out.println("1. Top Up Credit Card");
+			if (sale.getItemsInCart() > 0)
+				System.out.println("2. Modify Cart");
+			int helpIndex = sc.nextInt();
+			sc.nextLine();
+			if (helpIndex == 1)
+			{
+				topUpCard((Customer) user);
+				customerView(user, sale);
+				return;
+			}
+			else if (helpIndex == 2 && sale.getItemsInCart() > 0)
+			{
+				modifyCart(sale);
+				customerView(user, sale);
+				return;
+			}
+			else
+			{
+				System.out.println("Invalid Input!");
+				customerView(user, sale);
+				return;
+			}
+		}
+		else
+		{
+			
+		}
+	}
+	
+	private void addProductByID(Sale sale)
+	{
+		Scanner sc = new Scanner(System.in);
+
+		boolean quit;
+		Product product = null;
+		int quantity = 0;
+		quit = false;
+		while (quit == false)
+		{
+			System.out.println("Enter Product ID:");
+			String id = sc.nextLine();
+			product = pm.getProduct(id);
+			if (product == null)
+			{
+				System.out.println("Would you like to try again? (Y/N)");
+				String yes = sc.nextLine();
+				if (yes.equalsIgnoreCase("n"))
+				{
+					return;
+				}
+				else
+				{
+					continue;
+				}
+			}
+			while (quantity == 0)
+			{
+				System.out.println("Enter Quantity:");
+				quantity = sc.nextInt();
+				sc.nextLine();
+				// verfiication?
+				if (quantity > 0)
+					break;
+				System.out.println("Quantity error! Would you like to try again? (Y/N)");
+				String yes = sc.nextLine();
+				if (yes.equalsIgnoreCase("n"))
+				{
+					return;
+				}
+			}
+			quit = true;
+		}
+		SalesLineItem lineItem = new SalesLineItem(quantity, product);
+		sale.addLineItem(lineItem);
+		System.out.println("Added " + lineItem.getProductQuantity() + ' ' + product.getProductName() + " to cart!");
+		
+	}
+	
+	private void addProductByName(Sale sale)
+	{
+		Scanner sc = new Scanner(System.in);
+
+		boolean quit;
+		Product product = null;
+		int quantity = 0;
+		double weight = 0;
+		quit = false;
+		while (quit == false)
+		{
+			System.out.println("Enter Product Name:");
+			String name = sc.nextLine();
+			product = pm.getProductByName(name);
+			if (product == null)
+			{
+				System.out.println("Would you like to try again? (Y/N)");
+				String yes = sc.nextLine();
+				if (yes.equalsIgnoreCase("n"))
+				{
+					return;
+				}
+				else
+				{
+					continue;
+				}
+			}
+			if (product.getWeightable() == false) {
+				System.out.println("Product isn't weightable!");
+				while (quantity == 0) {
+					System.out.println("Enter Quantity:");
+					quantity = sc.nextInt();
+					sc.nextLine();
+					// verfiication?
+					if (quantity > 0)
+						break;
+					System.out.println("Quantity error! Would you like to try again? (Y/N)");
+					String yes = sc.nextLine();
+					if (yes.equalsIgnoreCase("n")) {
+						return;
+					}
+				}
+				quit = true;
+				SalesLineItem lineItem = new SalesLineItem(quantity, product);
+				System.out.println("Added " + lineItem.getProductQuantity() + ' ' + product.getProductName() + " to cart!");
+				sale.addLineItem(lineItem);
+			}
+			else
+			{
+				while (weight == 0) {
+					System.out.println("Price per gram for " + product.getProductName() + ":" + product.getPricePerGram());
+					System.out.println("Enter Weight (g):");
+					weight = sc.nextDouble();
+					sc.nextLine();
+					// verfiication?
+					if (weight > 0)
+						break;
+					System.out.println("Weight error! Would you like to try again? (Y/N)");
+					String yes = sc.nextLine();
+					if (yes.equalsIgnoreCase("n")) {
+						return;
+					}
+				}
+			}
+			quit = true;
+			SalesLineItem lineItem = new SalesLineItem(weight, product, true);
+			System.out.println("Added " + lineItem.getWeight() + "g of " + product.getProductName() + " to cart!");
+		}
+	}
+	
+	private void selectItemFromList(Sale sale)
+	{
+		Scanner sc = new Scanner(System.in);
+		boolean quit;
+		Product product = null;
+		int quantity = 0;
+		double weight = 0;
+		quit = false;
+		while (quit == false)
+		{
+		System.out.println("Please select one of the following items:");
+		HashMap<String, Product> products = pm.getProductsMap();
+		int counter = 1;
+		System.out.println("#\tID\tName\tWeightable\tPrice");
+		for (Product tempProduct : products.values()) {
+			if (tempProduct.getWeightable() == true)
+				System.out.println(counter + "\t" + tempProduct.getProductId() + '\t' + tempProduct.getProductName() + "\t \t" + tempProduct.getWeightable() + "\t$"  + tempProduct.getPricePerGram() + " /g");
+			else
+				System.out.println(counter + "\t" + tempProduct.getProductId() + '\t' + tempProduct.getProductName() + "\t \t$" + tempProduct.getProductPrice());
+			counter++;
+		}
+		System.out.println("Please enter the product #:");
+		int prodNum = sc.nextInt();
+		sc.nextLine();
+		
+		if (!(prodNum > 0 && prodNum <= counter))
+		{
+			System.out.println("Invalid input! Would you like to try again? (Y/N)");
+			String yes = sc.nextLine();
+			if (yes.equalsIgnoreCase("n"))
+			{
+				return;
+			}
+			else
+			{
+				continue;
+			}
+		}
+		
+		counter = 1;
+		
+		for (Product tempProduct : products.values()) {
+			if (prodNum == counter)
+			{
+				product = tempProduct;
+			}
+			counter++;
+		}
+		if (product.getWeightable() == false) {
+			System.out.println("Product isn't weightable!");
+			while (quantity == 0) {
+				System.out.println("Enter Quantity:");
+				quantity = sc.nextInt();
+				sc.nextLine();
+				// verfiication?
+				if (quantity > 0)
+					break;
+				System.out.println("Quantity error! Would you like to try again? (Y/N)");
+				String yes = sc.nextLine();
+				if (yes.equalsIgnoreCase("n")) {
+					return;
+				}
+				else
+					continue;
+			}
+			quit = true;
+			SalesLineItem lineItem = new SalesLineItem(quantity, product);
+			System.out.println("Added " + lineItem.getProductQuantity() + ' ' + product.getProductName() + " to cart!");
+			sale.addLineItem(lineItem);
+		}
+		else
+		{
+			while (weight == 0) {
+				System.out.println("Price per gram for " + product.getProductName() + ":" + product.getPricePerGram());
+				System.out.println("Enter Weight (g):");
+				weight = sc.nextDouble();
+				sc.nextLine();
+				// verfiication?
+				if (weight > 0)
+					break;
+				System.out.println("Weight error! Would you like to try again? (Y/N)");
+				String yes = sc.nextLine();
+				if (yes.equalsIgnoreCase("n")) {
+					return;
+				}
+			}
+			SalesLineItem lineItem = new SalesLineItem(weight, product, true);
+			System.out.println("Added " + lineItem.getWeight() + "g of " + product.getProductName() + " to cart!");
+		}
+		quit = true;
+		
+	}
+	}
+	
+	public boolean finishAndPay(Sale sale, Customer customer)
+	{
+		CreditCard cred = new CreditCard ("creditcardlol", "1234");
+		customer.setCreditCard(cred);
+		Scanner sc = new Scanner(System.in);
+		boolean quit = false;
+		System.out.println("This is your cart:");
+		displayCart(sale);
+		System.out.println("Total Price: $" + sale.getTotalPrice());
+		System.out.println("Total Loyalty Points Earned: " + sale.getLoyaltyPtsEarned());
+		System.out.println("Total Loyalty Points Used: " + sale.getLoyaltyPtsUsed());
+		System.out.println("Total Discounted Price: " + sale.getTotalDiscountedPrice());
+		System.out.println("Would you like to finish and pay? (Y/N)");
+		String yes = sc.nextLine();
+		if (yes.equalsIgnoreCase("n")) {
+			return false;
+		}
+		while (quit == false)
+		{
+			System.out.println("Amount Payable: " + sale.getTotalDiscountedPrice());
+			System.out.println("Please enter credit card ID:");
+			String credID = sc.nextLine();
+			System.out.println("Please enter credit card PIN:");
+			String pin = sc.nextLine();
+			if (credID.equals(customer.getCreditCard().getCreditCardID()) == false || pin.equals(customer.getCreditCard().getPin()) == false)
+			{
+				yes = sc.nextLine();
+				if (yes.equalsIgnoreCase("n")) {
+					return false;
+				}
+				else
+					continue;
+			}
+			System.out.println("Credit card balance: " + customer.getCreditCard().getBalance());
+			if (customer.getCreditCard().getBalance() < sale.getTotalDiscountedPrice())
+			{
+				System.out.println("Insufficient balance! Would you like one of our friendly staffs to top up for you? (Y/N)");
+				yes = sc.nextLine();
+				if (yes.equalsIgnoreCase("n")) {
+					return false;
+				}
+				else
+				{
+				boolean topUpSuccessful = topUpCard(customer);
+					if (topUpSuccessful == false)
+					{
+						System.out.println("Top up failed! Please try again later.");
+						return false;
+					}
+					else
+					{
+						System.out.println("New balance: " + customer.getCreditCard().getBalance());
+					}
+				}
+			}
+			sale.pay(sm);
+			customer.getCreditCard().deductBalance(sale.getTotalDiscountedPrice());
+			System.out.println("Payment successful! Amount paid: " + sale.getTotalDiscountedPrice());
+			System.out.println("New Credit card balance: " + customer.getCreditCard().getBalance());
+			System.out.println("Loyalty points: " + customer.getLoyaltyPts());
+			quit = true;
+		}
+		return true;
+	}
+	
+	private boolean topUpCard(Customer customer)
+	{
+		boolean quit = false;
+		Scanner sc = new Scanner(System.in);
+		while (quit == false)
+		{
+		System.out.println("Please login to continue or type \"quit\" to quit:");
+		System.out.print("\nStaff Username:");
+		String userName = sc.nextLine(); 
+		if (userName.equalsIgnoreCase("quit"))
+		{
+			return false;
+		}
+		System.out.print("\nPassword:");
+		String pin = sc.nextLine(); 
+		
+		User user = am.verify(userName, pin);
+		if (user == null || !(user instanceof SalesStaff))
+		{
+			System.out.println("Login failed! Would you like to try again? (Y/N)");
+			String yes = sc.nextLine();
+			if (yes.equalsIgnoreCase("n")) {
+				return false;
+			}
+			else
+				continue;
+		}
+		else
+		{
+			System.out.println("Enter amount to be topped up:");
+			double topupAmt = sc.nextDouble();
+			sc.nextLine();
+			if (topupAmt <= 0)
+			{
+				System.out.println("Input error! You've been logged out, please try again!");
+				continue;
+			}
+			customer.getCreditCard().addBalance(topupAmt);
+			System.out.println("Amount topped up: " + topupAmt + " for Customer" + customer.getUserID() + "\'s credit card");
+			return true;
+		}
+		}
+		return false;
+	}
+	
+	private void modifyCart(Sale sale)
+	{
+		Scanner sc = new Scanner(System.in);
+		boolean quit = false;
+		boolean innerQuit = false;
+		while (quit == false)
+		{
+			System.out.println("Please login to continue or type \"quit\" to quit:");
+			System.out.print("\nStaff Username:");
+			String userName = sc.nextLine(); 
+			if (userName.equalsIgnoreCase("quit"))
+			{
+				return;
+			}
+			System.out.print("\nPassword:");
+			String pin = sc.nextLine(); 
+			
+			User user = am.verify(userName, pin);
+			if (user == null || !(user instanceof SalesStaff))
+			{
+				System.out.println("Login failed! Would you like to try again? (Y/N)");
+				String yes = sc.nextLine();
+				if (yes.equalsIgnoreCase("n")) {
+					return;
+				}
+				else
+					continue;
+			}
+			else
+			{
+				while (innerQuit == false)
+				{
+					displayCart(sale);
+					System.out.println("Remove an item by its #:");
+					int itemNum = sc.nextInt(); 
+					sc.nextLine();
+					if (!(itemNum >= 0 && itemNum <= sale.getItemsInCart()))
+					{
+						System.out.println("Invalid input! Would you like to try again? (Y/N)");
+						String yes = sc.nextLine();
+						if (yes.equalsIgnoreCase("n"))
+						{
+							return;
+						}
+						else
+						{
+							continue;
+						}
+					}
+					else
+					{
+						sale.getSalesLineItems().remove(itemNum);
+						System.out.println("Item removed!!");
+					}
+					innerQuit = true;
+				}
+			}
+			quit = true;
+		}
+	}
+	
+	private void displayCart(Sale sale)
+	{
+		ArrayList<SalesLineItem> lineItems = sale.getSalesLineItems();
+		System.out.println("#\tID\tName\tQuantity\tWeight\tPrice");
+		for (int i = 0; i < sale.getItemsInCart(); i++)
+		{
+			Product tempProduct = lineItems.get(i).getProduct();
+			SalesLineItem lineItem = lineItems.get(i);
+			if (lineItem.getWeightable() == true)
+				System.out.println(i + "\t" + tempProduct.getProductId() + '\t' + tempProduct.getProductName() + "\t \t" + lineItem.getWeight() + "g\t$"  + lineItem.getTotalPrice());
+			else
+				System.out.println(i + "\t" + tempProduct.getProductId() + '\t' + tempProduct.getProductName() + '\t' + lineItem.getProductQuantity() + "\t \t$" + lineItem.getTotalPrice());
+		}
 	}
 }

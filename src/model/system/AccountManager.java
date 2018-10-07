@@ -13,8 +13,6 @@ import model.people.Manager;
 import model.people.SalesStaff;
 import model.people.Supplier;
 import model.people.User;
-import view.CustomerCheckoutPanel;
-import view.ManagerPanel;
 
 public class AccountManager {
 

@@ -1,6 +1,8 @@
 package model.pay;
 
-public class CreditCard {
+import java.io.Serializable;
+
+public class CreditCard implements Serializable{
 
 	private String creditCardID;
 	private String pin;

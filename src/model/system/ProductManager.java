@@ -79,6 +79,19 @@ public class ProductManager {
 		}
 	}
 	
+	public Product getProductByName(String productName) {
+		for (Product product : products.values()) {
+			if (product.getProductName().equalsIgnoreCase(productName))
+			{
+				return product;
+			} else {
+				System.out.println("Product " + productName + " doesn't exist in database!");
+				// UI Verification!
+			}
+		}
+		return null;
+	}
+	
 	public String getProductID(String name) {
 		Iterator iterator = products.entrySet().iterator();
 		while (iterator.hasNext()) {
