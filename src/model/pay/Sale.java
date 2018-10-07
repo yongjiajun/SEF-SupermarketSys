@@ -102,6 +102,15 @@ public class Sale implements Serializable {
 		}
 		updatePriceAndPts();
 	}
+	
+	public void removeLineItemByName(String name) {
+		for (int i = 0; i < lineItems.size(); i++) {
+			if (lineItems.get(i).getProduct().getProductName().equals(name)) {
+				lineItems.remove(i);
+			}
+		}
+		updatePriceAndPts();
+	}
 
 	public SalesLineItem getSalesLineItem(String productID) {
 		for (int i = 0; i < lineItems.size(); i++) {
@@ -110,6 +119,15 @@ public class Sale implements Serializable {
 			}
 		}
 		return null; // if cant find, throws exception?
+	}
+	
+	public String getItemId(String name) {
+		for (int i = 0; i < lineItems.size(); i++) {
+			if (lineItems.get(i).getProduct().getProductName().equals(name)) {
+				return lineItems.get(i).getProduct().getProductId();
+			}
+		}
+		return null;
 	}
 
 	public int getItemsInCart() {

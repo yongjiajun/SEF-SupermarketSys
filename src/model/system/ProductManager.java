@@ -78,13 +78,28 @@ public class ProductManager {
 			return null; // UI Verification!
 		}
 	}
+	
+	public String getProductID(String name) {
+		Iterator iterator = products.entrySet().iterator();
+		while (iterator.hasNext()) {
+			HashMap.Entry pair = (HashMap.Entry)iterator.next();
+	        if (getProduct(pair.getKey().toString()).getProductName().toLowerCase().equals(name.toLowerCase())) {
+	        	return pair.getKey().toString();
+	        }
+		}
+		return null;
+	}
+	
+	public HashMap getProductsMap() {
+		return products;
+	}
 
 	// DEBUG ONLY, call this before saving!
 	public void resetProducts() {
 		products = new HashMap<String, Product>();
 		System.out.println("Products reset!");
 	}
-
+	
 	// Print what items are in .ser file
 	public void printItems() {
 		Iterator iterator = products.entrySet().iterator();

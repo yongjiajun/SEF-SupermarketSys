@@ -32,15 +32,15 @@ import model.people.Customer;
 
 public class CustomerCheckoutPanel extends JFrame {
 
-	private JPanel contentPane, mainPanel, enterItemIDPanel, enterItemNamePanel, selectItemPanel, removeItemPanel;
+	private JPanel contentPane, mainPanel, enterItemIDPanel, enterItemNamePanel, selectItemPanel;
 	private JButton logoutBtn, finishAndPayBtn, removeItemBtn, requireAssistanceBtn, enterItemIDBtn, enterItemNameBtn,
 			selectItemBtn;
 	private JTextField idTextField, nameTextField, weightTextField, quantityTextField;
-	private JLabel welcomeLbl, errorMessageID, errorMessageName, totalLabel;
+	private JLabel welcomeLbl, errorMessageID, errorMessageName, errorMessageSelect, totalLabel;
 	private Customer customer;
 	private WelcomeScreen welcomeScreen;
-	private JTable itemList;
-	private DefaultTableModel tableModel;
+	private JTable itemList, selectItemList;
+	private DefaultTableModel tableModel, selectItemTableModel;
 	ItemController itemController;
 
 	public CustomerCheckoutPanel(Customer customer) {
@@ -215,7 +215,7 @@ public class CustomerCheckoutPanel extends JFrame {
 		JLabel totalTitleLabel = new JLabel("Total");
 		totalTitleLabel.setBounds(10, 330, 61, 16);
 		itemListPanel.add(totalTitleLabel);
-		
+
 		totalLabel = new JLabel("$00.00");
 		totalLabel.setBounds(375, 330, 61, 16);
 		itemListPanel.add(totalLabel);
@@ -265,9 +265,8 @@ public class CustomerCheckoutPanel extends JFrame {
 		selectItemBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-//				selectItemPanel.setVisible(true);
-//				displayButtons(false);
-//				itemController.displayItems();
+				selectItemPanel.setVisible(true);
+				displayButtons(false);
 			}
 		});
 		mainPanel.add(selectItemBtn);
@@ -282,8 +281,8 @@ public class CustomerCheckoutPanel extends JFrame {
 		removeItemBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (itemList.getSelectedRow() != -1 && itemList.getSelectedRow() != 0) {
-					Object q1 = tableModel.getValueAt(itemList.getSelectedRow(), 0);
-					itemController.removeItem(q1.toString(), itemList.getSelectedRow());
+					Object item = tableModel.getValueAt(itemList.getSelectedRow(), 0);
+					itemController.removeItem(item.toString(), itemList.getSelectedRow());
 				}
 			}
 		});
@@ -452,9 +451,11 @@ public class CustomerCheckoutPanel extends JFrame {
 		addBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				boolean error = false;
+				String name = null;
+				double weight = 0;
 				try {
-					String name = nameTextField.getText();
-					double weight = Double.parseDouble(weightTextField.getText());
+					name = nameTextField.getText();
+					weight = Double.parseDouble(weightTextField.getText());
 				} catch (NumberFormatException e1) {
 					System.err.println(e1);
 					errorMessageName.setText("Please enter all information correctly");
@@ -463,7 +464,7 @@ public class CustomerCheckoutPanel extends JFrame {
 				}
 
 				if (!error) {
-					// Add items to the leftPanel
+					itemController.addItemName(name, weight);
 					errorMessageName.setVisible(false);
 					enterItemNamePanel.setVisible(false);
 					displayButtons(true);
@@ -482,24 +483,43 @@ public class CustomerCheckoutPanel extends JFrame {
 		selectItemPanel.setVisible(false);
 		mainPanel.add(selectItemPanel);
 
+		errorMessageSelect = new JLabel();
+		errorMessageSelect.setFont(new Font("Lucida Grande", Font.PLAIN, 14));
+		errorMessageSelect.setForeground(Color.RED);
+		errorMessageSelect.setBounds(25, 350, 350, 30);
+		errorMessageSelect.setHorizontalAlignment(JLabel.CENTER);
+		errorMessageSelect.setVisible(false);
+		selectItemPanel.add(errorMessageSelect);
+
 		JTextArea itemTextArea = new JTextArea();
 		itemTextArea.setEditable(false);
 
-		JScrollPane itemScrollPane = new JScrollPane(itemTextArea);
-		itemScrollPane.setPreferredSize(new Dimension(264, 200));
-		itemScrollPane.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		itemScrollPane.setBackground(Color.RED);
-		itemScrollPane.setVisible(true);
-		itemScrollPane.setBounds(25, 25, 348, 300);
-		selectItemPanel.add(itemScrollPane);
+		selectItemTableModel = new DefaultTableModel() {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
+		selectItemList = new JTable(selectItemTableModel);
+		selectItemList.setBounds(25, 25, 348, 275);
+		selectItemPanel.add(selectItemList);
+
+		selectItemTableModel.addColumn("ITEM");
+		selectItemTableModel.addColumn("PRICE");
+		selectItemTableModel.addRow(new Object[] { "ITEM", "PRICE" });
+
+		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+		selectItemList.getColumnModel().getColumn(0).setPreferredWidth(225);
+		selectItemList.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
 
 		JLabel quantityLbl = new JLabel("Quantity");
-		quantityLbl.setBounds(30, 341, 76, 22);
+		quantityLbl.setBounds(30, 320, 76, 22);
 		quantityLbl.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
 		selectItemPanel.add(quantityLbl);
 
 		JTextField quantityTextField = new JTextField();
-		quantityTextField.setBounds(125, 336, 60, 32);
+		quantityTextField.setBounds(125, 315, 60, 32);
 		quantityTextField.setText("1");
 		quantityTextField.setHorizontalAlignment(JTextField.CENTER);
 		selectItemPanel.add(quantityTextField);
@@ -519,10 +539,36 @@ public class CustomerCheckoutPanel extends JFrame {
 		addBtn.setBounds(251, 381, 122, 38);
 		addBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// Add item to item list
+				boolean error = false;
+				int quantity = 0;
+				try {
+					quantity = Integer.parseInt(quantityTextField.getText());
+				} catch (NumberFormatException e1) {
+					System.err.println(e1);
+					if (quantity <= 0) {
+						errorMessageSelect.setText("Quantity must be positive");
+						errorMessageSelect.setVisible(true);
+					}
+					error = true;
+				}
+
+				if (!error) {
+					if (selectItemList.getSelectedRow() != -1 && selectItemList.getSelectedRow() != 0) {
+						int row = selectItemList.getSelectedRow();
+						Object item = selectItemTableModel.getValueAt(row, 0);
+						itemController.addItemSelected(item.toString(), quantity);
+						errorMessageSelect.setVisible(false);
+						selectItemPanel.setVisible(false);
+						displayButtons(true);
+					}
+				}
+
 			}
 		});
 		selectItemPanel.add(addBtn);
+		
+
+		itemController.displayAllItems();
 	}
 
 	public void employeeLogin() {
@@ -580,7 +626,11 @@ public class CustomerCheckoutPanel extends JFrame {
 	public DefaultTableModel getTableModel() {
 		return tableModel;
 	}
-	
+
+	public DefaultTableModel getSelectItemTableModel() {
+		return selectItemTableModel;
+	}
+
 	public JLabel getTotalLabel() {
 		return totalLabel;
 	}
