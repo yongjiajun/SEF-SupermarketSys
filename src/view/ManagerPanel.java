@@ -45,7 +45,6 @@ public class ManagerPanel extends JFrame {
 	private DefaultTableModel model;
 	private Manager manager;
 
-
 	private JTextField productNamefield;
 	private JTextField productPricefield;
 	private JTextField productQuantityField;
@@ -57,6 +56,7 @@ public class ManagerPanel extends JFrame {
 	private JTextField supplierLocationField;
 	private JTable supplierTable;
 	private JTable salesTable;
+	private JTable reportTable;
 
 	public ManagerPanel(Manager manager) {
 		this.manager = manager;
@@ -80,9 +80,9 @@ public class ManagerPanel extends JFrame {
 		salesPanel();
 		suppliersPanel();
 		reportPanel();
- 		viewSupplier();
+		viewSupplier();
 
- 	}
+	}
 
 	private void sideBarPanel() {
 		sideBarPanel = new JPanel();
@@ -167,6 +167,15 @@ public class ManagerPanel extends JFrame {
 		reportLabel.setForeground(Color.WHITE);
 		reportLabel.setFont(new Font("Microsoft Sans Serif", Font.PLAIN, 20));
 		reportLabel.setBounds(0, 563, 164, 37);
+		reportLabel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				parentPanel.removeAll();
+				parentPanel.add(reportPanel);
+				parentPanel.repaint();
+				parentPanel.revalidate();
+			}
+		});
 		sideBarPanel.add(reportLabel);
 
 		JLabel logoutLbl = new JLabel("LOGOUT", SwingConstants.CENTER);
@@ -453,6 +462,11 @@ public class ManagerPanel extends JFrame {
 						Double.parseDouble(productPricefield.getText()),
 						Integer.parseInt(productQuantityField.getText()), false);
 
+				if (addProduct.restockNeeded() == true) {
+					productQuantityField.setText("Restock Needed");
+					row[3] = productQuantityField.getText();
+				}
+
 			}
 		});
 
@@ -506,7 +520,7 @@ public class ManagerPanel extends JFrame {
 		table.setRowHeight(30);
 
 		JScrollPane pane = new JScrollPane(table);
-		pane.setBounds(19, 181, 989, 528);
+		pane.setBounds(24, 240, 938, 432);
 		productsPanel.add(pane);
 
 //
@@ -532,21 +546,20 @@ public class ManagerPanel extends JFrame {
 		salesLbl.setBounds(21, 27, 156, 34);
 		salesPanel.add(salesLbl);
 
-				salesTable = new JTable();
-				salesTable.setBounds(21, 278, 975, 423);
-				salesPanel.add(salesTable);
-				salesTable.setModel(salesModel);
-				salesTable.setBackground(Color.LIGHT_GRAY);
-				salesTable.setForeground(Color.black);
- 				salesTable.setFont(font);
-				salesTable.setRowHeight(30);
-				JScrollPane pane = new JScrollPane(salesTable);
-				pane.setBounds(21, 246, 986, 444);
-				salesPanel.add(pane);
+		salesTable = new JTable();
+		salesTable.setBounds(21, 278, 975, 423);
+		salesPanel.add(salesTable);
+		salesTable.setModel(salesModel);
+		salesTable.setBackground(Color.LIGHT_GRAY);
+		salesTable.setForeground(Color.black);
+		salesTable.setFont(font);
+		salesTable.setRowHeight(30);
+		JScrollPane pane = new JScrollPane(salesTable);
+		pane.setBounds(21, 246, 986, 444);
+		salesPanel.add(pane);
 
-		Object[] salesColumn = {"Most Revenue"};
- 		salesModel.setColumnIdentifiers(salesColumn);
-
+		Object[] salesColumn = { "Most Revenue" };
+		salesModel.setColumnIdentifiers(salesColumn);
 
 	}
 
@@ -614,7 +627,9 @@ public class ManagerPanel extends JFrame {
 //			}
 
 //				Supplier newSupplier = new Supplier(supplierID,"", "", "", companyName, contactNo, email, location);
-				addSupplier.addRemoveUpdateSupplier(supplierID.getText(), "","","", supplierCompanyNameField.getText(), supplierContactNoField.getText(), supplierEmailField.getText(), supplierLocationField.getText(), false);
+				addSupplier.addRemoveUpdateSupplier(supplierID.getText(), "", "", "",
+						supplierCompanyNameField.getText(), supplierContactNoField.getText(),
+						supplierEmailField.getText(), supplierLocationField.getText(), false);
 
 			}
 		});
@@ -629,7 +644,9 @@ public class ManagerPanel extends JFrame {
 				if (getSelectedRow >= 0) {
 					supplyModel.removeRow(getSelectedRow);
 
-					addSupplier.addRemoveUpdateSupplier(supplierID.getText(), "","","", supplierCompanyNameField.getText(), supplierContactNoField.getText(), supplierEmailField.getText(), supplierLocationField.getText(), true);
+					addSupplier.addRemoveUpdateSupplier(supplierID.getText(), "", "", "",
+							supplierCompanyNameField.getText(), supplierContactNoField.getText(),
+							supplierEmailField.getText(), supplierLocationField.getText(), true);
 
 				}
 
@@ -652,8 +669,9 @@ public class ManagerPanel extends JFrame {
 					supplyModel.setValueAt(supplierEmailField.getText(), getSelectedRow, 3);
 					supplyModel.setValueAt(supplierLocationField.getText(), getSelectedRow, 4);
 
-					addSupplier.addRemoveUpdateSupplier(supplierID.getText(), "","","", supplierCompanyNameField.getText(), supplierContactNoField.getText(), supplierEmailField.getText(), supplierLocationField.getText(), false);
-
+					addSupplier.addRemoveUpdateSupplier(supplierID.getText(), "", "", "",
+							supplierCompanyNameField.getText(), supplierContactNoField.getText(),
+							supplierEmailField.getText(), supplierLocationField.getText(), false);
 
 				}
 
@@ -688,8 +706,7 @@ public class ManagerPanel extends JFrame {
 		panel.add(supplierLocationField);
 
 		supplierTable = new JTable();
-//		supplierTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-//		supplierTable.setPreferredScrollableViewportSize(Toolkit.getDefaultToolkit().getScreenSize());
+
 		supplierTable.setShowHorizontalLines(true);
 		supplierTable.setBounds(17, 224, 991, 469);
 
@@ -707,14 +724,50 @@ public class ManagerPanel extends JFrame {
 		pane.setBounds(17, 190, 992, 518);
 		suppliersPanel.add(pane);
 
-
-
 	}
 
 	private void reportPanel() {
+		DefaultTableModel reportModel = new DefaultTableModel();
 		reportPanel = new JPanel();
-		reportPanel.setBackground(Color.PINK);
-		parentPanel.add(suppliersPanel);
+		reportPanel.setBackground(new Color(0, 128, 128));
+
+		parentPanel.add(reportPanel);
+		reportPanel.setLayout(null);
+
+		JLabel lblReport = new JLabel("Report");
+		lblReport.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		lblReport.setBounds(10, 7, 123, 61);
+		reportPanel.add(lblReport);
+
+		JPanel smallReportPanel = new JPanel();
+		smallReportPanel.setBackground(new Color(128, 128, 128));
+		smallReportPanel.setBounds(19, 80, 990, 109);
+		reportPanel.add(smallReportPanel);
+		smallReportPanel.setLayout(null);
+
+		JButton generateReportBtn = new JButton("Generate Report");
+		generateReportBtn.setBounds(6, 37, 153, 29);
+		smallReportPanel.add(generateReportBtn);
+
+		reportTable = new JTable();
+		reportTable.setBounds(45, 275, 956, 426);
+		reportPanel.add(reportTable);
+
+		Object[] columns = { "Total Revenue Today", "Amount of Products Sold Today", "Amount of Customers logged in",
+				"Amount of Users saved in the Database" };
+		reportModel.setColumnIdentifiers(columns);
+		reportTable.setModel(reportModel);
+		reportTable.setBackground(Color.LIGHT_GRAY);
+		reportTable.setForeground(Color.BLACK);
+		Font font = new Font("", 1, 16);
+		reportTable.setFont(font);
+		reportTable.setRowHeight(30);
+
+		JScrollPane pane = new JScrollPane(reportTable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		pane.setBounds(21, 239, 988, 469);
+		reportPanel.add(pane);
+
 	}
 
 	private void viewSupplier() {
@@ -724,5 +777,9 @@ public class ManagerPanel extends JFrame {
 
 	public void setWelcomeScreen(WelcomeScreen welcomeScreen) {
 		this.welcomeScreen = welcomeScreen;
+	}
+
+	public String getProductQuantity() {
+		return productQuantityField.getText();
 	}
 }

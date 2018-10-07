@@ -57,6 +57,13 @@ public class AddProductController   {
 
 	}
 
+	public boolean restockNeeded() {
+		if (Integer.parseInt(view.getProductQuantity()) <= 5) {
+			return true;
+		}
+		return false;
+	}
+
 	private void printProduct(Product product) {
 		System.out.println(product.toString());
 	}

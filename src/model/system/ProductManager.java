@@ -84,7 +84,7 @@ public class ProductManager {
 		products = new HashMap<String, Product>();
 		System.out.println("Products reset!");
 	}
-	
+
 	// Print what items are in .ser file
 	public void printItems() {
 		Iterator iterator = products.entrySet().iterator();
