@@ -18,6 +18,7 @@ public class Product implements Serializable {
 	private double productPrice;
 	private int amountSold;
 	private int totalQtyRestocked = 0;
+	private double revenueGenerated = 0;
 	
 
 	// to be overwritten by methods
@@ -170,10 +171,18 @@ public class Product implements Serializable {
 		this.amountSold += quantity;
 	}
 	
+	public void increaseRevenueGenerated(double revenue) {
+		this.revenueGenerated += revenue;
+	}
+	
 	public int getTotalQtyRestocked() {
 		return totalQtyRestocked;
 	}
 	
+	public double getRevenueGenerated() {
+		return revenueGenerated;
+	}
+
 	public void restock()
 	{
 		addStockQty(reorderQty); 

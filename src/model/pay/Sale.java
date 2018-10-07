@@ -151,6 +151,7 @@ public class Sale implements Serializable {
 				tempProduct.restock();
 			}
 			tempProduct.addAmountSold(quantity);
+			tempProduct.increaseRevenueGenerated(lineItems.get(i).getTotalPrice());
 		}
 
 		// add loyalty points
