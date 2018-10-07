@@ -20,10 +20,10 @@ public class SupermarketClient {
 				AccountManager am = new AccountManager();
 				SalesManager sr = new SalesManager();
 				
+				// PLEASE DO A RESET OF THE DATABASE AND READD USERS.
 				
-				
-				Product kleenex = new Product ("KLEEN123", "Kleenex", 2.49, 500);
-				pm.addProduct(kleenex);
+				// Product kleenex = new Product ("KLEEN123", "Kleenex", 2.49, 500);
+				// pm.addProduct(kleenex);
 				
 				Menu menu = new Menu(am, pm, sr);
 				menu.displayMainMenu();
