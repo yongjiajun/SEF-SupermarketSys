@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -17,12 +18,16 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 
 import control.EmployeeLoginController;
+import control.ItemController;
 import model.people.Customer;
 
 public class CustomerCheckoutPanel extends JFrame {
@@ -31,12 +36,16 @@ public class CustomerCheckoutPanel extends JFrame {
 	private JButton logoutBtn, finishAndPayBtn, removeItemBtn, requireAssistanceBtn, enterItemIDBtn, enterItemNameBtn,
 			selectItemBtn;
 	private JTextField idTextField, nameTextField, weightTextField, quantityTextField;
-	private JLabel welcomeLbl;
+	private JLabel welcomeLbl, errorMessageID, errorMessageName, totalLabel;
 	private Customer customer;
 	private WelcomeScreen welcomeScreen;
+	private JTable itemList;
+	private DefaultTableModel tableModel;
+	ItemController itemController;
 
 	public CustomerCheckoutPanel(Customer customer) {
 		this.customer = customer;
+		this.itemController = new ItemController(this, customer);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1200, 750);
@@ -58,7 +67,6 @@ public class CustomerCheckoutPanel extends JFrame {
 		enterItemIDPanel();
 		enterItemNamePanel();
 		selectItemPanel();
-		removeItemPanel();
 
 	}
 
@@ -174,11 +182,42 @@ public class CustomerCheckoutPanel extends JFrame {
 
 		JPanel itemListPanel = new JPanel();
 		itemListPanel.setBounds(66, 283, 471, 357);
-		mainPanel.add(itemListPanel);
 		itemListPanel.setLayout(null);
+		itemListPanel.setBackground(Color.WHITE);
+		mainPanel.add(itemListPanel);
 
-		JLabel totalLabel = new JLabel("Total");
-		totalLabel.setBounds(10, 330, 61, 16);
+		tableModel = new DefaultTableModel() {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
+		itemList = new JTable(tableModel);
+		itemList.setBounds(25, 0, 420, 315);
+		itemList.setFocusable(false);
+		itemList.setRowSelectionAllowed(false);
+		itemListPanel.add(itemList);
+
+		tableModel.addColumn("ITEM");
+		tableModel.addColumn("QUANTITY");
+		tableModel.addColumn("PRICE");
+		tableModel.addRow(new Object[] { "ITEM", "QUANTITY", "PRICE" });
+
+		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+
+		itemList.getColumnModel().getColumn(0).setPreferredWidth(245);
+		itemList.getColumnModel().getColumn(1).setPreferredWidth(100);
+		itemList.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+		itemList.getColumnModel().getColumn(2).setPreferredWidth(100);
+		itemList.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+
+		JLabel totalTitleLabel = new JLabel("Total");
+		totalTitleLabel.setBounds(10, 330, 61, 16);
+		itemListPanel.add(totalTitleLabel);
+		
+		totalLabel = new JLabel("$00.00");
+		totalLabel.setBounds(375, 330, 61, 16);
 		itemListPanel.add(totalLabel);
 
 		JSeparator separator = new JSeparator();
@@ -226,8 +265,9 @@ public class CustomerCheckoutPanel extends JFrame {
 		selectItemBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				selectItemPanel.setVisible(true);
-				displayButtons(false);
+//				selectItemPanel.setVisible(true);
+//				displayButtons(false);
+//				itemController.displayItems();
 			}
 		});
 		mainPanel.add(selectItemBtn);
@@ -241,8 +281,10 @@ public class CustomerCheckoutPanel extends JFrame {
 		removeItemBtn.setVisible(false);
 		removeItemBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				removeItemPanel.setVisible(true);
-				displayButtons(false);
+				if (itemList.getSelectedRow() != -1 && itemList.getSelectedRow() != 0) {
+					Object q1 = tableModel.getValueAt(itemList.getSelectedRow(), 0);
+					itemController.removeItem(q1.toString(), itemList.getSelectedRow());
+				}
 			}
 		});
 		mainPanel.add(removeItemBtn);
@@ -262,13 +304,13 @@ public class CustomerCheckoutPanel extends JFrame {
 		enterItemLbl.setFont(new Font("Lucida Grande", Font.BOLD, 22));
 		enterItemIDPanel.add(enterItemLbl);
 
-		JLabel errorMessage = new JLabel();
-		errorMessage.setFont(new Font("Lucida Grande", Font.PLAIN, 14));
-		errorMessage.setForeground(Color.RED);
-		errorMessage.setBounds(25, 168, 350, 30);
-		errorMessage.setHorizontalAlignment(JLabel.CENTER);
-		errorMessage.setVisible(false);
-		enterItemIDPanel.add(errorMessage);
+		errorMessageID = new JLabel();
+		errorMessageID.setFont(new Font("Lucida Grande", Font.PLAIN, 14));
+		errorMessageID.setForeground(Color.RED);
+		errorMessageID.setBounds(25, 168, 350, 30);
+		errorMessageID.setHorizontalAlignment(JLabel.CENTER);
+		errorMessageID.setVisible(false);
+		enterItemIDPanel.add(errorMessageID);
 
 		JLabel idLbl = new JLabel("ID", SwingConstants.CENTER);
 		idLbl.setBounds(48, 80, 76, 22);
@@ -279,7 +321,7 @@ public class CustomerCheckoutPanel extends JFrame {
 		idTextField.setBounds(149, 75, 163, 32);
 		idTextField.addFocusListener(new java.awt.event.FocusAdapter() {
 			public void focusGained(java.awt.event.FocusEvent evt) {
-				errorMessage.setVisible(false);
+				errorMessageID.setVisible(false);
 			}
 
 			public void focusLost(java.awt.event.FocusEvent evt) {
@@ -297,7 +339,7 @@ public class CustomerCheckoutPanel extends JFrame {
 		quantityTextField.setBounds(149, 127, 163, 32);
 		quantityTextField.addFocusListener(new java.awt.event.FocusAdapter() {
 			public void focusGained(java.awt.event.FocusEvent evt) {
-				errorMessage.setVisible(false);
+				errorMessageID.setVisible(false);
 			}
 		});
 		enterItemIDPanel.add(quantityTextField);
@@ -309,7 +351,7 @@ public class CustomerCheckoutPanel extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				enterItemIDPanel.setVisible(false);
 				displayButtons(true);
-				errorMessage.setVisible(false);
+				errorMessageID.setVisible(false);
 			}
 		});
 		enterItemIDPanel.add(cancelBtn);
@@ -318,22 +360,25 @@ public class CustomerCheckoutPanel extends JFrame {
 		addBtn.setBounds(251, 207, 122, 38);
 		addBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String id = null;
+				int quantity = 0;
 				boolean error = false;
 				try {
-					String id = idTextField.getText();
-					int quantity = Integer.parseInt(quantityTextField.getText());
+					id = idTextField.getText();
+					quantity = Integer.parseInt(quantityTextField.getText());
 				} catch (NumberFormatException e1) {
 					System.err.println(e1);
-					errorMessage.setText("Please enter all information correctly");
-					errorMessage.setVisible(true);
+					errorMessageID.setText("Please enter all information correctly");
+					errorMessageID.setVisible(true);
 					error = true;
 				}
 
 				if (!error) {
-					// Add items to the leftPanel
-					errorMessage.setVisible(false);
-					enterItemIDPanel.setVisible(false);
-					displayButtons(true);
+					if (itemController.addItemID(id, quantity)) {
+						errorMessageID.setVisible(false);
+						enterItemIDPanel.setVisible(false);
+						displayButtons(true);
+					}
 				}
 			}
 		});
@@ -354,13 +399,13 @@ public class CustomerCheckoutPanel extends JFrame {
 		enterItemLbl.setFont(new Font("Lucida Grande", Font.BOLD, 22));
 		enterItemNamePanel.add(enterItemLbl);
 
-		JLabel errorMessage = new JLabel();
-		errorMessage.setFont(new Font("Lucida Grande", Font.PLAIN, 14));
-		errorMessage.setForeground(Color.RED);
-		errorMessage.setBounds(25, 168, 350, 30);
-		errorMessage.setHorizontalAlignment(JLabel.CENTER);
-		errorMessage.setVisible(false);
-		enterItemNamePanel.add(errorMessage);
+		errorMessageName = new JLabel();
+		errorMessageName.setFont(new Font("Lucida Grande", Font.PLAIN, 14));
+		errorMessageName.setForeground(Color.RED);
+		errorMessageName.setBounds(25, 168, 350, 30);
+		errorMessageName.setHorizontalAlignment(JLabel.CENTER);
+		errorMessageName.setVisible(false);
+		enterItemNamePanel.add(errorMessageName);
 
 		JLabel nameLbl = new JLabel("Name", SwingConstants.CENTER);
 		nameLbl.setBounds(48, 80, 76, 22);
@@ -371,7 +416,7 @@ public class CustomerCheckoutPanel extends JFrame {
 		nameTextField.setBounds(149, 75, 163, 32);
 		nameTextField.addFocusListener(new java.awt.event.FocusAdapter() {
 			public void focusGained(java.awt.event.FocusEvent evt) {
-				errorMessage.setVisible(false);
+				errorMessageName.setVisible(false);
 			}
 		});
 		enterItemNamePanel.add(nameTextField);
@@ -385,7 +430,7 @@ public class CustomerCheckoutPanel extends JFrame {
 		weightTextField.setBounds(149, 127, 163, 32);
 		weightTextField.addFocusListener(new java.awt.event.FocusAdapter() {
 			public void focusGained(java.awt.event.FocusEvent evt) {
-				errorMessage.setVisible(false);
+				errorMessageName.setVisible(false);
 			}
 		});
 		enterItemNamePanel.add(weightTextField);
@@ -397,7 +442,7 @@ public class CustomerCheckoutPanel extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				enterItemNamePanel.setVisible(false);
 				displayButtons(true);
-				errorMessage.setVisible(false);
+				errorMessageName.setVisible(false);
 			}
 		});
 		enterItemNamePanel.add(cancelBtn);
@@ -412,14 +457,14 @@ public class CustomerCheckoutPanel extends JFrame {
 					double weight = Double.parseDouble(weightTextField.getText());
 				} catch (NumberFormatException e1) {
 					System.err.println(e1);
-					errorMessage.setText("Please enter all information correctly");
-					errorMessage.setVisible(true);
+					errorMessageName.setText("Please enter all information correctly");
+					errorMessageName.setVisible(true);
 					error = true;
 				}
 
 				if (!error) {
 					// Add items to the leftPanel
-					errorMessage.setVisible(false);
+					errorMessageName.setVisible(false);
 					enterItemNamePanel.setVisible(false);
 					displayButtons(true);
 				}
@@ -480,47 +525,9 @@ public class CustomerCheckoutPanel extends JFrame {
 		selectItemPanel.add(addBtn);
 	}
 
-	public void removeItemPanel() {
-		removeItemPanel = new JPanel();
-		removeItemPanel.setBounds(701, 200, 398, 442);
-		removeItemPanel.setBackground(Color.WHITE);
-		removeItemPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		removeItemPanel.setLayout(null);
-		removeItemPanel.setVisible(false);
-		mainPanel.add(removeItemPanel);
-
-		JTextArea itemTextArea = new JTextArea();
-		itemTextArea.setEditable(false);
-
-		JScrollPane itemScrollPane = new JScrollPane(itemTextArea);
-		itemScrollPane.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		itemScrollPane.setBackground(Color.RED);
-		itemScrollPane.setVisible(true);
-		itemScrollPane.setBounds(25, 25, 348, 325);
-		removeItemPanel.add(itemScrollPane);
-
-		JButton cancelBtn = new JButton("Cancel");
-		cancelBtn.setBounds(25, 381, 122, 38);
-		cancelBtn.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				removeItemPanel.setVisible(false);
-				displayButtons(true);
-			}
-		});
-		removeItemPanel.add(cancelBtn);
-
-		JButton removeBtn = new JButton("Remove");
-		removeBtn.setBounds(251, 381, 122, 38);
-		removeBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// Remove item from item list
-			}
-		});
-		removeItemPanel.add(removeBtn);
-	}
-
 	public void employeeLogin() {
+		itemList.setFocusable(true);
+		itemList.setRowSelectionAllowed(true);
 		logoutBtn.setVisible(true);
 		finishAndPayBtn.setVisible(false);
 		removeItemBtn.setVisible(true);
@@ -529,9 +536,10 @@ public class CustomerCheckoutPanel extends JFrame {
 	}
 
 	public void employeeLogout() {
+		itemList.setFocusable(false);
+		itemList.setRowSelectionAllowed(false);
 		logoutBtn.setVisible(false);
 		removeItemBtn.setVisible(false);
-		removeItemPanel.setVisible(false);
 		enterItemIDBtn.setVisible(true);
 		enterItemNameBtn.setVisible(true);
 		selectItemBtn.setVisible(true);
@@ -564,4 +572,17 @@ public class CustomerCheckoutPanel extends JFrame {
 	public JLabel getWelcomeLbl() {
 		return welcomeLbl;
 	}
+
+	public JLabel getErrorMessageID() {
+		return errorMessageID;
+	}
+
+	public DefaultTableModel getTableModel() {
+		return tableModel;
+	}
+	
+	public JLabel getTotalLabel() {
+		return totalLabel;
+	}
+
 }

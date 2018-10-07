@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import model.people.Customer;
 import model.people.Manager;
@@ -154,7 +155,7 @@ public class AccountManager {
 			suppliers.remove(supplierID);
 			System.out.println("Supplier " + supplierID + " removed from the database!");
 			return true;
-		}else {
+		} else {
 			System.out.println("Supplier " + supplierID + " doesn't exist in the database!");
 			return false;
 		}
@@ -170,78 +171,111 @@ public class AccountManager {
 //		}
 //	}
 
-	private void initialiseUsers()
-	{
+	private void initialiseUsers() {
 		try {
-	         FileInputStream fileInCustomer = new FileInputStream("database/customers.ser");
-	         FileInputStream fileInSupplier = new FileInputStream("database/suppliers.ser");
-	         FileInputStream fileInManager = new FileInputStream("database/managers.ser");
-	         FileInputStream fileInSalesStaff = new FileInputStream("database/salesstaffs.ser");
-	         ObjectInputStream objectInCustomer = new ObjectInputStream(fileInCustomer);
-	         ObjectInputStream objectInSupplier = new ObjectInputStream(fileInSupplier);
-	         ObjectInputStream objectInManager = new ObjectInputStream(fileInManager);
-	         ObjectInputStream objectInSalesStaff = new ObjectInputStream(fileInSalesStaff);
-	         customers = (HashMap<String, Customer>) objectInCustomer.readObject();
-	         suppliers = (HashMap<String, Supplier>) objectInSupplier.readObject();
-	         managers = (HashMap<String, Manager>) objectInManager.readObject();
-	         salesStaffs = (HashMap<String, SalesStaff>) objectInSalesStaff.readObject();
-	         System.out.println("Users are loaded from database!");
-	         objectInCustomer.close();
-	         objectInSupplier.close();
-	         objectInManager.close();
-	         objectInSalesStaff.close();
-	         fileInCustomer.close();
-	         fileInSupplier.close();
-	         fileInManager.close();
-	         fileInSalesStaff.close();
-	      } catch (IOException i) {
-	         i.printStackTrace();
-	         return;
-	      } catch (ClassNotFoundException c) {
-	         c.printStackTrace();
-	         return;
-	      }
+			FileInputStream fileInCustomer = new FileInputStream("database/customers.ser");
+			FileInputStream fileInSupplier = new FileInputStream("database/suppliers.ser");
+			FileInputStream fileInManager = new FileInputStream("database/managers.ser");
+			FileInputStream fileInSalesStaff = new FileInputStream("database/salesstaffs.ser");
+			ObjectInputStream objectInCustomer = new ObjectInputStream(fileInCustomer);
+			ObjectInputStream objectInSupplier = new ObjectInputStream(fileInSupplier);
+			ObjectInputStream objectInManager = new ObjectInputStream(fileInManager);
+			ObjectInputStream objectInSalesStaff = new ObjectInputStream(fileInSalesStaff);
+			customers = (HashMap<String, Customer>) objectInCustomer.readObject();
+			suppliers = (HashMap<String, Supplier>) objectInSupplier.readObject();
+			managers = (HashMap<String, Manager>) objectInManager.readObject();
+			salesStaffs = (HashMap<String, SalesStaff>) objectInSalesStaff.readObject();
+			System.out.println("Users are loaded from database!");
+			objectInCustomer.close();
+			objectInSupplier.close();
+			objectInManager.close();
+			objectInSalesStaff.close();
+			fileInCustomer.close();
+			fileInSupplier.close();
+			fileInManager.close();
+			fileInSalesStaff.close();
+		} catch (IOException i) {
+			i.printStackTrace();
+			return;
+		} catch (ClassNotFoundException c) {
+			c.printStackTrace();
+			return;
+		}
 	}
 
 	// always call this function before shutdown
-	public void saveUsers()
-	{
+	public void saveUsers() {
 		try {
 			FileOutputStream fileOutCustomer = new FileOutputStream("database/customers.ser");
 			FileOutputStream fileOutSupplier = new FileOutputStream("database/suppliers.ser");
 			FileOutputStream fileOutManager = new FileOutputStream("database/managers.ser");
 			FileOutputStream fileOutSalesStaff = new FileOutputStream("database/salesstaffs.ser");
-	         ObjectOutputStream objectOutCustomer = new ObjectOutputStream(fileOutCustomer);
-	         ObjectOutputStream objectOutSupplier = new ObjectOutputStream(fileOutSupplier);
-	         ObjectOutputStream objectOutManager = new ObjectOutputStream(fileOutManager);
-	         ObjectOutputStream objectOutSalesStaff = new ObjectOutputStream(fileOutSalesStaff);
-	         objectOutCustomer.writeObject(customers);
-	         objectOutSupplier.writeObject(suppliers);
-	         objectOutManager.writeObject(managers);
-	         objectOutSalesStaff.writeObject(salesStaffs);
-	         objectOutCustomer.close();
-	         objectOutSupplier.close();
-	         objectOutManager.close();
-	         objectOutSalesStaff.close();
-	         fileOutCustomer.close();
-	         fileOutSupplier.close();
-	         fileOutManager.close();
-	         fileOutSalesStaff.close();
-	         System.out.println("Users are saved to database!");
-	      } catch (IOException i) {
-	         i.printStackTrace();
-	      }
+			ObjectOutputStream objectOutCustomer = new ObjectOutputStream(fileOutCustomer);
+			ObjectOutputStream objectOutSupplier = new ObjectOutputStream(fileOutSupplier);
+			ObjectOutputStream objectOutManager = new ObjectOutputStream(fileOutManager);
+			ObjectOutputStream objectOutSalesStaff = new ObjectOutputStream(fileOutSalesStaff);
+			objectOutCustomer.writeObject(customers);
+			objectOutSupplier.writeObject(suppliers);
+			objectOutManager.writeObject(managers);
+			objectOutSalesStaff.writeObject(salesStaffs);
+			objectOutCustomer.close();
+			objectOutSupplier.close();
+			objectOutManager.close();
+			objectOutSalesStaff.close();
+			fileOutCustomer.close();
+			fileOutSupplier.close();
+			fileOutManager.close();
+			fileOutSalesStaff.close();
+			System.out.println("Users are saved to database!");
+		} catch (IOException i) {
+			i.printStackTrace();
+		}
 	}
 
 	// DEBUG ONLY, call this before saving!
-	public void resetUsers()
-	{
+	public void resetUsers() {
 		customers = new HashMap<String, Customer>();
 		salesStaffs = new HashMap<String, SalesStaff>();
 		managers = new HashMap<String, Manager>();
 		suppliers = new HashMap<String, Supplier>();
 		System.out.println("Users reset!");
 	}
+
+	// Print registered managers in .ser file
+	public void printManagers() {
+		Iterator iterator = managers.entrySet().iterator();
+		while (iterator.hasNext()) {
+			HashMap.Entry pair = (HashMap.Entry) iterator.next();
+			System.out.println(pair.getKey() + " = " + getManager(pair.getKey().toString()).getUserPIN());
+		}
+	}
+
+	// Print registered salesStaffs in .ser file
+	public void printSalesStaffs() {
+		Iterator iterator = salesStaffs.entrySet().iterator();
+		while (iterator.hasNext()) {
+			HashMap.Entry pair = (HashMap.Entry) iterator.next();
+			System.out.println(pair.getKey() + " = " + getSalesStaff(pair.getKey().toString()).getUserPIN());
+		}
+	}
+
+	// Print registered customers in .ser file
+	public void printCustomers() {
+		Iterator iterator = customers.entrySet().iterator();
+		while (iterator.hasNext()) {
+			HashMap.Entry pair = (HashMap.Entry) iterator.next();
+			System.out.println(pair.getKey() + " = " + getCustomer(pair.getKey().toString()).getUserPIN());
+		}
+	}
+	
+	// Print registered suppliers in .ser file
+		public void printSuppliers() {
+			Iterator iterator = suppliers.entrySet().iterator();
+			while (iterator.hasNext()) {
+				HashMap.Entry pair = (HashMap.Entry) iterator.next();
+				System.out.println(pair.getKey() + " = " + getSupplier(pair.getKey().toString()).getUserPIN());
+			}
+		}
 
 	// Print amount of users in .ser file
 	public void printSize() {

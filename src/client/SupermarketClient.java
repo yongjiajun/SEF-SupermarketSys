@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 
 import control.LoginController;
 import model.system.AccountManager;
+import model.system.Product;
 import model.system.ProductManager;
 import model.system.SalesManager;
 import view.LoginScreen;
@@ -32,11 +33,23 @@ public class SupermarketClient {
 					welcomeScreen.setLoginScreen(loginScreen);
 					welcomeScreen.setVisible(true);
 					
+					// AccountManager DEBUG
+//					System.out.println("----------");
+//					am.printSize();
+//					am.printCustomers();
+//					System.out.println("----------");
+					
+					// ProductManager Debug
+					System.out.println("----------");
+					pm.printSize();
+					pm.printItems();
+					System.out.println("----------");
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 				
-				// run codes on exit
+				// Run Code On Exit
 				Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
 			        public void run() {
 			        	pm.saveProducts();

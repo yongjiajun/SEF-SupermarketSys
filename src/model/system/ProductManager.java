@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
+import java.util.Iterator;
 
 public class ProductManager {
 
@@ -82,6 +83,15 @@ public class ProductManager {
 	public void resetProducts() {
 		products = new HashMap<String, Product>();
 		System.out.println("Products reset!");
+	}
+	
+	// Print what items are in .ser file
+	public void printItems() {
+		Iterator iterator = products.entrySet().iterator();
+		while (iterator.hasNext()) {
+			HashMap.Entry pair = (HashMap.Entry)iterator.next();
+	        System.out.println(pair.getKey() + " = " + pair.getValue());
+		}
 	}
 
 	// Print amount of users in .ser file
