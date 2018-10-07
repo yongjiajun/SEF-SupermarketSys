@@ -53,6 +53,10 @@ public class AddProductController   {
 		return newProducts;
 	}
 
+	public void setDiscount() {
+
+	}
+
 	private void printProduct(Product product) {
 		System.out.println(product.toString());
 	}

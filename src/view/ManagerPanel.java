@@ -56,6 +56,7 @@ public class ManagerPanel extends JFrame {
 	private JTextField supplierEmailField;
 	private JTextField supplierLocationField;
 	private JTable supplierTable;
+	private JTable salesTable;
 
 	public ManagerPanel(Manager manager) {
 		this.manager = manager;
@@ -79,10 +80,9 @@ public class ManagerPanel extends JFrame {
 		salesPanel();
 		suppliersPanel();
 		reportPanel();
-//		addSupplier();
-		viewSupplier();
-//		addProductPanel();
-	}
+ 		viewSupplier();
+
+ 	}
 
 	private void sideBarPanel() {
 		sideBarPanel = new JPanel();
@@ -189,10 +189,6 @@ public class ManagerPanel extends JFrame {
 		});
 
 		sideBarPanel.add(logoutLbl);
-		salesPanel = new JPanel();
-		salesPanel.setBounds(0, 0, 1036, 750);
-		contentPane.add(salesPanel);
-		salesPanel.setBackground(Color.GREEN);
 		reportLabel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -517,6 +513,41 @@ public class ManagerPanel extends JFrame {
 	}
 
 	private void salesPanel() {
+		DefaultTableModel salesModel = new DefaultTableModel();
+		Font font = new Font("", 1, 16);
+
+		salesPanel = new JPanel();
+		parentPanel.add(salesPanel, "name_105730085137343");
+		salesPanel.setBackground(new Color(0, 128, 128));
+		salesPanel.setLayout(null);
+
+		JPanel smallSalesPanel = new JPanel();
+		smallSalesPanel.setBackground(new Color(128, 128, 128));
+		smallSalesPanel.setBounds(21, 118, 986, 92);
+		salesPanel.add(smallSalesPanel);
+		smallSalesPanel.setLayout(null);
+
+		JLabel salesLbl = new JLabel("Sales");
+		salesLbl.setFont(new Font("Lucida Grande", Font.BOLD, 20));
+		salesLbl.setBounds(21, 27, 156, 34);
+		salesPanel.add(salesLbl);
+
+				salesTable = new JTable();
+				salesTable.setBounds(21, 278, 975, 423);
+				salesPanel.add(salesTable);
+				salesTable.setModel(salesModel);
+				salesTable.setBackground(Color.LIGHT_GRAY);
+				salesTable.setForeground(Color.black);
+ 				salesTable.setFont(font);
+				salesTable.setRowHeight(30);
+				JScrollPane pane = new JScrollPane(salesTable);
+				pane.setBounds(21, 246, 986, 444);
+				salesPanel.add(pane);
+
+		Object[] salesColumn = {"Most Revenue"};
+ 		salesModel.setColumnIdentifiers(salesColumn);
+
+
 	}
 
 	private void suppliersPanel() {
@@ -676,6 +707,8 @@ public class ManagerPanel extends JFrame {
 		pane.setBounds(17, 190, 992, 518);
 		suppliersPanel.add(pane);
 
+
+
 	}
 
 	private void reportPanel() {
@@ -692,5 +725,4 @@ public class ManagerPanel extends JFrame {
 	public void setWelcomeScreen(WelcomeScreen welcomeScreen) {
 		this.welcomeScreen = welcomeScreen;
 	}
-
 }

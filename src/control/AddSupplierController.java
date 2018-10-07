@@ -24,7 +24,8 @@ public class AddSupplierController {
 		System.out.println("\nSupplier successfully added to the database\n");
   		am.addSupplier(newSupplier);
 		am.saveUsers();
-		}
+
+ 		}
 		else {
   		am.removeSupplier(supplierID);
   		am.saveUsers();
@@ -39,6 +40,10 @@ public class AddSupplierController {
 		newSupplier[newSupplier.length - 1] = addSupplier;
 
 		return newSupplier;
+	}
+
+	public void printSuppliers() {
+		am.printSuppliers();
 	}
 
 }
