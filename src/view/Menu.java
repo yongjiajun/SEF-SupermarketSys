@@ -59,6 +59,7 @@ public class Menu {
 		if (user instanceof Manager)
 		{
 			System.out.println("\nWelcome Manager " + user.getUserID());
+			// MANAGERVIEW (consult jhow customerView works :)
 		}
 		else if (user instanceof Customer)
 		{
