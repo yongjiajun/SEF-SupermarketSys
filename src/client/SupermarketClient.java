@@ -21,6 +21,7 @@ public class SupermarketClient {
 				SalesManager sr = new SalesManager();
 				
 				// PLEASE DO A RESET OF THE DATABASE AND READD USERS.
+				// customers and staffs requirements should be working, further testing needed!
 				
 				// Product kleenex = new Product ("KLEEN123", "Kleenex", 2.49, 500);
 				// pm.addProduct(kleenex);
