@@ -12,6 +12,9 @@ import model.people.Customer;
 import model.people.Manager;
 import model.people.SalesStaff;
 import model.people.Supplier;
+import model.people.User;
+import view.CustomerCheckoutPanel;
+import view.ManagerPanel;
 
 public class AccountManager {
 
@@ -282,6 +285,50 @@ public class AccountManager {
 		System.out.println("Customers: " + customers.size());
 		System.out.println("SalesStaffs: " + salesStaffs.size());
 		System.out.println("Managers: " + managers.size());
+	}
+	
+	public User verify(String username, String pin)
+	{
+		username = username.toUpperCase();
+		switch (username.charAt(0)) {
+		// Manager Login
+		case 'M':
+			if (getManager(username) != null) {
+				if (getManager(username).getUserPIN().equals(pin)) {
+					return getManager(username);
+				}
+			}
+
+			break;
+		// SalesStaff Login
+		case 'S':
+			if (getSalesStaff(username) != null) {
+				if (getSalesStaff(username).getUserPIN().equals(pin)) {
+					return getSalesStaff(username);
+				}
+			}
+			break;
+		// Customer Login
+		case 'C':
+
+			if (getCustomer(username) != null) {
+				if (getCustomer(username).getUserPIN().equals(pin)) {
+					return getCustomer(username);
+				}
+			}
+			break;
+		// Supplier Login
+		case 'P':
+			if (getSupplier(username) != null) {
+				if (getSupplier(username).getUserPIN().equals(pin)) {
+					return getSupplier(username);
+				}
+			}
+
+			break;
+		}
+		return null;
+		
 	}
 
 }
