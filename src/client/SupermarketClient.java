@@ -4,6 +4,8 @@ package client;
 import java.awt.EventQueue;
 
 import model.pay.CreditCard;
+import model.people.Customer;
+import model.people.SalesStaff;
 import model.system.AccountManager;
 import model.system.Product;
 import model.system.ProductManager;
@@ -19,6 +21,18 @@ public class SupermarketClient {
 				ProductManager pm = new ProductManager();
 				AccountManager am = new AccountManager();
 				SalesManager sr = new SalesManager();
+				
+				//public Customer(String customerID, String customerPIN, String customerFName, String customerLName)
+				Customer cust = new Customer("C123", "1234", "lol", "lol");
+				
+				CreditCard card = new CreditCard("creditcardlol", "1234");
+				cust.setCreditCard(card);
+				
+				am.addCustomer(cust);
+				
+				SalesStaff s1 = new SalesStaff("S123", "1234", "cunt", "mike");
+				am.addSalesStaff(s1);
+				
 				
 				// PLEASE DO A RESET OF THE DATABASE AND READD USERS.
 				// customers and staffs requirements should be working, further testing needed!

@@ -19,7 +19,6 @@ import model.system.SalesManager;
 
 public class Menu {
 
-	
 	private AccountManager am;
 	private  ProductManager pm;
 	private SalesManager sm;
@@ -391,8 +390,6 @@ public class Menu {
 	
 	public boolean finishAndPay(Sale sale, Customer customer)
 	{
-		CreditCard cred = new CreditCard ("creditcardlol", "1234");
-		customer.setCreditCard(cred);
 		Scanner sc = new Scanner(System.in);
 		boolean quit = false;
 		System.out.println("This is your cart:");
@@ -574,4 +571,6 @@ public class Menu {
 				System.out.println(i + "\t" + tempProduct.getProductId() + '\t' + tempProduct.getProductName() + '\t' + lineItem.getProductQuantity() + "\t \t$" + lineItem.getTotalPrice());
 		}
 	}
+	
+	
 }

@@ -40,6 +40,6 @@ public class CreditCard implements Serializable{
 	}
 
 	public void deductBalance(double deductAmount) {
-		this.balance += deductAmount;
+		this.balance -= deductAmount;
 	}
 }
