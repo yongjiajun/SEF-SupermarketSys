@@ -12,8 +12,13 @@ public class Product implements Serializable {
 
 	// TODO
 
+	public double getStockWeight() {
+		return tockWeight;
+	}
+
 	private String productName;
 	private int stockQty;
+	private double stockWeight;
 	private String productID;
 	private double productPrice;
 	private int amountSold;
@@ -44,6 +49,16 @@ public class Product implements Serializable {
 		this.productPrice = productPrice;
 		// product name is ID, quantitySold is written to sales.txt and read from there
 	}
+	
+	public Product(String productID, String productName, double productPrice, double stockWeight) {
+		this.productName = productName;
+		this.stockWeight = stockWeight;
+		this.productID = productID;
+		this.productPrice = productPrice;
+		
+		// product name is ID, quantitySold is written to sales.txt and read from there
+	}
+
 
 	public void setProductName(String name) {
 		this.productName = name;
