@@ -22,7 +22,7 @@ public class Product implements Serializable {
 	private double revenueGenerated = 0;
 	
 
-	// to be overwritten by methods
+	// to be overwritten by methods?? 
 	private boolean discountEligible = false;
 	private double discountRate = 0;
 	private double discountedPrice = 0;
@@ -32,13 +32,13 @@ public class Product implements Serializable {
 	private double bulkSalesRate = 0;
 	private boolean weightable = false;
 	private double pricePerGram = 0;
-
+	// REMOVE UNNECESSARY VARIABLES!
 	private int restockLvl = 0;
 	private int reorderQty = 0;
 
 	private static NumberFormat formatter = new DecimalFormat("#0.00");
 
-	// REMOVE UNNECESSARY VARIABLES!
+	
 	public Product(String productID, String productName, double productPrice, int stockQty) {
 		this.productName = productName;
 		this.stockQty = stockQty;
