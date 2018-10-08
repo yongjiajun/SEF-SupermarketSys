@@ -20,7 +20,8 @@ public class SupermarketClient {
 			public void run() {
 				ProductManager pm = new ProductManager();
 				AccountManager am = new AccountManager();
-				SalesManager sr = new SalesManager();
+				SalesManager sm = new SalesManager();
+				
 				
 				//public Customer(String customerID, String customerPIN, String customerFName, String customerLName)
 				Customer cust = new Customer("C123", "1234", "lol", "lol");
@@ -40,7 +41,7 @@ public class SupermarketClient {
 				// Product kleenex = new Product ("KLEEN123", "Kleenex", 2.49, 500);
 				// pm.addProduct(kleenex);
 				
-				Menu menu = new Menu(am, pm, sr);
+				Menu menu = new Menu(am, pm, sm);
 				menu.displayMainMenu();
 				
 				
@@ -51,7 +52,7 @@ public class SupermarketClient {
 			        public void run() {
 			        	pm.saveProducts();
 						am.saveUsers();	
-						sr.saveSales();
+						sm.saveSales();
 			        }
 			    }, "Shutdown-thread"));
 				

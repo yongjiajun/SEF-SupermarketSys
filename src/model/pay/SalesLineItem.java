@@ -1,8 +1,10 @@
 package model.pay;
 
+import java.io.Serializable;
+
 import model.system.Product;
 
-public class SalesLineItem {
+public class SalesLineItem implements Serializable {
 
 	private int quantity;
 	private Product product;
