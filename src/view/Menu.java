@@ -390,6 +390,7 @@ public class Menu {
 	
 	public boolean finishAndPay(Sale sale, Customer customer)
 	{
+
 		Scanner sc = new Scanner(System.in);
 		boolean quit = false;
 		System.out.println("This is your cart:");
@@ -397,7 +398,7 @@ public class Menu {
 		System.out.println("Total Price: $" + sale.getTotalPrice());
 		System.out.println("Total Loyalty Points Earned: " + sale.getLoyaltyPtsEarned());
 		System.out.println("Total Loyalty Points Used: " + sale.getLoyaltyPtsUsed());
-		System.out.println("Total Discounted Price: " + sale.getTotalDiscountedPrice());
+		System.out.println("Total Discounted Price: $" + sale.getTotalDiscountedPrice());
 		System.out.println("Would you like to finish and pay? (Y/N)");
 		String yes = sc.nextLine();
 		if (yes.equalsIgnoreCase("n")) {
@@ -405,13 +406,14 @@ public class Menu {
 		}
 		while (quit == false)
 		{
-			System.out.println("Amount Payable: " + sale.getTotalDiscountedPrice());
+			System.out.println("Amount Payable: $" + sale.getTotalDiscountedPrice());
 			System.out.println("Please enter credit card ID:");
 			String credID = sc.nextLine();
 			System.out.println("Please enter credit card PIN:");
 			String pin = sc.nextLine();
 			if (credID.equals(customer.getCreditCard().getCreditCardID()) == false || pin.equals(customer.getCreditCard().getPin()) == false)
 			{
+				System.out.println("Credit Card ID / PIN Error! Would you like to try again? (Y/N)");
 				yes = sc.nextLine();
 				if (yes.equalsIgnoreCase("n")) {
 					return false;
@@ -437,14 +439,14 @@ public class Menu {
 					}
 					else
 					{
-						System.out.println("New balance: " + customer.getCreditCard().getBalance());
+						System.out.println("New balance: $" + customer.getCreditCard().getBalance());
 					}
 				}
 			}
 			sale.pay(sm);
 			customer.getCreditCard().deductBalance(sale.getTotalDiscountedPrice());
-			System.out.println("Payment successful! Amount paid: " + sale.getTotalDiscountedPrice());
-			System.out.println("New Credit card balance: " + customer.getCreditCard().getBalance());
+			System.out.println("Payment successful! Amount paid: $" + sale.getTotalDiscountedPrice());
+			System.out.println("New Credit card balance: $" + customer.getCreditCard().getBalance());
 			System.out.println("Loyalty points: " + customer.getLoyaltyPts());
 			quit = true;
 		}
