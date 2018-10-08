@@ -38,6 +38,7 @@ public class Product implements Serializable {
 
 	private static NumberFormat formatter = new DecimalFormat("#0.00");
 
+	// REMOVE UNNECESSARY VARIABLES!
 	public Product(String productID, String productName, double productPrice, int stockQty) {
 		this.productName = productName;
 		this.stockQty = stockQty;
@@ -46,14 +47,16 @@ public class Product implements Serializable {
 		// product name is ID, quantitySold is written to sales.txt and read from there
 	}
 	
-	public Product(String productID, String productName, double productPrice, double stockWeight) {
-		this.productName = productName;
-		this.stockWeight = stockWeight;
-		this.productID = productID;
-		this.productPrice = productPrice;
-		
-		// product name is ID, quantitySold is written to sales.txt and read from there
-	}
+	
+	// CONSTRUCTOR NEEDED FOR ADDING WEIGHTABLE PRODUCTS. ADD NECESSARY VARIABLES.
+//	public Product(String productID, String productName, double productPrice, double stockWeight) {
+//		this.productName = productName;
+//		this.stockWeight = stockWeight;
+//		this.productID = productID;
+//		this.productPrice = productPrice;
+//		
+//		// product name is ID, quantitySold is written to sales.txt and read from there
+//	}
 
 
 	public void setProductName(String name) {
