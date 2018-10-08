@@ -12,10 +12,6 @@ public class Product implements Serializable {
 
 	// TODO
 
-	public double getStockWeight() {
-		return tockWeight;
-	}
-
 	private String productName;
 	private int stockQty;
 	private double stockWeight;
@@ -163,6 +159,10 @@ public class Product implements Serializable {
 
 	public void setRestockLvl(int restockLvl) {
 		this.restockLvl = restockLvl;
+	}
+	
+	public double getStockWeight() {
+		return stockWeight;
 	}
 
 	public int getRestockLvl() {
