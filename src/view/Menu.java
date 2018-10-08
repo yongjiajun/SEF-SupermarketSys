@@ -452,6 +452,7 @@ public class Menu {
 			if (lineItem == null) {
 				if (product.getWeightable() == false) {
 					System.out.println("Product isn't weightable!");
+					// quantity verification!!! > 0 and not more than getProductQuantity();
 					while (quantity == 0) {
 						System.out.println("Enter Quantity:");
 						quantity = sc.nextInt();
