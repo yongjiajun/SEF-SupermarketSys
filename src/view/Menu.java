@@ -30,7 +30,7 @@ public class Menu {
 	}
 
 	public void displayMainMenu() {
-		System.out.println("\n\nWelcome to Kostko!");
+		System.out.println("\nWelcome to Kostko!");
 		System.out.println("------------------");
 
 		System.out.println("Please login to continue or type \"quit\" to quit:");

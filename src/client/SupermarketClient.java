@@ -24,9 +24,6 @@ public class SupermarketClient {
 				AccountManager am = new AccountManager();
 				SalesManager sm = new SalesManager();
 				
-				
-				
-				
 				//public Customer(String customerID, String customerPIN, String customerFName, String customerLName)
 //				Customer cust = new Customer("c123", "1234", "Ay", "Lmao");
 //				
@@ -44,8 +41,6 @@ public class SupermarketClient {
 //				WarehouseStaff ws = new WarehouseStaff("w123", "1234", "I need", "Sleep");
 //				am.addWarehouseStaff(ws);
 				
-				pm.resetProducts();
-
 				
 				// PLEASE DO A RESET OF THE DATABASE AND READD USERS.
 				// customers and staffs requirements should be working, further testing needed!
