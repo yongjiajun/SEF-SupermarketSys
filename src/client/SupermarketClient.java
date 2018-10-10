@@ -24,6 +24,8 @@ public class SupermarketClient {
 				SalesManager sm = new SalesManager();
 				
 				
+				
+				
 				//public Customer(String customerID, String customerPIN, String customerFName, String customerLName)
 //				Customer cust = new Customer("c123", "1234", "Ay", "Lmao");
 //				

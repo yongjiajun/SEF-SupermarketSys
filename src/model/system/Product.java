@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
+import model.people.Supplier;
+
 public class Product implements Serializable {
 
 	// TODO REMOVE UNNECESSARY VARIABLES! 
@@ -25,6 +27,7 @@ public class Product implements Serializable {
 	private int bulkSalesQty = 0;
 	private double bulkSalesRate = 0;
 	
+	private Supplier supplier;
 	
 	private boolean weightable = false;
 	
@@ -208,6 +211,16 @@ public class Product implements Serializable {
 	{
 		addStockQty(reorderQty); 
 		totalQtyRestocked += reorderQty;
+	}
+	
+	public Supplier getSupplier()
+	{
+		return supplier;
+	}
+	
+	public void setSupplier(Supplier supplier)
+	{
+		this.supplier = supplier;
 	}
 	
 	@Override

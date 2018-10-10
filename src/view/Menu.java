@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
-import model.pay.CreditCard;
 import model.pay.Sale;
 import model.pay.SalesLineItem;
 import model.people.Customer;
@@ -12,6 +11,7 @@ import model.people.Manager;
 import model.people.SalesStaff;
 import model.people.Supplier;
 import model.people.User;
+import model.people.WarehouseStaff;
 import model.system.AccountManager;
 import model.system.Product;
 import model.system.ProductManager;
@@ -49,8 +49,8 @@ public class Menu {
 		}
 
 		User user = am.verify(userName, pin);
-		if (user == null || user instanceof SalesStaff || user instanceof Supplier) // as Supplier doesnt have to login! 
-			// and i've done salesStaff requirements dont worry
+		if (user == null || user instanceof SalesStaff) // as Supplier doesnt have to login!
+		// and i've done salesStaff requirements dont worry
 		{
 			System.out.println("Login failed! Please try again.");
 			sc.nextLine();
@@ -65,16 +65,19 @@ public class Menu {
 			Sale sale = new Sale((Customer) user);
 			customerView((Customer) user, sale);
 		}
+		else if (user instanceof WarehouseStaff) {
+				System.out.println("\nWelcome Warehouse Staff " + user.getUserID());
+				warehouseView((WarehouseStaff) user);
+			}
 	}
 
-	private void managerView(Manager manager)
-	{
+	private void managerView(Manager manager) {
 		// README:
-		
+
 		// consult customerView() for flow control and stuff please.
 
-		// *****btw to list products, can use the following code***** 
-		
+		// *****btw to list products, can use the following code*****
+
 //		System.out.println("Please select one of the following items:");
 //		HashMap<String, Product> products = pm.getProductsMap();
 //		int counter = 1;
@@ -87,11 +90,9 @@ public class Menu {
 //				System.out.println(counter + "\t" + tempProduct.getProductId() + '\t' + tempProduct.getProductName()
 //						+ "\t \t$" + tempProduct.getProductPrice());
 //			counter++;
-		
-		
+
 		// ******and to select a product from list*****
-		
-		
+
 //		System.out.println("Please enter the product #:");
 //		int prodNum = sc.nextInt();
 //		sc.nextLine();
@@ -115,46 +116,115 @@ public class Menu {
 //			counter++;
 //		}
 
-		
-		// ... see selectItemFromList() down at line 580 
-		
-		
+		// ... see selectItemFromList() down at line 580
+
 		// ****** TODO / implement ******:
-		// - a constructor that adds weighable products (ask in the UI first, "Is product weighable?" as the first question. then only asks for input
-		
+		// - a constructor that adds weighable products (ask in the UI first, "Is
+		// product weighable?" as the first question. then only asks for input
+
 		// - (verify) if getPrice function in Product class works for weighable products
-		
-		// - function that uses productManager (pm) to maintain unit-price, stock level, replenish level and reorder quantity for all items.
-		
+
+		// - function that uses productManager (pm) to maintain unit-price, stock level,
+		// replenish level and reorder quantity for all items.
+
 		// - Maintains supplier details for all products
-		
+
 //		- Allows me to override the standard price for a specific product when there is a
 //		promotion (use setDiscount in Product class)
-		
+
 //		- Allows me to offer special discounts for bulk sales (for example, 10% discount for 5
 //		items, 20% discount for 10 items etc.) on specific products (use setBulkDiscount in Product class, please read how the class works)
-		
+
 //		- Allows me to modify these percentages and item numbers through the interface.
-		
+
 //		- That automatically places a purchase order for all items below replenishment level (ALREADY DONE (auto restocks when stock < level) , just make sure to have an UI to input replenishment level
-		
+
 //		- Allows me to generate sales report for the specified period (probably just use amtSold in Product class)
-		
+
 //		- Generate supply report (Payments for supplies are out of scope) (huh?)
-		
+
 //		- List products generating the most revenue. (use revenueGenerated in Product class! then sort.)
-		
-		
-		
-		// **** ONE QUESTION THOUGH, for the warehouse staff requirement should we complete it by implementing 
+		Product product = null;
+		Boolean quit = false;
+
+		System.out.println("Select one of the following options (1-5):");
+		System.out.println("\n1. Override standard price for a specific product");
+		System.out.println("2. Apply discount on item");
+		System.out.println("3. Check stock levels");
+		System.out.println("4. Generate sales report");
+		System.out.println("5. List products generating the most revenue");
+		System.out.println("6. Display existing products");
+		System.out.println("7. Exit");
+
+		Scanner scanner = new Scanner(System.in);
+		int managerInput = scanner.nextInt();
+
+		while (quit != true) {
+			if (managerInput == 1) {
+				System.out.print("Please enter the product ID: ");
+				String productID = scanner.nextLine();
+				scanner.nextLine();
+				product = pm.getProduct(productID);
+				if (product == null) {
+					System.out.println("Would you like to try again? (Y/N)");
+					String yes = scanner.nextLine();
+					if (yes.equalsIgnoreCase("n")) {
+						return;
+					} else {
+						continue;
+					}
+				}
+				System.out.print("Please enter the new product price: ");
+				double newPrice = scanner.nextDouble();
+				product.setProductPrice(newPrice);
+
+			}
+
+			else if (managerInput == 2) {
+				System.out.print("Please enter the product ID: ");
+				String productID = scanner.nextLine();
+				scanner.nextLine();
+				product = pm.getProduct(productID);
+				if (product == null) {
+					System.out.println("Would you like to try again? (Y/N)");
+					String yes = scanner.nextLine();
+					if (yes.equalsIgnoreCase("n")) {
+						return;
+					} else {
+						continue;
+					}
+				}
+
+				System.out.print("Please enter the discount percentage without the symbol: ");
+				Double discountPercent = scanner.nextDouble();
+				product.setDiscountedPrice(discountPercent);
+				System.out.println("The new price is now: " + product.getProductPrice());
+
+			} else if (managerInput == 3) {
+
+			} else if (managerInput == 4) {
+
+			} else if (managerInput == 5) {
+
+			} else if (managerInput == 6) {
+//
+			}
+			if (managerInput == 7) {
+				quit = true;
+			}
+
+		}
+		// **** ONE QUESTION THOUGH, for the warehouse staff requirement should we
+		// complete it by implementing
 		// another User class and function to replenish stock levels?
-		// then warehouse staff will have to key in supplier details. manager can then view the stuff
-		
-		// "I want to be able to replenish stock levels before placing items received on the shelves."
-		
-		
+		// then warehouse staff will have to key in supplier details. manager can then
+		// view the stuff
+
+		// "I want to be able to replenish stock levels before placing items received on
+		// the shelves."
+
 	}
-	
+
 	private void customerView(Customer user, Sale sale) {
 		System.out.println("You have " + sale.getItemsInCart() + " items in your cart.");
 		if (sale.getItemsInCart() > 0) {
@@ -190,7 +260,7 @@ public class Menu {
 				customerView(user, sale);
 				return;
 			}
-			boolean success = finishAndPay(sale, (Customer) user);
+			boolean success = finishAndPay(sale, user);
 			if (success == false) {
 				customerView(user, sale);
 				return;
@@ -217,7 +287,7 @@ public class Menu {
 			int helpIndex = sc.nextInt();
 			sc.nextLine();
 			if (helpIndex == 1) {
-				topUpCard((Customer) user);
+				topUpCard(user);
 				customerView(user, sale);
 				return;
 			} else if (helpIndex == 2 && sale.getItemsInCart() > 0) {
@@ -230,8 +300,13 @@ public class Menu {
 				return;
 			}
 		} else {
-			
+			// prints invalid input then rerun?
 		}
+	}
+	
+	private void warehouseView(WarehouseStaff user)
+	{
+		
 	}
 
 	private void addProductByID(Sale sale) {
@@ -256,154 +331,138 @@ public class Menu {
 				}
 			}
 			// check if product is in cart
-						ArrayList<SalesLineItem> lineItems = sale.getSalesLineItems();
-						SalesLineItem lineItem = null;
-						for (int i = 0; i < lineItems.size(); i++) {
-							if (lineItems.get(i).getProduct().equals(product)) {
-								lineItem = lineItems.get(i);
-							}
+			ArrayList<SalesLineItem> lineItems = sale.getSalesLineItems();
+			SalesLineItem lineItem = null;
+			for (int i = 0; i < lineItems.size(); i++) {
+				if (lineItems.get(i).getProduct().equals(product)) {
+					lineItem = lineItems.get(i);
+				}
+			}
+
+			if (lineItem == null) {
+				if (product.getWeightable() == false) {
+					System.out.println("Product isn't weightable!");
+					boolean quantityOK = false;
+					while (quantityOK == false) {
+						System.out.println("Enter Quantity:");
+						quantity = sc.nextInt();
+						sc.nextLine();
+						// verfiication?
+						if (quantity > 0 && quantity <= product.getStockQty()) {
+							quantityOK = true;
+							break;
+						} else if (quantity > product.getStockQty()) {
+							System.out.println(
+									"Quantity inputted exceeded what we have in stock! Would you like to try again? (Y/N)");
+						} else if (quantity <= 0) {
+							System.out.println("Quantity error! Would you like to try again? (Y/N)");
 						}
-
-						if (lineItem == null) {
-							if (product.getWeightable() == false) {
-								System.out.println("Product isn't weightable!");
-								boolean quantityOK = false;
-								while (quantityOK == false) {
-									System.out.println("Enter Quantity:");
-									quantity = sc.nextInt();
-									sc.nextLine();
-									// verfiication?
-									if (quantity > 0 && quantity <= product.getStockQty())
-									{
-										quantityOK = true;
-										break;
-									}
-									else if (quantity > product.getStockQty())
-									{
-										System.out.println("Quantity inputted exceeded what we have in stock! Would you like to try again? (Y/N)");
-									}
-									else if (quantity <= 0)
-									{
-										System.out.println("Quantity error! Would you like to try again? (Y/N)");
-									}
-									String yes = sc.nextLine();
-									if (yes.equalsIgnoreCase("n")) {
-										return;
-									}
-								}
-								lineItem = new SalesLineItem(quantity, product);
-								sale.addLineItem(lineItem);
-								System.out.println(
-										"Added " + lineItem.getProductQuantity() + ' ' + product.getProductName() + " to cart!");
-								quit = true;
-							} else {
-								System.out.println("Product weightable!");
-								boolean weightOK = false;
-								while (weightOK == false) {
-									System.out.println(
-											"Price per gram for " + product.getProductName() + ":" + product.getPricePerGram());
-									System.out.println("Enter Weight (in g):");
-									weight = sc.nextDouble();
-									sc.nextLine();
-									// verfiication?
-									if (weight > 0 && weight <= product.getStockWeight())
-									{
-										weightOK = true;
-										break;
-									}
-									else if (weight > product.getStockWeight())
-									{
-										System.out.println("Weight inputted exceeded what we have in stock! Would you like to try again? (Y/N)");
-									}
-									else if (weight <= 0)
-									{
-										System.out.println("Weight error! Would you like to try again? (Y/N)");
-									}
-									String yes = sc.nextLine();
-									if (yes.equalsIgnoreCase("n")) {
-										return;
-									}
-								}
-								quit = true;
-								lineItem = new SalesLineItem(weight, product, true);
-								System.out.println(
-										"Added " + lineItem.getWeight() + "g of " + product.getProductName() + " to cart!");
-							}
-
-						} else {
-							System.out.println("Product already in cart! Would you like to add more? (Y/N)");
-							String yes = sc.nextLine();
-							if (yes.equalsIgnoreCase("n")) {
-								return;
-							}
-							if (product.getWeightable() == false) {
-								System.out.println("Product isn't weightable!");
-
-								boolean quantityOK = false;
-								while (quantityOK == false) {
-									System.out.println("Enter Quantity (" + lineItem.getProductQuantity() + " in cart) :");
-									quantity = sc.nextInt();
-									sc.nextLine();
-									// verfiication?
-									if (quantity > 0 && quantity <= product.getStockQty())
-									{
-										quantityOK = true;
-										break;
-									}
-									else if (quantity > product.getStockQty())
-									{
-										System.out.println("Quantity inputted is greater than what we have in stock! Would you like to try again? (Y/N)");
-									}
-									else if (quantity <= 0)
-									{
-										System.out.println("Quantity error! Would you like to try again? (Y/N)");
-									}
-									yes = sc.nextLine();
-									if (yes.equalsIgnoreCase("n")) {
-										return;
-									}
-								}
-								int prodQuantity = lineItem.getProductQuantity();
-								prodQuantity += quantity;
-								lineItem.setProductQuantity(prodQuantity);
-								System.out.println("Added " + quantity + "more " + product.getProductName() + " to cart!");
-								System.out.println("Total quantity: " + lineItem.getProductQuantity());
-								quit = true;
-							} else {
-								boolean weightOK = false;
-								while (weightOK == false) {
-									System.out.println(
-											"Price per gram for " + product.getProductName() + ":" + product.getPricePerGram());
-									System.out.println("Enter Weight (in g, " + lineItem.getWeight() + "g in cart):");
-									weight = sc.nextDouble();
-									sc.nextLine();
-									// verfiication?
-									if (weight > 0 && weight <= product.getStockWeight())
-									{
-										weightOK = true;
-										break;
-									}
-									else if (weight > product.getStockWeight())
-									{
-										System.out.println("Weight inputted exceeded what we have in stock! Would you like to try again? (Y/N)");
-									}
-									else if (weight <= 0)
-									{
-										System.out.println("Weight error! Would you like to try again? (Y/N)");
-									}
-									yes = sc.nextLine();
-									if (yes.equalsIgnoreCase("n")) {
-										return;
-									}
-								}
-								double prodWeight = lineItem.getWeight();
-								weight += prodWeight;
-								lineItem.setWeight(weight);
-								System.out.println("Added " + weight + "g of more " + product.getProductName() + " to cart!");
-								System.out.println("Total weight: " + lineItem.getWeight() + "g");
-								quit = true;
-							}
+						String yes = sc.nextLine();
+						if (yes.equalsIgnoreCase("n")) {
+							return;
 						}
+					}
+					lineItem = new SalesLineItem(quantity, product);
+					sale.addLineItem(lineItem);
+					System.out.println(
+							"Added " + lineItem.getProductQuantity() + ' ' + product.getProductName() + " to cart!");
+					quit = true;
+				} else {
+					System.out.println("Product weightable!");
+					boolean weightOK = false;
+					while (weightOK == false) {
+						System.out.println(
+								"Price per gram for " + product.getProductName() + ":" + product.getPricePerGram());
+						System.out.println("Enter Weight (in g):");
+						weight = sc.nextDouble();
+						sc.nextLine();
+						// verfiication?
+						if (weight > 0 && weight <= product.getStockWeight()) {
+							weightOK = true;
+							break;
+						} else if (weight > product.getStockWeight()) {
+							System.out.println(
+									"Weight inputted exceeded what we have in stock! Would you like to try again? (Y/N)");
+						} else if (weight <= 0) {
+							System.out.println("Weight error! Would you like to try again? (Y/N)");
+						}
+						String yes = sc.nextLine();
+						if (yes.equalsIgnoreCase("n")) {
+							return;
+						}
+					}
+					quit = true;
+					lineItem = new SalesLineItem(weight, product, true);
+					System.out.println(
+							"Added " + lineItem.getWeight() + "g of " + product.getProductName() + " to cart!");
+				}
+
+			} else {
+				System.out.println("Product already in cart! Would you like to add more? (Y/N)");
+				String yes = sc.nextLine();
+				if (yes.equalsIgnoreCase("n")) {
+					return;
+				}
+				if (product.getWeightable() == false) {
+					System.out.println("Product isn't weightable!");
+
+					boolean quantityOK = false;
+					while (quantityOK == false) {
+						System.out.println("Enter Quantity (" + lineItem.getProductQuantity() + " in cart) :");
+						quantity = sc.nextInt();
+						sc.nextLine();
+						// verfiication?
+						if (quantity > 0 && quantity <= product.getStockQty()) {
+							quantityOK = true;
+							break;
+						} else if (quantity > product.getStockQty()) {
+							System.out.println(
+									"Quantity inputted is greater than what we have in stock! Would you like to try again? (Y/N)");
+						} else if (quantity <= 0) {
+							System.out.println("Quantity error! Would you like to try again? (Y/N)");
+						}
+						yes = sc.nextLine();
+						if (yes.equalsIgnoreCase("n")) {
+							return;
+						}
+					}
+					int prodQuantity = lineItem.getProductQuantity();
+					prodQuantity += quantity;
+					lineItem.setProductQuantity(prodQuantity);
+					System.out.println("Added " + quantity + "more " + product.getProductName() + " to cart!");
+					System.out.println("Total quantity: " + lineItem.getProductQuantity());
+					quit = true;
+				} else {
+					boolean weightOK = false;
+					while (weightOK == false) {
+						System.out.println(
+								"Price per gram for " + product.getProductName() + ":" + product.getPricePerGram());
+						System.out.println("Enter Weight (in g, " + lineItem.getWeight() + "g in cart):");
+						weight = sc.nextDouble();
+						sc.nextLine();
+						// verfiication?
+						if (weight > 0 && weight <= product.getStockWeight()) {
+							weightOK = true;
+							break;
+						} else if (weight > product.getStockWeight()) {
+							System.out.println(
+									"Weight inputted exceeded what we have in stock! Would you like to try again? (Y/N)");
+						} else if (weight <= 0) {
+							System.out.println("Weight error! Would you like to try again? (Y/N)");
+						}
+						yes = sc.nextLine();
+						if (yes.equalsIgnoreCase("n")) {
+							return;
+						}
+					}
+					double prodWeight = lineItem.getWeight();
+					weight += prodWeight;
+					lineItem.setWeight(weight);
+					System.out.println("Added " + weight + "g of more " + product.getProductName() + " to cart!");
+					System.out.println("Total weight: " + lineItem.getWeight() + "g");
+					quit = true;
+				}
+			}
 		}
 
 	}
@@ -448,17 +507,13 @@ public class Menu {
 						quantity = sc.nextInt();
 						sc.nextLine();
 						// verfiication?
-						if (quantity > 0 && quantity <= product.getStockQty())
-						{
+						if (quantity > 0 && quantity <= product.getStockQty()) {
 							quantityOK = true;
 							break;
-						}
-						else if (quantity > product.getStockQty())
-						{
-							System.out.println("Quantity inputted is greater than what we have in stock! Would you like to try again? (Y/N)");
-						}
-						else if (quantity <= 0)
-						{
+						} else if (quantity > product.getStockQty()) {
+							System.out.println(
+									"Quantity inputted is greater than what we have in stock! Would you like to try again? (Y/N)");
+						} else if (quantity <= 0) {
 							System.out.println("Quantity error! Would you like to try again? (Y/N)");
 						}
 						String yes = sc.nextLine();
@@ -481,17 +536,13 @@ public class Menu {
 						weight = sc.nextDouble();
 						sc.nextLine();
 						// verfiication?
-						if (weight > 0 && weight <= product.getStockWeight())
-						{
+						if (weight > 0 && weight <= product.getStockWeight()) {
 							weightOK = true;
 							break;
-						}
-						else if (weight > product.getStockWeight())
-						{
-							System.out.println("Weight inputted exceeded what we have in stock! Would you like to try again? (Y/N)");
-						}
-						else if (weight <= 0)
-						{
+						} else if (weight > product.getStockWeight()) {
+							System.out.println(
+									"Weight inputted exceeded what we have in stock! Would you like to try again? (Y/N)");
+						} else if (weight <= 0) {
 							System.out.println("Weight error! Would you like to try again? (Y/N)");
 						}
 						String yes = sc.nextLine();
@@ -519,17 +570,13 @@ public class Menu {
 						quantity = sc.nextInt();
 						sc.nextLine();
 						// verfiication?
-						if (quantity > 0 && quantity <= product.getStockQty())
-						{
+						if (quantity > 0 && quantity <= product.getStockQty()) {
 							quantityOK = true;
 							break;
-						}
-						else if (quantity > product.getStockQty())
-						{
-							System.out.println("Quantity inputted is greater than what we have in stock! Would you like to try again? (Y/N)");
-						}
-						else if (quantity <= 0)
-						{
+						} else if (quantity > product.getStockQty()) {
+							System.out.println(
+									"Quantity inputted is greater than what we have in stock! Would you like to try again? (Y/N)");
+						} else if (quantity <= 0) {
 							System.out.println("Quantity error! Would you like to try again? (Y/N)");
 						}
 						yes = sc.nextLine();
@@ -552,17 +599,13 @@ public class Menu {
 						weight = sc.nextDouble();
 						sc.nextLine();
 						// verfiication?
-						if (weight > 0 && weight <= product.getStockWeight())
-						{
+						if (weight > 0 && weight <= product.getStockWeight()) {
 							weightOK = true;
 							break;
-						}
-						else if (weight > product.getStockWeight())
-						{
-							System.out.println("Weight inputted exceeded what we have in stock! Would you like to try again? (Y/N)");
-						}
-						else if (weight <= 0)
-						{
+						} else if (weight > product.getStockWeight()) {
+							System.out.println(
+									"Weight inputted exceeded what we have in stock! Would you like to try again? (Y/N)");
+						} else if (weight <= 0) {
 							System.out.println("Weight error! Would you like to try again? (Y/N)");
 						}
 						yes = sc.nextLine();
@@ -641,17 +684,13 @@ public class Menu {
 						quantity = sc.nextInt();
 						sc.nextLine();
 						// verfiication?
-						if (quantity > 0 && quantity <= product.getStockQty())
-						{
+						if (quantity > 0 && quantity <= product.getStockQty()) {
 							quantityOK = true;
 							break;
-						}
-						else if (quantity > product.getStockQty())
-						{
-							System.out.println("Quantity inputted is greater than what we have in stock! Would you like to try again? (Y/N)");
-						}
-						else if (quantity <= 0)
-						{
+						} else if (quantity > product.getStockQty()) {
+							System.out.println(
+									"Quantity inputted is greater than what we have in stock! Would you like to try again? (Y/N)");
+						} else if (quantity <= 0) {
 							System.out.println("Quantity error! Would you like to try again? (Y/N)");
 						}
 						String yes = sc.nextLine();
@@ -674,17 +713,13 @@ public class Menu {
 						weight = sc.nextDouble();
 						sc.nextLine();
 						// verfiication?
-						if (weight > 0 && weight <= product.getStockWeight())
-						{
+						if (weight > 0 && weight <= product.getStockWeight()) {
 							weightOK = true;
 							break;
-						}
-						else if (weight > product.getStockWeight())
-						{
-							System.out.println("Weight inputted exceeded what we have in stock! Would you like to try again? (Y/N)");
-						}
-						else if (weight <= 0)
-						{
+						} else if (weight > product.getStockWeight()) {
+							System.out.println(
+									"Weight inputted exceeded what we have in stock! Would you like to try again? (Y/N)");
+						} else if (weight <= 0) {
 							System.out.println("Weight error! Would you like to try again? (Y/N)");
 						}
 						String yes = sc.nextLine();
@@ -712,17 +747,13 @@ public class Menu {
 						quantity = sc.nextInt();
 						sc.nextLine();
 						// verfiication?
-						if (quantity > 0 && quantity <= product.getStockQty())
-						{
+						if (quantity > 0 && quantity <= product.getStockQty()) {
 							quantityOK = true;
 							break;
-						}
-						else if (quantity > product.getStockQty())
-						{
-							System.out.println("Quantity inputted is greater than what we have in stock! Would you like to try again? (Y/N)");
-						}
-						else if (quantity <= 0)
-						{
+						} else if (quantity > product.getStockQty()) {
+							System.out.println(
+									"Quantity inputted is greater than what we have in stock! Would you like to try again? (Y/N)");
+						} else if (quantity <= 0) {
 							System.out.println("Quantity error! Would you like to try again? (Y/N)");
 						}
 						yes = sc.nextLine();
@@ -745,17 +776,13 @@ public class Menu {
 						weight = sc.nextDouble();
 						sc.nextLine();
 						// verfiication?
-						if (weight > 0 && weight <= product.getStockWeight())
-						{
+						if (weight > 0 && weight <= product.getStockWeight()) {
 							weightOK = true;
 							break;
-						}
-						else if (weight > product.getStockWeight())
-						{
-							System.out.println("Weight inputted exceeded what we have in stock! Would you like to try again? (Y/N)");
-						}
-						else if (weight <= 0)
-						{
+						} else if (weight > product.getStockWeight()) {
+							System.out.println(
+									"Weight inputted exceeded what we have in stock! Would you like to try again? (Y/N)");
+						} else if (weight <= 0) {
 							System.out.println("Weight error! Would you like to try again? (Y/N)");
 						}
 						yes = sc.nextLine();
@@ -930,5 +957,6 @@ public class Menu {
 						+ lineItem.getProductQuantity() + "\t \t$" + lineItem.getTotalPrice());
 		}
 	}
+	
 
 }

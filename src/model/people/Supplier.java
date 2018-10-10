@@ -1,23 +1,16 @@
 package model.people;
 
-public class Supplier extends User{
+public class Supplier {
 
 	private String supplierCompanyName, supplierContactNo, supplierEmail, supplierLocation;
-
-	public Supplier(String supplierID, String supplierPIN, String supplierFName, String supplierLName,
-			String supplierCompanyName, String supplierContactNo, String supplierEmail, String supplierLocation) {
-		super(supplierID, supplierPIN, supplierFName, supplierLName);
+	
+	public Supplier(String supplierCompanyName, String supplierContactNo, String supplierEmail, String supplierLocation)
+	{
 		this.supplierCompanyName = supplierCompanyName;
 		this.supplierContactNo = supplierContactNo;
 		this.supplierEmail = supplierEmail;
 		this.supplierLocation = supplierLocation;
 	}
-
-//	public Supplier(String supplierID, String supplierCompanyName, String supplierContactNo, String supplierEmail, String supplierLocation) {
-//		super(supplierID);
-//		this.supplierCompanyName
-//	}
-
 
 	public String getSupplierCompanyName() {
 		return supplierCompanyName;
@@ -34,4 +27,5 @@ public class Supplier extends User{
 	public String getSupplierLocation() {
 		return supplierLocation;
 	}
+	
 }
