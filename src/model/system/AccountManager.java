@@ -287,7 +287,6 @@ public class AccountManager {
 	
 	public User verify(String username, String pin)
 	{
-		username = username.toUpperCase();
 		switch (username.charAt(0)) {
 		// Manager Login
 		case 'M':

@@ -43,6 +43,10 @@ public class Menu {
 		}
 		System.out.print("\nPassword:");
 		String pin = sc.nextLine();
+		if (pin.equalsIgnoreCase("quit")) {
+			System.out.println("Good bye!\n");
+			return;
+		}
 
 		User user = am.verify(userName, pin);
 		if (user == null || user instanceof SalesStaff || user instanceof Supplier) // as Supplier doesnt have to login! 
