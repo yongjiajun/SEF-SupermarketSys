@@ -147,6 +147,8 @@ public class Menu {
 		// then warehouse staff will have to key in supplier details. manager can then view the stuff
 		
 		// "I want to be able to replenish stock levels before placing items received on the shelves."
+		
+		
 	}
 	
 	private void customerView(Customer user, Sale sale) {
