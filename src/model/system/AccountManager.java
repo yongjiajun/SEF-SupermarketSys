@@ -289,7 +289,7 @@ public class AccountManager {
 	{
 		switch (username.charAt(0)) {
 		// Manager Login
-		case 'M':
+		case 'm':
 			if (getManager(username) != null) {
 				if (getManager(username).getUserPIN().equals(pin)) {
 					return getManager(username);
@@ -298,7 +298,7 @@ public class AccountManager {
 
 			break;
 		// SalesStaff Login
-		case 'S':
+		case 's':
 			if (getSalesStaff(username) != null) {
 				if (getSalesStaff(username).getUserPIN().equals(pin)) {
 					return getSalesStaff(username);
@@ -306,22 +306,13 @@ public class AccountManager {
 			}
 			break;
 		// Customer Login
-		case 'C':
+		case 'c':
 
 			if (getCustomer(username) != null) {
 				if (getCustomer(username).getUserPIN().equals(pin)) {
 					return getCustomer(username);
 				}
 			}
-			break;
-		// Supplier Login
-		case 'P':
-			if (getSupplier(username) != null) {
-				if (getSupplier(username).getUserPIN().equals(pin)) {
-					return getSupplier(username);
-				}
-			}
-
 			break;
 		}
 		return null;
