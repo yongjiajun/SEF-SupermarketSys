@@ -6,22 +6,16 @@ import java.text.NumberFormat;
 
 public class Product implements Serializable {
 
-	// manages product details, manager can modify most, supplier modifies quantity
-	// productLoad and productSave not implemented yet! (product.txt read/write)
-	// product array can be stored in SupportSystem..?
-
-	// TODO
+	// TODO REMOVE UNNECESSARY VARIABLES! 
 
 	private String productName;
-	private int stockQty;
-	private double stockWeight;
+	
 	private String productID;
 	private double productPrice;
-	private int amountSold;
+	private int amountSold = 0;
 	private int totalQtyRestocked = 0;
 	private double revenueGenerated = 0;
 	
-
 	// to be overwritten by methods?? 
 	private boolean discountEligible = false;
 	private double discountRate = 0;
@@ -30,9 +24,18 @@ public class Product implements Serializable {
 	private boolean bulkSalesEligible = false;
 	private int bulkSalesQty = 0;
 	private double bulkSalesRate = 0;
+	
+	
 	private boolean weightable = false;
-	private double pricePerGram = 0;
-	// REMOVE UNNECESSARY VARIABLES!
+	
+	// for weighable products, btw NO DISCOUNTS ON THESE
+	
+	private double pricePerGram = 0; // assume its per 100g then
+	private double stockWeight = 0; // product weight available in warehouse
+	
+	// non-weighable products!
+	private int stockQty;
+	
 	private int restockLvl = 0;
 	private int reorderQty = 0;
 
