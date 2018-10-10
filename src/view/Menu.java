@@ -45,7 +45,8 @@ public class Menu {
 		String pin = sc.nextLine();
 
 		User user = am.verify(userName, pin);
-		if (user == null || user instanceof SalesStaff || user instanceof Supplier) // as Supplier doesnt have to login!
+		if (user == null || user instanceof SalesStaff || user instanceof Supplier) // as Supplier doesnt have to login! 
+			// and i've done salesStaff requirements dont worry
 		{
 			System.out.println("Login failed! Please try again.");
 			sc.nextLine();
@@ -54,15 +55,100 @@ public class Menu {
 		}
 		if (user instanceof Manager) {
 			System.out.println("\nWelcome Manager " + user.getUserID());
-			// MANAGERVIEW (consult jhow customerView works :)
+			managerView((Manager) user);
 		} else if (user instanceof Customer) {
 			System.out.println("\nWelcome Customer " + user.getUserID());
 			Sale sale = new Sale((Customer) user);
 			customerView((Customer) user, sale);
 		}
-
 	}
 
+	private void managerView(Manager manager)
+	{
+		// README:
+		
+		// consult customerView() for flow control and stuff please.
+
+		// *****btw to list products, can use the following code***** 
+		
+//		System.out.println("Please select one of the following items:");
+//		HashMap<String, Product> products = pm.getProductsMap();
+//		int counter = 1;
+//		System.out.println("#\tID\tName\tWeightable\tPrice");
+//		for (Product tempProduct : products.values()) {
+//			if (tempProduct.getWeightable() == true)
+//				System.out.println(counter + "\t" + tempProduct.getProductId() + '\t' + tempProduct.getProductName()
+//						+ "\t \t" + tempProduct.getWeightable() + "\t$" + tempProduct.getPricePerGram() + " /g");
+//			else
+//				System.out.println(counter + "\t" + tempProduct.getProductId() + '\t' + tempProduct.getProductName()
+//						+ "\t \t$" + tempProduct.getProductPrice());
+//			counter++;
+		
+		
+		// ******and to select a product from list*****
+		
+		
+//		System.out.println("Please enter the product #:");
+//		int prodNum = sc.nextInt();
+//		sc.nextLine();
+//
+//		if (!(prodNum > 0 && prodNum <= counter)) {
+//			System.out.println("Invalid input! Would you like to try again? (Y/N)");
+//			String yes = sc.nextLine();
+//			if (yes.equalsIgnoreCase("n")) {
+//				return;
+//			} else {
+//				continue;
+//			}
+//		}
+//
+//		counter = 1;
+//
+//		for (Product tempProduct : products.values()) {
+//			if (prodNum == counter) {
+//				product = tempProduct; // this is where it stores the selected product
+//			}
+//			counter++;
+//		}
+
+		
+		// ... see selectItemFromList() down at line 580 
+		
+		
+		// ****** TODO / implement ******:
+		// - a constructor that adds weighable products (ask in the UI first, "Is product weighable?" as the first question. then only asks for input
+		
+		// - (verify) if getPrice function in Product class works for weighable products
+		
+		// - function that uses productManager (pm) to maintain unit-price, stock level, replenish level and reorder quantity for all items.
+		
+		// - Maintains supplier details for all products
+		
+//		- Allows me to override the standard price for a specific product when there is a
+//		promotion (use setDiscount in Product class)
+		
+//		- Allows me to offer special discounts for bulk sales (for example, 10% discount for 5
+//		items, 20% discount for 10 items etc.) on specific products (use setBulkDiscount in Product class, please read how the class works)
+		
+//		- Allows me to modify these percentages and item numbers through the interface.
+		
+//		- That automatically places a purchase order for all items below replenishment level (ALREADY DONE (auto restocks when stock < level) , just make sure to have an UI to input replenishment level
+		
+//		- Allows me to generate sales report for the specified period (probably just use amtSold in Product class)
+		
+//		- Generate supply report (Payments for supplies are out of scope) (huh?)
+		
+//		- List products generating the most revenue. (use revenueGenerated in Product class! then sort.)
+		
+		
+		
+		// **** ONE QUESTION THOUGH, for the warehouse staff requirement should we complete it by implementing 
+		// another User class and function to replenish stock levels?
+		// then warehouse staff will have to key in supplier details. manager can then view the stuff
+		
+		// "I want to be able to replenish stock levels before placing items received on the shelves."
+	}
+	
 	private void customerView(Customer user, Sale sale) {
 		System.out.println("You have " + sale.getItemsInCart() + " items in your cart.");
 		if (sale.getItemsInCart() > 0) {
@@ -138,7 +224,7 @@ public class Menu {
 				return;
 			}
 		} else {
-
+			
 		}
 	}
 
