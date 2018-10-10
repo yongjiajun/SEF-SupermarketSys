@@ -34,14 +34,14 @@ public class Menu {
 		System.out.println("------------------");
 
 		System.out.println("Please login to continue or type \"quit\" to quit:");
-		System.out.print("\nUsername:");
+		System.out.println("\nUsername:");
 		Scanner sc = new Scanner(System.in);
 		String userName = sc.nextLine();
 		if (userName.equalsIgnoreCase("quit")) {
 			System.out.println("Good bye!\n");
 			return;
 		}
-		System.out.print("\nPassword:");
+		System.out.println("\nPassword:");
 		String pin = sc.nextLine();
 		if (pin.equalsIgnoreCase("quit")) {
 			System.out.println("Good bye!\n");
@@ -68,6 +68,8 @@ public class Menu {
 		else if (user instanceof WarehouseStaff) {
 				System.out.println("\nWelcome Warehouse Staff " + user.getUserID());
 				warehouseView((WarehouseStaff) user);
+				displayMainMenu();
+				return;
 			}
 	}
 
@@ -306,7 +308,222 @@ public class Menu {
 	
 	private void warehouseView(WarehouseStaff user)
 	{
+		Scanner sc = new Scanner(System.in);
+		boolean idOK = false;
+		boolean nameOK = false;
+		boolean inputA = false;
+		boolean inputB = false;
+		String productName = null;
+		String productID = null;
+		Product product = null;
 		
+		System.out.println("Would you like to add an item received? (Y/N)");
+		String yes = sc.nextLine();
+		if (yes.equalsIgnoreCase("n")) {
+			System.out.println("\nYou've been logged out!");
+			return;
+		} 
+		
+		while (idOK == false)
+		{
+			System.out.println("Enter product ID:");
+			productID = sc.nextLine();
+			if(productID == null)
+			{
+				System.out.println("Input error! Please try again.");
+				continue;
+			}
+			Product temp = pm.getProduct(productID);
+			if (temp == null)
+			{
+				System.out.println("Proceeding to add product...");
+				idOK = true;
+			}
+			else
+			{
+				System.out.println("Product with the same ID exists in database!");
+			}
+		}
+		
+		while (nameOK == false)
+		{
+			System.out.println("Enter product name:");
+			productName = sc.nextLine();
+			if(productName == null)
+			{
+				System.out.println("Input error! Please try again.");
+				continue;
+			}
+			else
+				nameOK = true;
+		}
+		
+		System.out.println("Is product weighable? (Y/N)");
+		yes = sc.nextLine();
+		if (yes.equalsIgnoreCase("n")) {
+			double price = 0;
+			int quantity = 0;
+			while (inputA == false)
+			{
+				try {
+					System.out.println("Enter unit price ($):");
+					price = sc.nextDouble();
+					sc.nextLine();
+					if (price <= 0)
+					{
+						System.out.println("Invalid price! Please try again.");
+						continue;
+					}
+					inputA = true;
+				}
+				catch (Exception e)
+				{
+					System.out.println("Invalid input! Please try again.");
+				}
+			}
+			while (inputB == false)
+			{
+				try {
+					System.out.println("Enter stock quantity:");
+					quantity = sc.nextInt();
+					sc.nextLine();
+					if (quantity <= 0)
+					{
+						System.out.println("Invalid quantity! Please try again.");
+						continue;
+					}
+					inputB = true;
+					
+				}
+				catch (Exception e)
+				{
+					System.out.println("Invalid input! Please try again.");
+				}
+			}
+			product = new Product(productID, productName, price, quantity);
+
+			System.out.println("Product ID: " + productID);
+			System.out.println("Product Name: " + productName);
+			System.out.println("Unit price: " + price);
+			System.out.println("Stock quantity: " + quantity);
+			System.out.println("Product added!");
+		} 
+		else
+		{
+			double pricePerGram = 0;
+			double stockWeight = 0;
+			while (inputA == false)
+			{
+				try {
+					System.out.println("Enter price per 100g:");
+					pricePerGram = sc.nextDouble();
+					sc.nextLine();
+					if (pricePerGram <= 0)
+					{
+						System.out.println("Invalid price! Please try again.");
+						continue;
+					}
+					inputA = true;
+				}
+				catch (Exception e)
+				{
+					System.out.println("Invalid input! Please try again.");
+				}
+			}
+			while (inputB == false)
+			{
+				try {
+					System.out.println("Enter stock weight in g:");
+					stockWeight = sc.nextInt();
+					sc.nextLine();
+					if (stockWeight <= 0)
+					{
+						System.out.println("Invalid weight! Please try again.");
+						continue;
+					}
+					inputB = true;
+					
+				}
+				catch (Exception e)
+				{
+					System.out.println("Invalid input! Please try again.");
+				}
+			}
+			product = new Product(productID, productName, pricePerGram, stockWeight);
+			
+			System.out.println("Product ID: " + productID);
+			System.out.println("Product Name: " + productName);
+			System.out.println("Price per 100g: " + pricePerGram);
+			System.out.println("Stock weight: " + stockWeight);
+			System.out.println("Product added!");
+		}
+		
+		System.out.println("\nNext up, we'll input supplier details for product " + productID + "...");
+		
+		boolean supplierCompanyNameOK= false, supplierContactNoOK = false, supplierEmailOK = false, supplierLocationOK = false;
+		String supplierCompanyName = null, supplierContactNo = null, supplierEmail = null, supplierLocation = null;
+	
+		while (supplierCompanyNameOK == false)
+		{
+			System.out.println("\nEnter Supplier Company Name:");
+			supplierCompanyName = sc.nextLine();
+			if(supplierCompanyName == null)
+			{
+				System.out.println("Input error! Please try again.");
+				continue;
+			}
+			else
+				supplierCompanyNameOK = true;
+		}
+		
+		while (supplierContactNoOK == false)
+		{
+			System.out.println("\nEnter Supplier Contact Number:");
+			supplierContactNo = sc.nextLine();
+			if(supplierContactNo == null)
+			{
+				System.out.println("Input error! Please try again.");
+				continue;
+			}
+			else
+				supplierContactNoOK = true;
+		}
+		
+		while (supplierEmailOK == false)
+		{
+			System.out.println("\nEnter Supplier Email:");
+			supplierEmail = sc.nextLine();
+			if(supplierEmail == null)
+			{
+				System.out.println("Input error! Please try again.");
+				continue;
+			}
+			else
+				supplierEmailOK = true;
+		}
+		
+		while (supplierLocationOK == false)
+		{
+			System.out.println("\nEnter Supplier Location:");
+			supplierLocation = sc.nextLine();
+			if(supplierLocation == null)
+			{
+				System.out.println("Input error! Please try again.");
+				continue;
+			}
+			else
+				supplierLocationOK = true;
+		}
+		
+		Supplier supplier = new Supplier (supplierCompanyName, supplierContactNo, supplierEmail, supplierLocation);
+		System.out.println("Supplier details added to product " + productID + "!");
+		System.out.println("Supplier Company Name:" + supplierCompanyName);
+		System.out.println("Supplier Contact No:" + supplierContactNo);
+		System.out.println("Supplier Email:" + supplierEmail);
+		System.out.println("Supplier Location:" + supplierLocation);
+		product.setSupplier(supplier);
+		pm.addProduct(product);
+		System.out.println("\nThanks for using the system. You've been logged out!");
 	}
 
 	private void addProductByID(Sale sale) {

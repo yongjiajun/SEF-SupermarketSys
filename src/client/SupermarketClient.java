@@ -7,6 +7,7 @@ import model.pay.CreditCard;
 import model.people.Customer;
 import model.people.Manager;
 import model.people.SalesStaff;
+import model.people.WarehouseStaff;
 import model.system.AccountManager;
 import model.system.Product;
 import model.system.ProductManager;
@@ -40,6 +41,10 @@ public class SupermarketClient {
 //				Manager m1 = new Manager("m123", "1234", "Lol", "Lol");
 //				am.addManager(m1);
 				
+//				WarehouseStaff ws = new WarehouseStaff("w123", "1234", "I need", "Sleep");
+//				am.addWarehouseStaff(ws);
+				
+				pm.resetProducts();
 
 				
 				// PLEASE DO A RESET OF THE DATABASE AND READD USERS.

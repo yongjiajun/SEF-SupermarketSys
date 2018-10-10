@@ -38,7 +38,7 @@ public class AccountManager {
 		if (warehouseStaffs.containsKey(id)) {
 			return warehouseStaffs.get(id);
 		} else {
-			System.out.println("Warehouse " + id + " not found in database!");
+			System.out.println("Warehouse Staff " + id + " not found in database!");
 			return null;
 		}
 	}

@@ -50,19 +50,15 @@ public class Product implements Serializable {
 		this.stockQty = stockQty;
 		this.productID = productID;
 		this.productPrice = productPrice;
-		// product name is ID, quantitySold is written to sales.txt and read from there
 	}
 	
 	
-	// CONSTRUCTOR NEEDED FOR ADDING WEIGHTABLE PRODUCTS. ADD NECESSARY VARIABLES.
-//	public Product(String productID, String productName, double productPrice, double stockWeight) {
-//		this.productName = productName;
-//		this.stockWeight = stockWeight;
-//		this.productID = productID;
-//		this.productPrice = productPrice;
-//		
-//		// product name is ID, quantitySold is written to sales.txt and read from there
-//	}
+	public Product(String productID, String productName, double pricePerGram, double stockWeight) {
+		this.productName = productName;
+		this.stockWeight = stockWeight;
+		this.productID = productID;
+		this.setWeightable(pricePerGram);
+	}
 
 
 	public void setProductName(String name) {
