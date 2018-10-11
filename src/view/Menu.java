@@ -1,7 +1,6 @@
 package view;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Scanner;
@@ -32,18 +31,19 @@ public class Menu {
 	}
 
 	public void displayMainMenu() {
+		Scanner sc = new Scanner(System.in);
+		
 		System.out.println("\nWelcome to Kostko!");
 		System.out.println("------------------");
 
 		System.out.println("Please login to continue or type \"quit\" to quit:");
-		System.out.println("\nUsername:");
-		Scanner sc = new Scanner(System.in);
+		System.out.print("\nUsername: ");
 		String userName = sc.nextLine();
 		if (userName.equalsIgnoreCase("quit")) {
 			System.out.println("Good bye!\n");
 			return;
 		}
-		System.out.println("\nPassword:");
+		System.out.print("Password: ");
 		String pin = sc.nextLine();
 		if (pin.equalsIgnoreCase("quit")) {
 			System.out.println("Good bye!\n");
@@ -60,14 +60,14 @@ public class Menu {
 			return;
 		}
 		if (user instanceof Manager) {
-			System.out.println("\nWelcome Manager " + user.getUserID());
+			System.out.println("\nWelcome Manager " + user.getUserFName() + "\n");
 			managerView((Manager) user);
 		} else if (user instanceof Customer) {
-			System.out.println("\nWelcome Customer " + user.getUserID());
+			System.out.println("\nWelcome Customer " + user.getUserFName() + "\n");
 			Sale sale = new Sale((Customer) user);
 			customerView((Customer) user, sale);
 		} else if (user instanceof WarehouseStaff) {
-			System.out.println("\nWelcome Warehouse Staff " + user.getUserID());
+			System.out.println("\nWelcome Warehouse Staff " + user.getUserFName() + "\n");
 			warehouseView((WarehouseStaff) user);
 			displayMainMenu();
 			return;
@@ -75,262 +75,18 @@ public class Menu {
 	}
 
 	private void managerView(Manager manager) {
-		// README:
-
-		// consult customerView() for flow control and stuff please.
-
-		// *****btw to list products, can use the following code*****
-
-//		System.out.println("Please select one of the following items:");
-//		HashMap<String, Product> products = pm.getProductsMap();
-//		int counter = 1;
-//		System.out.println("#\tID\tName\tWeightable\tPrice");
-//		for (Product tempProduct : products.values()) {
-//			if (tempProduct.getWeightable() == true)
-//				System.out.println(counter + "\t" + tempProduct.getProductId() + '\t' + tempProduct.getProductName()
-//						+ "\t \t" + tempProduct.getWeightable() + "\t$" + tempProduct.getPricePerGram() + " /g");
-//			else
-//				System.out.println(counter + "\t" + tempProduct.getProductId() + '\t' + tempProduct.getProductName()
-//						+ "\t \t$" + tempProduct.getProductPrice());
-//			counter++;
-
-		// ******and to select a product from list*****
-
-//		System.out.println("Please enter the product #:");
-//		int prodNum = sc.nextInt();
-//		sc.nextLine();
-//
-//		if (!(prodNum > 0 && prodNum <= counter)) {
-//			System.out.println("Invalid input! Would you like to try again? (Y/N)");
-//			String yes = sc.nextLine();
-//			if (yes.equalsIgnoreCase("n")) {
-//				return;
-//			} else {
-//				continue;
-//			}
-//		}
-//
-//		counter = 1;
-//
-//		for (Product tempProduct : products.values()) {
-//			if (prodNum == counter) {
-//				product = tempProduct; // this is where it stores the selected product
-//			}
-//			counter++;
-//		}
-
-		// ... see selectItemFromList() down at line 580
-
-		// ****** TODO / implement ******:
-		// - a constructor that adds weighable products (ask in the UI first, "Is
-		// product weighable?" as the first question. then only asks for input
-
-		// - (verify) if getPrice function in Product class works for weighable products
-
-		// - function that uses productManager (pm) to maintain unit-price, stock level,
-		// replenish level and reorder quantity for all items.
-
-		// - Maintains supplier details for all products
-
-//		- Allows me to override the standard price for a specific product when there is a
-//		promotion (use setDiscount in Product class)
-
-//		- Allows me to offer special discounts for bulk sales (for example, 10% discount for 5
-//		items, 20% discount for 10 items etc.) on specific products (use setBulkDiscount in Product class, please read how the class works)
-
-//		- Allows me to modify these percentages and item numbers through the interface.
-
-//		- That automatically places a purchase order for all items below replenishment level (ALREADY DONE (auto restocks when stock < level) , just make sure to have an UI to input replenishment level
-
-//		- Allows me to generate sales report for the specified period (probably just use amtSold in Product class)
-
-//		- Generate supply report (Payments for supplies are out of scope) (huh?)
-
-//		- List products generating the most revenue. (use revenueGenerated in Product class! then sort.)
-
-		Scanner scanner = new Scanner(System.in);
-		boolean quit = false;
-		double newPrice = 0;
-		String productID = null;
-		Product product = null;
-		int userInput;
-
-		while (quit != true) {
-
-			System.out.println("Select one of the following options (1-5):");
-			System.out.println("\n1. Override standard price for a specific product");
-			System.out.println("2. Apply discount on item");
-			System.out.println("3. Check stock levels");
-			System.out.println("4. Generate sales report");
-			System.out.println("5. List products generating the most revenue");
-			System.out.println("6. Display existing products");
-			System.out.println("7. Exit");
-			System.out.print("\nPlease enter your choice: ");
-			userInput = scanner.nextInt();
-			scanner.nextLine();
-
-			// Change price of product
-			if (userInput == 1) {
-				System.out.print("Please enter the product ID: ");
-				productID = scanner.nextLine();
-				Product temp = pm.getProduct(productID);
-
-				if (temp == null) {
-					return;
-				} else {
-					System.out.print("Please enter the new price for the product: ");
-					newPrice = scanner.nextDouble();
-
-//	 				product = new Product(productID, newPrice);
-
-					temp.setProductPrice(newPrice);
-
-					System.out.println("The new price for product ID: " + temp.getProductId() + " is now $"
-							+ temp.getProductPrice());
-
-					System.out.println("\nWould you like to override a different product price? (Y/N)");
-					String userChoice = scanner.nextLine();
-					scanner.nextLine();
-
-					if (userChoice.equalsIgnoreCase("n")) {
-						System.out.println("\nThanks for using the System, you've been logged out....");
-						return;
-					} else {
-						continue;
-					}
-				}
-			}
-
-			// Apply discount on item
-			if (userInput == 2) {
-				System.out.print("Please enter the product ID: ");
-				productID = scanner.nextLine();
-				Product temp = pm.getProduct(productID);
-
-				if (temp == null) {
-					return;
-				} else {
-					System.out.print("How much discount would you like to apply on this item?  ");
-					double discountPercentage = scanner.nextDouble();
-
-					temp.setDiscountedPrice(discountPercentage);
-
-					System.out.println("Product ID: " + temp.getProductId() + " Old Price: $" + temp.getProductPrice());
-
-//					System.out.println(product.getDiscountRate() + "% " + "has been applied to " + product.getProductName());
-					System.out.println(temp.getDiscountRate() + "% " + "has been applied to " + temp.getProductName());
-					System.out
-							.println("\nProduct ID: " + temp.getProductId() + " is now $" + temp.getDiscountedPrice());
-
-				}
-
-			}
-//**********STILL NEED TO FIX UP RESTOCK **********
-			if (userInput == 3) {
-
-				System.out.print("Please enter the ID of the product you would like to restock: ");
-				productID = scanner.nextLine();
-
-				Product temp = pm.getProduct(productID);
-
-				if (temp == null) {
-					continue;
-				} else {
-//					System.out.println("Product " + product.getProductId() + " has " + product.getStockQty());
-					System.out.println("The Stock Quantity for this product: " + temp.getStockQty());
-
-					if (temp.getStockQty() < 5) {
-						System.out.println("Stock levels below replenishment level!");
-						System.out.println("Placing purchase order......");
-						temp.restock();
-						System.out.println("Successfully restocked items");
-						temp.getTotalQtyRestocked();
-						temp.addStockQty(temp.getTotalQtyRestocked());
-						System.out.println("New stock quantity: " + temp.getStockQty());
-					}
-				}
-
-			}
-
-			// Generate sales report
-			if (userInput == 4) {
-				HashMap<String, Product> products = pm.getProductsMap();
-				Iterator iterator = products.entrySet().iterator();
-				while (iterator.hasNext()) {
-					HashMap.Entry pair = (HashMap.Entry)iterator.next();
-			        Product temp = pm.getProduct(pair.getKey().toString());
-			        System.out.println("Product Name: " + temp.getProductName());
-			        System.out.println("Amount Sold: " + temp.getAmountSold());
-			        System.out.println("Product Reveneue: $" + temp.getRevenueGenerated());
-			        System.out.println();
-				}
-			}
-
-			// List products generating the most revenue
-			if (userInput == 5) {
-				HashMap<String, Product> products = pm.getProductsMap();
-				
-				ArrayList<String> mapKeys = new ArrayList<>(products.keySet());
-				ArrayList<Double> mapValues = new ArrayList<Double>();
-				
-				Iterator iterator = products.entrySet().iterator();
-				while (iterator.hasNext()) {
-					HashMap.Entry pair = (HashMap.Entry)iterator.next();
-					mapValues.add(pm.getProduct(pair.getKey().toString()).getRevenueGenerated());
-				}
-
-			    Collections.sort(mapKeys);
-				Collections.sort(mapValues);
-				double highestRevenue = 0.01, secondHighestRevenue = 0.01, thirdHighestRevenue = 0.01;
-				String idHighestRevenue = null, idSecondHighestRevenue = null, idThirdHighestRevenue = null;
-				for (int i = 0; i < mapValues.size(); i++) {
-					if (mapValues.get(i) > highestRevenue) {
-						thirdHighestRevenue = secondHighestRevenue;
-						idThirdHighestRevenue = idSecondHighestRevenue;
-						secondHighestRevenue = highestRevenue;
-						idSecondHighestRevenue = idHighestRevenue;
-						highestRevenue = mapValues.get(i);
-						idHighestRevenue = mapKeys.get(i);
-					}
-					else if (mapValues.get(i) > secondHighestRevenue) {
-						thirdHighestRevenue = secondHighestRevenue;
-						idThirdHighestRevenue = idSecondHighestRevenue;
-						secondHighestRevenue = mapValues.get(i);
-						idSecondHighestRevenue = mapKeys.get(i);
-					}
-					else if (mapValues.get(i) > thirdHighestRevenue) {
-						thirdHighestRevenue = mapValues.get(i);
-						idThirdHighestRevenue = mapKeys.get(i);
-					}
-				}
-				
-				if (idHighestRevenue == null) {
-					System.out.println("No Items Have Been Sold");
-				}
-				if (idHighestRevenue != null) {
-					System.out.println("Top Three Higest Revenue Items");
-					System.out.println("1. " + pm.getProduct(idHighestRevenue).getProductName() + " | $" + highestRevenue);
-				}
-				if (idSecondHighestRevenue != null) {
-					System.out.println("2. " + pm.getProduct(idSecondHighestRevenue).getProductName() + " | $" + secondHighestRevenue);
-				}
-				if (idThirdHighestRevenue != null) {
-					System.out.println("3. " + pm.getProduct(idThirdHighestRevenue).getProductName() + " | $" + thirdHighestRevenue);
-				}
-				System.out.println();
-				
-				
-			}
-			// Display existing products
-			if (userInput == 6) {
-				pm.printItems();
-			}
-
-			// Exit
-			if (userInput == 7) {
-				quit = true;
-			}
-		}
+		Scanner scan = new Scanner(System.in);
+		int userInput, value;
+		
+		do {
+			managerMainMenu();
+			userInput = scan.nextInt();
+			scan.nextLine();
+			value = userResponse(userInput);
+			
+		} while (value != -1);
+		
+		displayMainMenu();
 	}
 
 	// **** ONE QUESTION THOUGH, for the warehouse staff requirement should we
@@ -1252,4 +1008,244 @@ public class Menu {
 		}
 	}
 
+	
+	
+	// Manager Functions
+	public void managerMainMenu() {
+		System.out.println("Select one of the following options (1-7):");
+		System.out.println("1. Override standard price for a specific product");
+		System.out.println("2. Apply discount on item");
+		System.out.println("3. Check stock levels");
+		System.out.println("4. Generate sales report");
+		System.out.println("5. List products generating the most revenue");
+		System.out.println("6. Display existing products");
+		System.out.println("7. Logout");
+		System.out.print("\nPlease enter your choice: ");
+	}
+	
+	public int userResponse(int userResp) {
+		switch (userResp) {
+			case 1:
+				overridePrice();
+				break;
+			case 2: 
+				applyDiscount();
+				break;
+			case 3:
+				displayStockLevels();
+				break;
+			case 4:
+				displaySalesReport();
+				break;
+			case 5:
+				displayTopRevenueProducts();
+				break;
+			case 6:
+				displayExistingProducts();
+				break;
+			case 7:
+				return -1;
+			default:
+				System.out.println("Invalid response");
+		}
+		return 0;
+	}
+	
+	public void overridePrice() {
+		Scanner scan = new Scanner(System.in);
+		double newPrice = 0;
+		String productID = null;
+		
+		System.out.print("Please enter the product ID: ");
+		productID = scan.nextLine();
+		Product temp = pm.getProduct(productID);
+
+		if (temp == null) {
+			System.out.println();
+			return;
+		} else {
+			System.out.println("Current Price: $" + temp.getProductPrice());
+			
+			System.out.print("Please enter the new price for the product: ");
+			newPrice = scan.nextDouble();
+			scan.nextLine();
+
+//				product = new Product(productID, newPrice);
+
+			temp.setProductPrice(newPrice);
+
+			System.out.println("The new price for product ID: " + temp.getProductId() + " is now $" + temp.getProductPrice());
+			System.out.println("\nWould you like to override a different product price? (Y/N)");
+			String userChoice = scan.nextLine();
+			
+			if (userChoice.equalsIgnoreCase("n")) {
+				System.out.println();
+				return;
+			} else {
+				overridePrice();
+			}
+		}
+	}
+	
+	public void applyDiscount() {
+		Scanner scan = new Scanner(System.in);
+		String productID = null;
+		
+		System.out.print("Please enter the product ID: ");
+		productID = scan.nextLine();
+		Product temp = pm.getProduct(productID);
+
+		if (temp == null) {
+			System.out.println();
+			return;
+		} else {
+			System.out.print("How much discount would you like to apply on this item? ");
+			double discountPercentage = scan.nextDouble();
+
+			temp.setDiscountedPrice(discountPercentage);
+
+			System.out.println("Product ID: " + temp.getProductId() + " Old Price: $" + temp.getProductPrice() + "\n");
+			System.out.println(temp.getDiscountRate() + "% " + "discount has been applied to " + temp.getProductName());
+			System.out.println("Product ID: " + temp.getProductId() + " is now $" + temp.getDiscountedPrice() + "\n");
+
+		}
+	}
+	
+	public void displayStockLevels() {
+		Scanner scan = new Scanner(System.in);
+		String productID = null;
+		
+		System.out.print("Please enter the ID of the product you would like to restock: ");
+		productID = scan.nextLine();
+
+		Product temp = pm.getProduct(productID);
+
+		if (temp == null) {
+			System.out.println("Product does not exist.");
+			displayStockLevels();
+		} else {
+
+			System.out.println("The Stock Quantity for this product: " + temp.getStockQty());
+			System.out.println("Would you like to do a restock? (Y/N)");
+			String yes = scan.nextLine();
+
+			if (yes.equalsIgnoreCase("n")) {
+				System.out.println();
+				return;
+			}
+
+			System.out.print("Enter restock quantity: ");
+			int restockQty = scan.nextInt(); // please do input verification
+			scan.nextLine();
+			temp.addStockQty(restockQty);
+			System.out.println("Successfully restocked items");
+			System.out.println("New stock quantity: " + temp.getStockQty() + "\n");
+
+			if (temp.getRestockLvl() == 0 || temp.getBulkSalesQty() == 0) {
+				System.out.println("Auto restock is not enabled for this product!");
+				System.out.println("Would you like to setup auto restock for this product? (Y/N)");
+			} else {
+				System.out.println("Current auto restock level: " + temp.getRestockLvl());
+				System.out.println("Current auto restock quantity: " + temp.getReorderQty());
+				System.out.println("Would you like to modify auto restock for this product? (Y/N)");
+			}
+
+			yes = scan.nextLine();
+
+			if (yes.equalsIgnoreCase("n")) {
+				System.out.println();
+				return;
+			}
+
+			System.out.print("Enter auto restock level: ");
+			int autoRestockLevel = scan.nextInt();
+			scan.nextLine();
+			temp.setRestockLvl(autoRestockLevel);
+
+			System.out.print("Enter auto restock quantity: ");
+			int autoRestockQty = scan.nextInt();
+			scan.nextLine();
+			temp.setReorderQty(autoRestockQty);
+
+			System.out.println("Current auto restock level: " + temp.getRestockLvl());
+			System.out.println("Current auto restock quantity: " + temp.getReorderQty() + "\n");
+
+		}
+	}
+	
+	public void displaySalesReport() {
+		HashMap<String, Product> products = pm.getProductsMap();
+		Iterator iterator = products.entrySet().iterator();
+		while (iterator.hasNext()) {
+			HashMap.Entry pair = (HashMap.Entry) iterator.next();
+			Product temp = pm.getProduct(pair.getKey().toString());
+			System.out.println("Product Name: " + temp.getProductName());
+			System.out.println("Amount Sold: " + temp.getAmountSold());
+			System.out.println("Product Reveneue: $" + temp.getRevenueGenerated());
+			System.out.println();
+		}
+	}
+	
+	public void displayTopRevenueProducts() {
+		HashMap<String, Product> products = pm.getProductsMap();
+
+		ArrayList<String> mapKeys = new ArrayList<>(products.keySet());
+		ArrayList<Double> mapValues = new ArrayList<Double>();
+
+		Iterator iterator = products.entrySet().iterator();
+		while (iterator.hasNext()) {
+			HashMap.Entry pair = (HashMap.Entry) iterator.next();
+			mapValues.add(pm.getProduct(pair.getKey().toString()).getRevenueGenerated());
+		}
+		
+		double highestRevenue = 0.01, secondHighestRevenue = 0.01, thirdHighestRevenue = 0.01;
+		String idHighestRevenue = null, idSecondHighestRevenue = null, idThirdHighestRevenue = null;
+		for (int i = 0; i < mapValues.size(); i++) {
+			if (mapValues.get(i) > highestRevenue) {
+				thirdHighestRevenue = secondHighestRevenue;
+				idThirdHighestRevenue = idSecondHighestRevenue;
+				secondHighestRevenue = highestRevenue;
+				idSecondHighestRevenue = idHighestRevenue;
+				highestRevenue = mapValues.get(i);
+				idHighestRevenue = mapKeys.get(i);
+			} else if (mapValues.get(i) > secondHighestRevenue) {
+				thirdHighestRevenue = secondHighestRevenue;
+				idThirdHighestRevenue = idSecondHighestRevenue;
+				secondHighestRevenue = mapValues.get(i);
+				idSecondHighestRevenue = mapKeys.get(i);
+			} else if (mapValues.get(i) > thirdHighestRevenue) {
+				thirdHighestRevenue = mapValues.get(i);
+				idThirdHighestRevenue = mapKeys.get(i);
+			}
+		}
+
+		if (idHighestRevenue == null) {
+			System.out.println("No Items Have Been Sold");
+		}
+		if (idHighestRevenue != null) {
+			System.out.println("Top Three Higest Revenue Items");
+			System.out.println(
+					"1. " + pm.getProduct(idHighestRevenue).getProductName() + " | $" + highestRevenue);
+		}
+		if (idSecondHighestRevenue != null) {
+			System.out.println("2. " + pm.getProduct(idSecondHighestRevenue).getProductName() + " | $"
+					+ secondHighestRevenue);
+		}
+		if (idThirdHighestRevenue != null) {
+			System.out.println("3. " + pm.getProduct(idThirdHighestRevenue).getProductName() + " | $"
+					+ thirdHighestRevenue);
+		}
+		System.out.println();
+	}
+	
+	public void displayExistingProducts() {
+		pm.printItems();
+	}
+	
+	
+	
+	
+	
+	
+	
 }
