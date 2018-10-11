@@ -201,8 +201,6 @@ public class Sale implements Serializable {
 		sr.addSale(this);
 	}
 
-	// check if paid is true!
-	// if paid is false, null will be returned!
 	public LocalDateTime getTimePaid() {
 		return timePaid;
 	}

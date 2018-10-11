@@ -16,7 +16,7 @@ public class ProductManager {
 		initialiseProducts();
 	}
 
-	public void initialiseProducts() {
+	private void initialiseProducts() {
 		try {
 			FileInputStream fileIn = new FileInputStream("database/products.ser");
 			ObjectInputStream objectIn = new ObjectInputStream(fileIn);

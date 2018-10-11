@@ -7,8 +7,7 @@ public class CreditCard implements Serializable{
 	private String creditCardID;
 	private String pin;
 	private double balance;
-	private int loyaltyPoints;
-
+	
 	public CreditCard(String creditCardID, String pin) {
 		this.creditCardID = creditCardID;
 		this.pin = pin;
@@ -25,14 +24,6 @@ public class CreditCard implements Serializable{
 
 	public double getBalance() {
 		return balance;
-	}
-
-	public double getLoyaltyPoints() {
-		return loyaltyPoints;
-	}
-
-	public void setLoyaltyPoints(int loyaltyPoints) {
-		this.loyaltyPoints = loyaltyPoints;
 	}
 
 	public void addBalance(double topup) {

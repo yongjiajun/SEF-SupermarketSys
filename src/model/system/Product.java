@@ -55,11 +55,6 @@ public class Product implements Serializable {
 		this.setWeightable(pricePerGram);
 	}
 
-
-	public void setProductName(String name) {
-		this.productName = name;
-	}
-
 	public String getProductName() {
 		return productName;
 	}
@@ -199,6 +194,7 @@ public class Product implements Serializable {
 		return revenueGenerated;
 	}
 
+	// for auto restock
 	public void restock()
 	{
 		addStockQty(reorderQty); 
