@@ -1,7 +1,9 @@
 package view;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Scanner;
 
 import model.pay.Sale;
@@ -64,13 +66,12 @@ public class Menu {
 			System.out.println("\nWelcome Customer " + user.getUserID());
 			Sale sale = new Sale((Customer) user);
 			customerView((Customer) user, sale);
+		} else if (user instanceof WarehouseStaff) {
+			System.out.println("\nWelcome Warehouse Staff " + user.getUserID());
+			warehouseView((WarehouseStaff) user);
+			displayMainMenu();
+			return;
 		}
-		else if (user instanceof WarehouseStaff) {
-				System.out.println("\nWelcome Warehouse Staff " + user.getUserID());
-				warehouseView((WarehouseStaff) user);
-				displayMainMenu();
-				return;
-			}
 	}
 
 	private void managerView(Manager manager) {
@@ -146,86 +147,200 @@ public class Menu {
 //		- Generate supply report (Payments for supplies are out of scope) (huh?)
 
 //		- List products generating the most revenue. (use revenueGenerated in Product class! then sort.)
-		Product product = null;
-		Boolean quit = false;
-
-		System.out.println("Select one of the following options (1-5):");
-		System.out.println("\n1. Override standard price for a specific product");
-		System.out.println("2. Apply discount on item");
-		System.out.println("3. Check stock levels");
-		System.out.println("4. Generate sales report");
-		System.out.println("5. List products generating the most revenue");
-		System.out.println("6. Display existing products");
-		System.out.println("7. Exit");
 
 		Scanner scanner = new Scanner(System.in);
-		int managerInput = scanner.nextInt();
+		boolean quit = false;
+		double newPrice = 0;
+		String productID = null;
+		Product product = null;
+		int userInput;
 
 		while (quit != true) {
-			if (managerInput == 1) {
+
+			System.out.println("Select one of the following options (1-5):");
+			System.out.println("\n1. Override standard price for a specific product");
+			System.out.println("2. Apply discount on item");
+			System.out.println("3. Check stock levels");
+			System.out.println("4. Generate sales report");
+			System.out.println("5. List products generating the most revenue");
+			System.out.println("6. Display existing products");
+			System.out.println("7. Exit");
+			System.out.print("\nPlease enter your choice: ");
+			userInput = scanner.nextInt();
+			scanner.nextLine();
+
+			// Change price of product
+			if (userInput == 1) {
 				System.out.print("Please enter the product ID: ");
-				String productID = scanner.nextLine();
-				scanner.nextLine();
-				product = pm.getProduct(productID);
-				if (product == null) {
-					System.out.println("Would you like to try again? (Y/N)");
-					String yes = scanner.nextLine();
-					if (yes.equalsIgnoreCase("n")) {
+				productID = scanner.nextLine();
+				Product temp = pm.getProduct(productID);
+
+				if (temp == null) {
+					return;
+				} else {
+					System.out.print("Please enter the new price for the product: ");
+					newPrice = scanner.nextDouble();
+
+//	 				product = new Product(productID, newPrice);
+
+					temp.setProductPrice(newPrice);
+
+					System.out.println("The new price for product ID: " + temp.getProductId() + " is now $"
+							+ temp.getProductPrice());
+
+					System.out.println("\nWould you like to override a different product price? (Y/N)");
+					String userChoice = scanner.nextLine();
+					scanner.nextLine();
+
+					if (userChoice.equalsIgnoreCase("n")) {
+						System.out.println("\nThanks for using the System, you've been logged out....");
 						return;
 					} else {
 						continue;
 					}
 				}
-				System.out.print("Please enter the new product price: ");
-				double newPrice = scanner.nextDouble();
-				product.setProductPrice(newPrice);
-
 			}
 
-			else if (managerInput == 2) {
+			// Apply discount on item
+			if (userInput == 2) {
 				System.out.print("Please enter the product ID: ");
-				String productID = scanner.nextLine();
-				scanner.nextLine();
-				product = pm.getProduct(productID);
-				if (product == null) {
-					System.out.println("Would you like to try again? (Y/N)");
-					String yes = scanner.nextLine();
-					if (yes.equalsIgnoreCase("n")) {
-						return;
-					} else {
-						continue;
+				productID = scanner.nextLine();
+				Product temp = pm.getProduct(productID);
+
+				if (temp == null) {
+					return;
+				} else {
+					System.out.print("How much discount would you like to apply on this item?  ");
+					double discountPercentage = scanner.nextDouble();
+
+					temp.setDiscountedPrice(discountPercentage);
+
+					System.out.println("Product ID: " + temp.getProductId() + " Old Price: $" + temp.getProductPrice());
+
+//					System.out.println(product.getDiscountRate() + "% " + "has been applied to " + product.getProductName());
+					System.out.println(temp.getDiscountRate() + "% " + "has been applied to " + temp.getProductName());
+					System.out
+							.println("\nProduct ID: " + temp.getProductId() + " is now $" + temp.getDiscountedPrice());
+
+				}
+
+			}
+//**********STILL NEED TO FIX UP RESTOCK **********
+			if (userInput == 3) {
+
+				System.out.print("Please enter the ID of the product you would like to restock: ");
+				productID = scanner.nextLine();
+
+				Product temp = pm.getProduct(productID);
+
+				if (temp == null) {
+					continue;
+				} else {
+//					System.out.println("Product " + product.getProductId() + " has " + product.getStockQty());
+					System.out.println("The Stock Quantity for this product: " + temp.getStockQty());
+
+					if (temp.getStockQty() < 5) {
+						System.out.println("Stock levels below replenishment level!");
+						System.out.println("Placing purchase order......");
+						temp.restock();
+						System.out.println("Successfully restocked items");
+						temp.getTotalQtyRestocked();
+						temp.addStockQty(temp.getTotalQtyRestocked());
+						System.out.println("New stock quantity: " + temp.getStockQty());
 					}
 				}
 
-				System.out.print("Please enter the discount percentage without the symbol: ");
-				Double discountPercent = scanner.nextDouble();
-				product.setDiscountedPrice(discountPercent);
-				System.out.println("The new price is now: " + product.getProductPrice());
-
-			} else if (managerInput == 3) {
-
-			} else if (managerInput == 4) {
-
-			} else if (managerInput == 5) {
-
-			} else if (managerInput == 6) {
-//
 			}
-			if (managerInput == 7) {
+
+			// Generate sales report
+			if (userInput == 4) {
+				HashMap<String, Product> products = pm.getProductsMap();
+				Iterator iterator = products.entrySet().iterator();
+				while (iterator.hasNext()) {
+					HashMap.Entry pair = (HashMap.Entry)iterator.next();
+			        Product temp = pm.getProduct(pair.getKey().toString());
+			        System.out.println("Product Name: " + temp.getProductName());
+			        System.out.println("Amount Sold: " + temp.getAmountSold());
+			        System.out.println("Product Reveneue: $" + temp.getRevenueGenerated());
+			        System.out.println();
+				}
+			}
+
+			// List products generating the most revenue
+			if (userInput == 5) {
+				HashMap<String, Product> products = pm.getProductsMap();
+				
+				ArrayList<String> mapKeys = new ArrayList<>(products.keySet());
+				ArrayList<Double> mapValues = new ArrayList<Double>();
+				
+				Iterator iterator = products.entrySet().iterator();
+				while (iterator.hasNext()) {
+					HashMap.Entry pair = (HashMap.Entry)iterator.next();
+					mapValues.add(pm.getProduct(pair.getKey().toString()).getRevenueGenerated());
+				}
+
+			    Collections.sort(mapKeys);
+				Collections.sort(mapValues);
+				double highestRevenue = 0.01, secondHighestRevenue = 0.01, thirdHighestRevenue = 0.01;
+				String idHighestRevenue = null, idSecondHighestRevenue = null, idThirdHighestRevenue = null;
+				for (int i = 0; i < mapValues.size(); i++) {
+					if (mapValues.get(i) > highestRevenue) {
+						thirdHighestRevenue = secondHighestRevenue;
+						idThirdHighestRevenue = idSecondHighestRevenue;
+						secondHighestRevenue = highestRevenue;
+						idSecondHighestRevenue = idHighestRevenue;
+						highestRevenue = mapValues.get(i);
+						idHighestRevenue = mapKeys.get(i);
+					}
+					else if (mapValues.get(i) > secondHighestRevenue) {
+						thirdHighestRevenue = secondHighestRevenue;
+						idThirdHighestRevenue = idSecondHighestRevenue;
+						secondHighestRevenue = mapValues.get(i);
+						idSecondHighestRevenue = mapKeys.get(i);
+					}
+					else if (mapValues.get(i) > thirdHighestRevenue) {
+						thirdHighestRevenue = mapValues.get(i);
+						idThirdHighestRevenue = mapKeys.get(i);
+					}
+				}
+				
+				if (idHighestRevenue == null) {
+					System.out.println("No Items Have Been Sold");
+				}
+				if (idHighestRevenue != null) {
+					System.out.println("Top Three Higest Revenue Items");
+					System.out.println("1. " + pm.getProduct(idHighestRevenue).getProductName() + " | $" + highestRevenue);
+				}
+				if (idSecondHighestRevenue != null) {
+					System.out.println("2. " + pm.getProduct(idSecondHighestRevenue).getProductName() + " | $" + secondHighestRevenue);
+				}
+				if (idThirdHighestRevenue != null) {
+					System.out.println("3. " + pm.getProduct(idThirdHighestRevenue).getProductName() + " | $" + thirdHighestRevenue);
+				}
+				System.out.println();
+				
+				
+			}
+			// Display existing products
+			if (userInput == 6) {
+				pm.printItems();
+			}
+
+			// Exit
+			if (userInput == 7) {
 				quit = true;
 			}
-
 		}
-		// **** ONE QUESTION THOUGH, for the warehouse staff requirement should we
-		// complete it by implementing
-		// another User class and function to replenish stock levels?
-		// then warehouse staff will have to key in supplier details. manager can then
-		// view the stuff
-
-		// "I want to be able to replenish stock levels before placing items received on
-		// the shelves."
-
 	}
+
+	// **** ONE QUESTION THOUGH, for the warehouse staff requirement should we
+	// complete it by implementing
+	// another User class and function to replenish stock levels?
+	// then warehouse staff will have to key in supplier details. manager can then
+	// view the stuff
+
+	// "I want to be able to replenish stock levels before placing items received on
+	// the shelves."
 
 	private void customerView(Customer user, Sale sale) {
 		System.out.println("You have " + sale.getItemsInCart() + " items in your cart.");
@@ -305,9 +420,8 @@ public class Menu {
 			// prints invalid input then rerun?
 		}
 	}
-	
-	private void warehouseView(WarehouseStaff user)
-	{
+
+	private void warehouseView(WarehouseStaff user) {
 		Scanner sc = new Scanner(System.in);
 		boolean idOK = false;
 		boolean nameOK = false;
@@ -316,87 +430,71 @@ public class Menu {
 		String productName = null;
 		String productID = null;
 		Product product = null;
-		
+
 		System.out.println("Would you like to add an item received? (Y/N)");
 		String yes = sc.nextLine();
 		if (yes.equalsIgnoreCase("n")) {
 			System.out.println("\nYou've been logged out!");
 			return;
-		} 
-		
-		while (idOK == false)
-		{
+		}
+
+		while (idOK == false) {
 			System.out.println("Enter product ID:");
 			productID = sc.nextLine();
-			if(productID == null)
-			{
+			if (productID == null) {
 				System.out.println("Input error! Please try again.");
 				continue;
 			}
 			Product temp = pm.getProduct(productID);
-			if (temp == null)
-			{
+			if (temp == null) {
 				System.out.println("Proceeding to add product...");
 				idOK = true;
-			}
-			else
-			{
+			} else {
 				System.out.println("Product with the same ID exists in database!");
 			}
 		}
-		
-		while (nameOK == false)
-		{
+
+		while (nameOK == false) {
 			System.out.println("Enter product name:");
 			productName = sc.nextLine();
-			if(productName == null)
-			{
+			if (productName == null) {
 				System.out.println("Input error! Please try again.");
 				continue;
-			}
-			else
+			} else
 				nameOK = true;
 		}
-		
+
 		System.out.println("Is product weighable? (Y/N)");
 		yes = sc.nextLine();
 		if (yes.equalsIgnoreCase("n")) {
 			double price = 0;
 			int quantity = 0;
-			while (inputA == false)
-			{
+			while (inputA == false) {
 				try {
 					System.out.println("Enter unit price ($):");
 					price = sc.nextDouble();
 					sc.nextLine();
-					if (price <= 0)
-					{
+					if (price <= 0) {
 						System.out.println("Invalid price! Please try again.");
 						continue;
 					}
 					inputA = true;
-				}
-				catch (Exception e)
-				{
+				} catch (Exception e) {
 					System.out.println("Invalid input! Please try again.");
 				}
 			}
-			while (inputB == false)
-			{
+			while (inputB == false) {
 				try {
 					System.out.println("Enter stock quantity:");
 					quantity = sc.nextInt();
 					sc.nextLine();
-					if (quantity <= 0)
-					{
+					if (quantity <= 0) {
 						System.out.println("Invalid quantity! Please try again.");
 						continue;
 					}
 					inputB = true;
-					
-				}
-				catch (Exception e)
-				{
+
+				} catch (Exception e) {
 					System.out.println("Invalid input! Please try again.");
 				}
 			}
@@ -407,115 +505,94 @@ public class Menu {
 			System.out.println("Unit price: " + price);
 			System.out.println("Stock quantity: " + quantity);
 			System.out.println("Product added!");
-		} 
-		else
-		{
+		} else {
 			double pricePerGram = 0;
 			double stockWeight = 0;
-			while (inputA == false)
-			{
+			while (inputA == false) {
 				try {
 					System.out.println("Enter price per 100g:");
 					pricePerGram = sc.nextDouble();
 					sc.nextLine();
-					if (pricePerGram <= 0)
-					{
+					if (pricePerGram <= 0) {
 						System.out.println("Invalid price! Please try again.");
 						continue;
 					}
 					inputA = true;
-				}
-				catch (Exception e)
-				{
+				} catch (Exception e) {
 					System.out.println("Invalid input! Please try again.");
 				}
 			}
-			while (inputB == false)
-			{
+			while (inputB == false) {
 				try {
 					System.out.println("Enter stock weight in g:");
 					stockWeight = sc.nextInt();
 					sc.nextLine();
-					if (stockWeight <= 0)
-					{
+					if (stockWeight <= 0) {
 						System.out.println("Invalid weight! Please try again.");
 						continue;
 					}
 					inputB = true;
-					
-				}
-				catch (Exception e)
-				{
+
+				} catch (Exception e) {
 					System.out.println("Invalid input! Please try again.");
 				}
 			}
 			product = new Product(productID, productName, pricePerGram, stockWeight);
-			
+
 			System.out.println("Product ID: " + productID);
 			System.out.println("Product Name: " + productName);
 			System.out.println("Price per 100g: " + pricePerGram);
 			System.out.println("Stock weight: " + stockWeight);
 			System.out.println("Product added!");
 		}
-		
+
 		System.out.println("\nNext up, we'll input supplier details for product " + productID + "...");
-		
-		boolean supplierCompanyNameOK= false, supplierContactNoOK = false, supplierEmailOK = false, supplierLocationOK = false;
+
+		boolean supplierCompanyNameOK = false, supplierContactNoOK = false, supplierEmailOK = false,
+				supplierLocationOK = false;
 		String supplierCompanyName = null, supplierContactNo = null, supplierEmail = null, supplierLocation = null;
-	
-		while (supplierCompanyNameOK == false)
-		{
+
+		while (supplierCompanyNameOK == false) {
 			System.out.println("\nEnter Supplier Company Name:");
 			supplierCompanyName = sc.nextLine();
-			if(supplierCompanyName == null)
-			{
+			if (supplierCompanyName == null) {
 				System.out.println("Input error! Please try again.");
 				continue;
-			}
-			else
+			} else
 				supplierCompanyNameOK = true;
 		}
-		
-		while (supplierContactNoOK == false)
-		{
+
+		while (supplierContactNoOK == false) {
 			System.out.println("\nEnter Supplier Contact Number:");
 			supplierContactNo = sc.nextLine();
-			if(supplierContactNo == null)
-			{
+			if (supplierContactNo == null) {
 				System.out.println("Input error! Please try again.");
 				continue;
-			}
-			else
+			} else
 				supplierContactNoOK = true;
 		}
-		
-		while (supplierEmailOK == false)
-		{
+
+		while (supplierEmailOK == false) {
 			System.out.println("\nEnter Supplier Email:");
 			supplierEmail = sc.nextLine();
-			if(supplierEmail == null)
-			{
+			if (supplierEmail == null) {
 				System.out.println("Input error! Please try again.");
 				continue;
-			}
-			else
+			} else
 				supplierEmailOK = true;
 		}
-		
-		while (supplierLocationOK == false)
-		{
+
+		while (supplierLocationOK == false) {
 			System.out.println("\nEnter Supplier Location:");
 			supplierLocation = sc.nextLine();
-			if(supplierLocation == null)
-			{
+			if (supplierLocation == null) {
 				System.out.println("Input error! Please try again.");
 				continue;
-			}
-			else
+			} else
 				supplierLocationOK = true;
 		}
-		
-		Supplier supplier = new Supplier (supplierCompanyName, supplierContactNo, supplierEmail, supplierLocation);
+
+		Supplier supplier = new Supplier(supplierCompanyName, supplierContactNo, supplierEmail, supplierLocation);
 		System.out.println("Supplier details added to product " + productID + "!");
 		System.out.println("Supplier Company Name:" + supplierCompanyName);
 		System.out.println("Supplier Contact No:" + supplierContactNo);
@@ -1174,6 +1251,5 @@ public class Menu {
 						+ lineItem.getProductQuantity() + "\t \t$" + lineItem.getTotalPrice());
 		}
 	}
-	
 
 }

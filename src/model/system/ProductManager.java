@@ -118,7 +118,7 @@ public class ProductManager {
 		Iterator iterator = products.entrySet().iterator();
 		while (iterator.hasNext()) {
 			HashMap.Entry pair = (HashMap.Entry)iterator.next();
-	        System.out.println(pair.getKey() + " = " + pair.getValue());
+	        System.out.println(pair.getValue());
 		}
 	}
 
