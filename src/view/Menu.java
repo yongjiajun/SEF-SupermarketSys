@@ -31,6 +31,7 @@ public class Menu {
 	}
 
 	public void displayMainMenu() {
+		am.printSize();
 		Scanner sc = new Scanner(System.in);
 		
 		System.out.println("\nWelcome to Kostko!");
@@ -60,20 +61,21 @@ public class Menu {
 			return;
 		}
 		if (user instanceof Manager) {
-			System.out.println("\nWelcome Manager " + user.getUserFName() + "\n");
+			System.out.println("\nWelcome, Manager " + user.getUserFName() + "\n");
 			managerView((Manager) user);
 		} else if (user instanceof Customer) {
-			System.out.println("\nWelcome Customer " + user.getUserFName() + "\n");
+			System.out.println("\nWelcome, Customer " + user.getUserFName() + "\n");
 			Sale sale = new Sale((Customer) user);
 			customerView((Customer) user, sale);
 		} else if (user instanceof WarehouseStaff) {
-			System.out.println("\nWelcome Warehouse Staff " + user.getUserFName() + "\n");
+			System.out.println("\nWelcome, Warehouse Staff " + user.getUserFName() + "\n");
 			warehouseView((WarehouseStaff) user);
 			displayMainMenu();
 			return;
 		}
 	}
 
+	// Manager Login
 	private void managerView(Manager manager) {
 		Scanner scan = new Scanner(System.in);
 		int userInput, value;
@@ -98,6 +100,7 @@ public class Menu {
 	// "I want to be able to replenish stock levels before placing items received on
 	// the shelves."
 
+	// Customer Login
 	private void customerView(Customer user, Sale sale) {
 		System.out.println("You have " + sale.getItemsInCart() + " items in your cart.");
 		if (sale.getItemsInCart() > 0) {
@@ -177,6 +180,7 @@ public class Menu {
 		}
 	}
 
+	// Warehouse Staff Login	
 	private void warehouseView(WarehouseStaff user) {
 		Scanner sc = new Scanner(System.in);
 		boolean idOK = false;
@@ -359,6 +363,8 @@ public class Menu {
 		System.out.println("\nThanks for using the system. You've been logged out!");
 	}
 
+	// Customer Functions
+	// Customer Adds A Product By ID
 	private void addProductByID(Sale sale) {
 		Scanner sc = new Scanner(System.in);
 
@@ -517,6 +523,7 @@ public class Menu {
 
 	}
 
+	// Customer Adds A Product By Name
 	private void addProductByName(Sale sale) {
 		Scanner sc = new Scanner(System.in);
 
@@ -674,6 +681,7 @@ public class Menu {
 		}
 	}
 
+	// Customer Selects Item From A List
 	private void selectItemFromList(Sale sale) {
 		Scanner sc = new Scanner(System.in);
 		boolean quit;
@@ -851,10 +859,11 @@ public class Menu {
 		}
 	}
 
+	// Customer Pays For Products In Cart
 	public boolean finishAndPay(Sale sale, Customer customer) {
-
 		Scanner sc = new Scanner(System.in);
 		boolean quit = false;
+		
 		System.out.println("This is your cart:");
 		displayCart(sale);
 		System.out.println("Total Price: $" + sale.getTotalPrice());
@@ -908,6 +917,7 @@ public class Menu {
 		return true;
 	}
 
+	// Top Up Customer's Credit Card
 	private boolean topUpCard(Customer customer) {
 		boolean quit = false;
 		Scanner sc = new Scanner(System.in);
@@ -946,6 +956,7 @@ public class Menu {
 		return false;
 	}
 
+	// Modify Customer's Cart
 	private void modifyCart(Sale sale) {
 		Scanner sc = new Scanner(System.in);
 		boolean quit = false;
@@ -993,6 +1004,7 @@ public class Menu {
 		}
 	}
 
+	// Display Customer's Cart
 	private void displayCart(Sale sale) {
 		ArrayList<SalesLineItem> lineItems = sale.getSalesLineItems();
 		System.out.println("#\tID\tName\tQuantity\tWeight\tPrice");
@@ -1007,11 +1019,10 @@ public class Menu {
 						+ lineItem.getProductQuantity() + "\t \t$" + lineItem.getTotalPrice());
 		}
 	}
-
-	
 	
 	// Manager Functions
-	public void managerMainMenu() {
+	// Manager Main Menu
+	private void managerMainMenu() {
 		System.out.println("Select one of the following options (1-7):");
 		System.out.println("1. Override standard price for a specific product");
 		System.out.println("2. Apply discount on item");
@@ -1023,7 +1034,8 @@ public class Menu {
 		System.out.print("\nPlease enter your choice: ");
 	}
 	
-	public int userResponse(int userResp) {
+	// Switch Case For User Response
+	private int userResponse(int userResp) {
 		switch (userResp) {
 			case 1:
 				overridePrice();
@@ -1051,7 +1063,8 @@ public class Menu {
 		return 0;
 	}
 	
-	public void overridePrice() {
+	// Alter Price Of A Product
+	private void overridePrice() {
 		Scanner scan = new Scanner(System.in);
 		double newPrice = 0;
 		String productID = null;
@@ -1087,7 +1100,8 @@ public class Menu {
 		}
 	}
 	
-	public void applyDiscount() {
+	// Apply Discount To A Product
+	private void applyDiscount() {
 		Scanner scan = new Scanner(System.in);
 		String productID = null;
 		
@@ -1111,7 +1125,8 @@ public class Menu {
 		}
 	}
 	
-	public void displayStockLevels() {
+	// Display/Alter Stock Levels
+	private void displayStockLevels() {
 		Scanner scan = new Scanner(System.in);
 		String productID = null;
 		
@@ -1169,11 +1184,11 @@ public class Menu {
 
 			System.out.println("Current auto restock level: " + temp.getRestockLvl());
 			System.out.println("Current auto restock quantity: " + temp.getReorderQty() + "\n");
-
 		}
 	}
 	
-	public void displaySalesReport() {
+	// Display Sales Report
+	private void displaySalesReport() {
 		HashMap<String, Product> products = pm.getProductsMap();
 		Iterator iterator = products.entrySet().iterator();
 		while (iterator.hasNext()) {
@@ -1186,7 +1201,8 @@ public class Menu {
 		}
 	}
 	
-	public void displayTopRevenueProducts() {
+	// Display Top Three Revenue Items
+	private void displayTopRevenueProducts() {
 		HashMap<String, Product> products = pm.getProductsMap();
 
 		ArrayList<String> mapKeys = new ArrayList<>(products.keySet());
@@ -1238,14 +1254,15 @@ public class Menu {
 		System.out.println();
 	}
 	
-	public void displayExistingProducts() {
-		pm.printItems();
+	// Display All Products In The Database
+	private void displayExistingProducts() {
+		HashMap<String, Product> products = pm.getProductsMap();
+		
+		Iterator iterator = products.entrySet().iterator();
+		while (iterator.hasNext()) {
+			HashMap.Entry pair = (HashMap.Entry)iterator.next();
+	        System.out.println(pair.getValue());
+		}
 	}
-	
-	
-	
-	
-	
-	
 	
 }
