@@ -1,5 +1,10 @@
 package client;
 
+import model.pay.CreditCard;
+import model.people.Customer;
+import model.people.Manager;
+import model.people.SalesStaff;
+import model.people.WarehouseStaff;
 import model.system.AccountManager;
 import model.system.ProductManager;
 import model.system.SalesManager;
@@ -12,21 +17,20 @@ public class SupermarketClient {
 		AccountManager am = new AccountManager();
 		SalesManager sm = new SalesManager();
 		
-//		am.resetUsers();
-//		Customer cust = new Customer("c123", "1234", "Ay", "Lmao");
+//		Customer cust = new Customer("c123", "1234", "Michael", "Lmao");
 //
 //		CreditCard card = new CreditCard("creditcardlol", "1234");
 //		cust.setCreditCard(card);
 //
 //		am.addCustomer(cust);
 //
-//		SalesStaff s1 = new SalesStaff("s123", "1234", "Meme", "Licious");
+//		SalesStaff s1 = new SalesStaff("s123", "1234", "Michelle", "Meme");
 //		am.addSalesStaff(s1);
 //
-//		Manager m1 = new Manager("m123", "1234", "Lol", "Lol");
+//		Manager m1 = new Manager("m123", "1234", "Vicky", "Lol");
 //		am.addManager(m1);
 //
-//		WarehouseStaff ws = new WarehouseStaff("w123", "1234", "I need", "Sleep");
+//		WarehouseStaff ws = new WarehouseStaff("w123", "1234", "Sephora", "Dong");
 //		am.addWarehouseStaff(ws);
 
 		am.printSize();
