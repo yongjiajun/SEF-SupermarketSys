@@ -31,7 +31,6 @@ public class Menu {
 	}
 
 	public void displayMainMenu() {
-		am.printSize();
 		Scanner sc = new Scanner(System.in);
 		
 		System.out.println("\nWelcome to Kostko!");
@@ -52,8 +51,7 @@ public class Menu {
 		}
 
 		User user = am.verify(userName, pin);
-		if (user == null || user instanceof SalesStaff) // as Supplier doesnt have to login!
-		// and i've done salesStaff requirements dont worry
+		if (user == null || user instanceof SalesStaff)
 		{
 			System.out.println("Login failed! Please try again.");
 			sc.nextLine();
@@ -65,6 +63,7 @@ public class Menu {
 			managerView((Manager) user);
 		} else if (user instanceof Customer) {
 			System.out.println("\nWelcome, Customer " + user.getUserFName() + "\n");
+			System.out.println("You currently have " + ((Customer) user).getLoyaltyPts() +" loyalty points.");
 			Sale sale = new Sale((Customer) user);
 			customerView((Customer) user, sale);
 		} else if (user instanceof WarehouseStaff) {
@@ -91,21 +90,12 @@ public class Menu {
 		displayMainMenu();
 	}
 
-	// **** ONE QUESTION THOUGH, for the warehouse staff requirement should we
-	// complete it by implementing
-	// another User class and function to replenish stock levels?
-	// then warehouse staff will have to key in supplier details. manager can then
-	// view the stuff
-
-	// "I want to be able to replenish stock levels before placing items received on
-	// the shelves."
-
 	// Customer Login
 	private void customerView(Customer user, Sale sale) {
 		System.out.println("You have " + sale.getItemsInCart() + " items in your cart.");
 		if (sale.getItemsInCart() > 0) {
 			displayCart(sale);
-			System.out.println("Total Price: $" + sale.getTotalPrice());
+			System.out.println("Total Price: $" + String.format("%.2f", sale.getTotalPrice()));
 		}
 		System.out.println("-------------------------------------");
 		System.out.println("Select one of the following options (1-5):");
@@ -176,7 +166,9 @@ public class Menu {
 				return;
 			}
 		} else {
-			// prints invalid input then rerun?
+			System.out.println("Invalid Input!");
+			customerView(user, sale);
+			return;
 		}
 	}
 
@@ -301,7 +293,7 @@ public class Menu {
 
 			System.out.println("Product ID: " + productID);
 			System.out.println("Product Name: " + productName);
-			System.out.println("Price per 100g: " + pricePerGram);
+			System.out.println("Price per 100g: $" + pricePerGram);
 			System.out.println("Stock weight: " + stockWeight);
 			System.out.println("Product added!");
 		}
@@ -403,7 +395,6 @@ public class Menu {
 						System.out.println("Enter Quantity:");
 						quantity = sc.nextInt();
 						sc.nextLine();
-						// verfiication?
 						if (quantity > 0 && quantity <= product.getStockQty()) {
 							quantityOK = true;
 							break;
@@ -428,11 +419,10 @@ public class Menu {
 					boolean weightOK = false;
 					while (weightOK == false) {
 						System.out.println(
-								"Price per gram for " + product.getProductName() + ":" + product.getPricePerGram());
+								"Price per 100g for " + product.getProductName() + ": $" + product.getPricePerGram());
 						System.out.println("Enter Weight (in g):");
 						weight = sc.nextDouble();
 						sc.nextLine();
-						// verfiication?
 						if (weight > 0 && weight <= product.getStockWeight()) {
 							weightOK = true;
 							break;
@@ -449,6 +439,7 @@ public class Menu {
 					}
 					quit = true;
 					lineItem = new SalesLineItem(weight, product, true);
+					sale.addLineItem(lineItem);
 					System.out.println(
 							"Added " + lineItem.getWeight() + "g of " + product.getProductName() + " to cart!");
 				}
@@ -467,7 +458,6 @@ public class Menu {
 						System.out.println("Enter Quantity (" + lineItem.getProductQuantity() + " in cart) :");
 						quantity = sc.nextInt();
 						sc.nextLine();
-						// verfiication?
 						if (quantity > 0 && quantity <= product.getStockQty()) {
 							quantityOK = true;
 							break;
@@ -492,11 +482,10 @@ public class Menu {
 					boolean weightOK = false;
 					while (weightOK == false) {
 						System.out.println(
-								"Price per gram for " + product.getProductName() + ":" + product.getPricePerGram());
+								"Price per 100g for " + product.getProductName() + ": $" + product.getPricePerGram());
 						System.out.println("Enter Weight (in g, " + lineItem.getWeight() + "g in cart):");
 						weight = sc.nextDouble();
 						sc.nextLine();
-						// verfiication?
 						if (weight > 0 && weight <= product.getStockWeight()) {
 							weightOK = true;
 							break;
@@ -563,7 +552,6 @@ public class Menu {
 						System.out.println("Enter Quantity:");
 						quantity = sc.nextInt();
 						sc.nextLine();
-						// verfiication?
 						if (quantity > 0 && quantity <= product.getStockQty()) {
 							quantityOK = true;
 							break;
@@ -588,11 +576,10 @@ public class Menu {
 					boolean weightOK = false;
 					while (weightOK == false) {
 						System.out.println(
-								"Price per gram for " + product.getProductName() + ":" + product.getPricePerGram());
+								"Price per 100g for " + product.getProductName() + ": $" + product.getPricePerGram());
 						System.out.println("Enter Weight (in g):");
 						weight = sc.nextDouble();
 						sc.nextLine();
-						// verfiication?
 						if (weight > 0 && weight <= product.getStockWeight()) {
 							weightOK = true;
 							break;
@@ -608,7 +595,9 @@ public class Menu {
 						}
 					}
 					quit = true;
+
 					lineItem = new SalesLineItem(weight, product, true);
+					sale.addLineItem(lineItem);
 					System.out.println(
 							"Added " + lineItem.getWeight() + "g of " + product.getProductName() + " to cart!");
 				}
@@ -626,7 +615,6 @@ public class Menu {
 						System.out.println("Enter Quantity (" + lineItem.getProductQuantity() + " in cart) :");
 						quantity = sc.nextInt();
 						sc.nextLine();
-						// verfiication?
 						if (quantity > 0 && quantity <= product.getStockQty()) {
 							quantityOK = true;
 							break;
@@ -651,11 +639,10 @@ public class Menu {
 					boolean weightOK = false;
 					while (weightOK == false) {
 						System.out.println(
-								"Price per gram for " + product.getProductName() + ":" + product.getPricePerGram());
+								"Price per 100g for " + product.getProductName() + ": $" + product.getPricePerGram());
 						System.out.println("Enter Weight (in g, " + lineItem.getWeight() + "g in cart):");
 						weight = sc.nextDouble();
 						sc.nextLine();
-						// verfiication?
 						if (weight > 0 && weight <= product.getStockWeight()) {
 							weightOK = true;
 							break;
@@ -693,14 +680,14 @@ public class Menu {
 			System.out.println("Please select one of the following items:");
 			HashMap<String, Product> products = pm.getProductsMap();
 			int counter = 1;
-			System.out.println("#\tID\tName\tWeightable\tPrice");
+			System.out.println("#\tID\t\tName\t\tWeightable\t\tPrice");
 			for (Product tempProduct : products.values()) {
 				if (tempProduct.getWeightable() == true)
-					System.out.println(counter + "\t" + tempProduct.getProductId() + '\t' + tempProduct.getProductName()
-							+ "\t \t" + tempProduct.getWeightable() + "\t$" + tempProduct.getPricePerGram() + " /g");
+					System.out.println(counter + "\t" + tempProduct.getProductId() + "\t" + tempProduct.getProductName()
+							+ "\t \t" + "\t$" + String.format("%.2f", tempProduct.getPricePerGram()) + "/100g");
 				else
 					System.out.println(counter + "\t" + tempProduct.getProductId() + '\t' + tempProduct.getProductName()
-							+ "\t \t$" + tempProduct.getProductPrice());
+							+ "\t\t \t\t$" + String.format("%.2f", tempProduct.getProductPrice()));
 				counter++;
 			}
 			System.out.println("Please enter the product #:");
@@ -741,7 +728,6 @@ public class Menu {
 						System.out.println("Enter Quantity:");
 						quantity = sc.nextInt();
 						sc.nextLine();
-						// verfiication?
 						if (quantity > 0 && quantity <= product.getStockQty()) {
 							quantityOK = true;
 							break;
@@ -766,11 +752,10 @@ public class Menu {
 					boolean weightOK = false;
 					while (weightOK == false) {
 						System.out.println(
-								"Price per gram for " + product.getProductName() + ":" + product.getPricePerGram());
+								"Price per 100g for " + product.getProductName() + ": $" + product.getPricePerGram());
 						System.out.println("Enter Weight (in g):");
 						weight = sc.nextDouble();
 						sc.nextLine();
-						// verfiication?
 						if (weight > 0 && weight <= product.getStockWeight()) {
 							weightOK = true;
 							break;
@@ -786,7 +771,9 @@ public class Menu {
 						}
 					}
 					quit = true;
+					
 					lineItem = new SalesLineItem(weight, product, true);
+					sale.addLineItem(lineItem);
 					System.out.println(
 							"Added " + lineItem.getWeight() + "g of " + product.getProductName() + " to cart!");
 				}
@@ -804,7 +791,6 @@ public class Menu {
 						System.out.println("Enter Quantity (" + lineItem.getProductQuantity() + " in cart) :");
 						quantity = sc.nextInt();
 						sc.nextLine();
-						// verfiication?
 						if (quantity > 0 && quantity <= product.getStockQty()) {
 							quantityOK = true;
 							break;
@@ -829,11 +815,10 @@ public class Menu {
 					boolean weightOK = false;
 					while (weightOK == false) {
 						System.out.println(
-								"Price per gram for " + product.getProductName() + ":" + product.getPricePerGram());
+								"Price per 100g for " + product.getProductName() + ": $" + product.getPricePerGram());
 						System.out.println("Enter Weight (in g, " + lineItem.getWeight() + "g in cart):");
 						weight = sc.nextDouble();
 						sc.nextLine();
-						// verfiication?
 						if (weight > 0 && weight <= product.getStockWeight()) {
 							weightOK = true;
 							break;
@@ -866,17 +851,33 @@ public class Menu {
 		
 		System.out.println("This is your cart:");
 		displayCart(sale);
-		System.out.println("Total Price: $" + sale.getTotalPrice());
-		System.out.println("Total Loyalty Points Earned: " + sale.getLoyaltyPtsEarned());
+		System.out.println("Total Price: $" +  String.format("%.2f", sale.getTotalPrice()));
 		System.out.println("Total Loyalty Points Used: " + sale.getLoyaltyPtsUsed());
-		System.out.println("Total Discounted Price: $" + sale.getTotalDiscountedPrice());
+		System.out.println("Total Loyalty Points Earned: " + sale.getLoyaltyPtsEarned());
+
+		System.out.println("Total Discounted Price: $" +  String.format("%.2f", sale.getTotalDiscountedPrice()));
 		System.out.println("Would you like to finish and pay? (Y/N)");
 		String yes = sc.nextLine();
 		if (yes.equalsIgnoreCase("n")) {
 			return false;
 		}
+		if (sale.getTotalDiscountedPrice() == 0)
+		{
+			System.out.println("Would you like to confirm your payment with loyalty points? (Y/N)");
+			yes = sc.nextLine();
+			if (yes.equalsIgnoreCase("n")) {
+				return false;
+			}
+			sale.pay(sm);
+			customer.getCreditCard().deductBalance(sale.getTotalDiscountedPrice());
+			System.out.println("Payment successful! Amount paid: $" +  String.format("%.2f", sale.getTotalDiscountedPrice()));
+			System.out.println("Total Loyalty Points Earned: " + sale.getLoyaltyPtsEarned());
+			System.out.println("Total Loyalty Points Used: " + sale.getLoyaltyPtsUsed());
+			System.out.println("New Loyalty Points Balance: " + customer.getLoyaltyPts());
+			return true;
+		}
 		while (quit == false) {
-			System.out.println("Amount Payable: $" + sale.getTotalDiscountedPrice());
+			System.out.println("Amount Payable: $" +  String.format("%.2f", sale.getTotalDiscountedPrice()));
 			System.out.println("Please enter credit card ID:");
 			String credID = sc.nextLine();
 			System.out.println("Please enter credit card PIN:");
@@ -890,28 +891,44 @@ public class Menu {
 				} else
 					continue;
 			}
-			System.out.println("Credit card balance: $" + customer.getCreditCard().getBalance());
+			System.out.println("Credit card balance: $" +  String.format("%.2f", customer.getCreditCard().getBalance()));
+			boolean balanceSuffice = false;
 			if (customer.getCreditCard().getBalance() < sale.getTotalDiscountedPrice()) {
-				System.out.println(
-						"Insufficient balance! Would you like one of our friendly staffs to top up for you? (Y/N)");
-				yes = sc.nextLine();
-				if (yes.equalsIgnoreCase("n")) {
-					return false;
-				} else {
-					boolean topUpSuccessful = topUpCard(customer);
-					if (topUpSuccessful == false) {
-						System.out.println("Top up failed! Please try again later.");
-						return false;
-					} else {
-						System.out.println("New balance: $" + customer.getCreditCard().getBalance());
+				while (balanceSuffice == false)
+				{
+						System.out.println(
+								"Insufficient balance! Amount payable is $" +  String.format("%.2f", sale.getTotalDiscountedPrice()));
+						System.out.println("Would you like one of our friendly staffs to top up for you? (Y/N)");
+						yes = sc.nextLine();
+						if (yes.equalsIgnoreCase("n")) {
+							return false;
+						} else {
+							boolean topUpSuccessful = topUpCard(customer);
+							if (topUpSuccessful == false) {
+								System.out.println("Top up failed! Please try again later.");
+								return false;
+							} 
+							else if (topUpSuccessful == true && customer.getCreditCard().getBalance() < sale.getTotalDiscountedPrice())
+							{
+								System.out.println("New balance: $" +  String.format("%.2f", customer.getCreditCard().getBalance()));
+							}
+							else {
+								System.out.println("New balance: $" + String.format("%.2f",  customer.getCreditCard().getBalance()));
+								balanceSuffice = true;
+							}
+						}
 					}
-				}
+			}
+			System.out.println("Would you like to confirm your payment? (Y/N)");
+			yes = sc.nextLine();
+			if (yes.equalsIgnoreCase("n")) {
+				return false;
 			}
 			sale.pay(sm);
 			customer.getCreditCard().deductBalance(sale.getTotalDiscountedPrice());
-			System.out.println("Payment successful! Amount paid: $" + sale.getTotalDiscountedPrice());
-			System.out.println("New Credit card balance: $" + customer.getCreditCard().getBalance());
-			System.out.println("Loyalty points: " + customer.getLoyaltyPts());
+			System.out.println("Payment successful! Amount paid: $" +  String.format("%.2f", sale.getTotalDiscountedPrice()));
+			System.out.println("New Credit card balance: $" +  String.format("%.2f", customer.getCreditCard().getBalance()));
+			System.out.println("New loyalty points balance: " + customer.getLoyaltyPts());
 			quit = true;
 		}
 		return true;
@@ -1007,16 +1024,16 @@ public class Menu {
 	// Display Customer's Cart
 	private void displayCart(Sale sale) {
 		ArrayList<SalesLineItem> lineItems = sale.getSalesLineItems();
-		System.out.println("#\tID\tName\tQuantity\tWeight\tPrice");
+		System.out.println("#\tID\t\tName\t\tQuantity\tWeight\tPrice");
 		for (int i = 0; i < sale.getItemsInCart(); i++) {
 			Product tempProduct = lineItems.get(i).getProduct();
 			SalesLineItem lineItem = lineItems.get(i);
 			if (lineItem.getWeightable() == true)
-				System.out.println(i + "\t" + tempProduct.getProductId() + '\t' + tempProduct.getProductName() + "\t \t"
-						+ lineItem.getWeight() + "g\t$" + lineItem.getTotalPrice());
+				System.out.println(i+1 + "\t" + tempProduct.getProductId() + '\t' + tempProduct.getProductName() + "\t \t"
+						+ lineItem.getWeight() + "g\t$" +  String.format("%.2f", lineItem.getTotalPrice()));
 			else
-				System.out.println(i + "\t" + tempProduct.getProductId() + '\t' + tempProduct.getProductName() + '\t'
-						+ lineItem.getProductQuantity() + "\t \t$" + lineItem.getTotalPrice());
+				System.out.println(i+1 + "\t" + tempProduct.getProductId() + '\t' + tempProduct.getProductName() + '\t'
+						+ lineItem.getProductQuantity() + "\t \t\t$" +  String.format("%.2f", lineItem.getTotalPrice()));
 		}
 	}
 	
@@ -1136,67 +1153,93 @@ public class Menu {
 		Product temp = pm.getProduct(productID);
 
 		if (temp == null) {
-			System.out.println("Product does not exist.");
 			displayStockLevels();
 		} else {
-
-			System.out.println("The Stock Quantity for this product: " + temp.getStockQty());
-			System.out.println("Would you like to do a restock? (Y/N)");
-			String yes = scan.nextLine();
-
-			if (yes.equalsIgnoreCase("n")) {
-				System.out.println();
-				return;
-			}
-
-			System.out.print("Enter restock quantity: ");
-			int restockQty = scan.nextInt(); // please do input verification
-			scan.nextLine();
-			temp.addStockQty(restockQty);
-			System.out.println("Successfully restocked items");
-			System.out.println("New stock quantity: " + temp.getStockQty() + "\n");
-
-			if (temp.getRestockLvl() == 0 || temp.getBulkSalesQty() == 0) {
-				System.out.println("Auto restock is not enabled for this product!");
-				System.out.println("Would you like to setup auto restock for this product? (Y/N)");
-			} else {
+			if (temp.getWeightable() == false)
+			{
+				System.out.println("The Stock Quantity for this product: " + temp.getStockQty());
+				System.out.println("Would you like to do a restock? (Y/N)");
+				String yes = scan.nextLine();
+	
+				if (yes.equalsIgnoreCase("n")) {
+					System.out.println();
+					return;
+				}
+	
+				System.out.print("Enter restock quantity: ");
+				int restockQty = scan.nextInt();
+				scan.nextLine();
+				temp.addStockQty(restockQty);
+				System.out.println("Successfully restocked product" + temp.getProductId());
+				System.out.println("New stock quantity: " + temp.getStockQty() + "\n");
+	
+				if (temp.getRestockLvl() == 0 || temp.getBulkSalesQty() == 0) {
+					System.out.println("Auto restock is not enabled for this product!");
+					System.out.println("Would you like to setup auto restock for this product? (Y/N)");
+				} else {
+					System.out.println("Current auto restock level: " + temp.getRestockLvl());
+					System.out.println("Current auto restock quantity: " + temp.getReorderQty());
+					System.out.println("Would you like to modify auto restock for this product? (Y/N)");
+				}
+	
+				yes = scan.nextLine();
+	
+				if (yes.equalsIgnoreCase("n")) {
+					System.out.println();
+					return;
+				}
+	
+				System.out.print("Enter auto restock level: ");
+				int autoRestockLevel = scan.nextInt();
+				scan.nextLine();
+				temp.setRestockLvl(autoRestockLevel);
+	
+				System.out.print("Enter auto restock quantity: ");
+				int autoRestockQty = scan.nextInt();
+				scan.nextLine();
+				temp.setReorderQty(autoRestockQty);
+	
 				System.out.println("Current auto restock level: " + temp.getRestockLvl());
-				System.out.println("Current auto restock quantity: " + temp.getReorderQty());
-				System.out.println("Would you like to modify auto restock for this product? (Y/N)");
+				System.out.println("Current auto restock quantity: " + temp.getReorderQty() + "\n");
 			}
-
-			yes = scan.nextLine();
-
-			if (yes.equalsIgnoreCase("n")) {
-				System.out.println();
-				return;
+			else
+			{
+				System.out.println("The Stock Weight for this product: " + temp.getStockWeight() + "g");
+				System.out.println("Would you like to do a restock? (Y/N)");
+				String yes = scan.nextLine();
+	
+				if (yes.equalsIgnoreCase("n")) {
+					System.out.println();
+					return;
+				}
+				
+				System.out.print("Enter restock weight: ");
+				double restockWeight = scan.nextDouble();
+				scan.nextLine();
+				temp.addStockWeight(restockWeight);
+				System.out.println("Successfully restocked product " + temp.getProductId());
+				System.out.println("New stock weight: " + temp.getStockWeight() + "\n");
+				
+				System.out.println("Weighable products don't support auto restock! Therefore it can't be setup." );
 			}
-
-			System.out.print("Enter auto restock level: ");
-			int autoRestockLevel = scan.nextInt();
-			scan.nextLine();
-			temp.setRestockLvl(autoRestockLevel);
-
-			System.out.print("Enter auto restock quantity: ");
-			int autoRestockQty = scan.nextInt();
-			scan.nextLine();
-			temp.setReorderQty(autoRestockQty);
-
-			System.out.println("Current auto restock level: " + temp.getRestockLvl());
-			System.out.println("Current auto restock quantity: " + temp.getReorderQty() + "\n");
 		}
 	}
 	
 	// Display Sales Report
 	private void displaySalesReport() {
 		HashMap<String, Product> products = pm.getProductsMap();
+		if (products.size() == 0)
+		{
+			System.out.println("No products in the system!");
+			System.out.println("Returning to manager's menu...\n");
+		}
 		Iterator iterator = products.entrySet().iterator();
 		while (iterator.hasNext()) {
 			HashMap.Entry pair = (HashMap.Entry) iterator.next();
 			Product temp = pm.getProduct(pair.getKey().toString());
 			System.out.println("Product Name: " + temp.getProductName());
-			System.out.println("Amount Sold: " + temp.getAmountSold());
-			System.out.println("Product Reveneue: $" + temp.getRevenueGenerated());
+			System.out.println("Amount Sold: " +  String.format("%.2f", temp.getAmountSold()));
+			System.out.println("Product Reveneue: $" +  String.format("%.2f", temp.getRevenueGenerated()));
 			System.out.println();
 		}
 	}
@@ -1241,15 +1284,15 @@ public class Menu {
 		if (idHighestRevenue != null) {
 			System.out.println("Top Three Higest Revenue Items");
 			System.out.println(
-					"1. " + pm.getProduct(idHighestRevenue).getProductName() + " | $" + highestRevenue);
+					"1. " + pm.getProduct(idHighestRevenue).getProductName() + " | $" +  String.format("%.2f", highestRevenue));
 		}
 		if (idSecondHighestRevenue != null) {
 			System.out.println("2. " + pm.getProduct(idSecondHighestRevenue).getProductName() + " | $"
-					+ secondHighestRevenue);
+					+  String.format("%.2f", secondHighestRevenue));
 		}
 		if (idThirdHighestRevenue != null) {
 			System.out.println("3. " + pm.getProduct(idThirdHighestRevenue).getProductName() + " | $"
-					+ thirdHighestRevenue);
+					+  String.format("%.2f", thirdHighestRevenue));
 		}
 		System.out.println();
 	}

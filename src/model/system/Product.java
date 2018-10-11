@@ -8,17 +8,15 @@ import model.people.Supplier;
 
 public class Product implements Serializable {
 
-	// TODO REMOVE UNNECESSARY VARIABLES! 
 
-	private String productName;
-	
+	private String productName;	
 	private String productID;
 	private double productPrice;
 	private int amountSold = 0;
+	private double weightSold = 0;
 	private int totalQtyRestocked = 0;
 	private double revenueGenerated = 0;
 	
-	// to be overwritten by methods?? 
 	private boolean discountEligible = false;
 	private double discountRate = 0;
 	private double discountedPrice = 0;
@@ -31,12 +29,9 @@ public class Product implements Serializable {
 	
 	private boolean weightable = false;
 	
-	// for weighable products, btw NO DISCOUNTS ON THESE
-	
-	private double pricePerGram = 0; // assume its per 100g then
+	private double pricePerGram = 0;
 	private double stockWeight = 0; // product weight available in warehouse
 	
-	// non-weighable products!
 	private int stockQty;
 	
 	private int restockLvl = 0;
@@ -114,7 +109,6 @@ public class Product implements Serializable {
 	}
 
 	public void setDiscountedPrice(double discountPercentage) {
-//		this.discountedPrice = discountPercentage;
 		double price = this.getProductPrice();
 		this.discountRate = discountPercentage;
 		double total = 0;
@@ -169,6 +163,8 @@ public class Product implements Serializable {
 	public double getStockWeight() {
 		return stockWeight;
 	}
+	
+	
 
 	public int getRestockLvl() {
 		return restockLvl;
@@ -207,6 +203,21 @@ public class Product implements Serializable {
 	{
 		addStockQty(reorderQty); 
 		totalQtyRestocked += reorderQty;
+	}
+	
+	public void addStockWeight(double stockweight)
+	{
+		this.stockWeight += stockweight;
+	}
+	
+	public void deductStockWeight(double stockweight)
+	{
+		this.stockWeight -= stockweight;
+	}
+	
+	public void addWeightSold(double weightSold)
+	{
+		this.weightSold += weightSold;
 	}
 	
 	public Supplier getSupplier()
