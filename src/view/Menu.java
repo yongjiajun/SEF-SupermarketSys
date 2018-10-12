@@ -1040,14 +1040,15 @@ public class Menu {
 	// Manager Functions
 	// Manager Main Menu
 	private void managerMainMenu() {
-		System.out.println("Select one of the following options (1-7):");
+		System.out.println("Select one of the following options (1-8):");
 		System.out.println("1. Override standard price for a specific product");
 		System.out.println("2. Apply discount on item");
 		System.out.println("3. Check stock levels");
 		System.out.println("4. Generate sales report");
 		System.out.println("5. List products generating the most revenue");
-		System.out.println("6. Display existing products");
-		System.out.println("7. Logout");
+		System.out.println("6. Maintain Supplier Details");
+		System.out.println("7. Display existing products");
+		System.out.println("8. Logout");
 		System.out.print("\nPlease enter your choice: ");
 	}
 	
@@ -1070,9 +1071,12 @@ public class Menu {
 				displayTopRevenueProducts();
 				break;
 			case 6:
-				displayExistingProducts();
+				maintainSupplierDetails();
 				break;
 			case 7:
+				displayExistingProducts();
+				break;
+			case 8:
 				return -1;
 			default:
 				System.out.println("Invalid response");
@@ -1099,8 +1103,6 @@ public class Menu {
 			System.out.print("Please enter the new price for the product: ");
 			newPrice = scan.nextDouble();
 			scan.nextLine();
-
-//				product = new Product(productID, newPrice);
 
 			temp.setProductPrice(newPrice);
 
@@ -1294,6 +1296,68 @@ public class Menu {
 			System.out.println("3. " + pm.getProduct(idThirdHighestRevenue).getProductName() + " | $"
 					+  String.format("%.2f", thirdHighestRevenue));
 		}
+		System.out.println();
+	}
+	
+	// Maintain Supplier Details
+	private void maintainSupplierDetails() {
+		Scanner scan = new Scanner(System.in);
+		String productID = null;
+		
+		System.out.print("Please enter the ID of the product you would like to maintain: ");
+		productID = scan.nextLine();
+
+		Product temp = pm.getProduct(productID);
+
+		if (temp == null) {
+			maintainSupplierDetails();
+		} else {
+			String userChoice = null;
+			Supplier supplier = temp.getSupplier();
+			
+			System.out.print("Change Supplier Company Name (Y/N): ");
+			userChoice = scan.nextLine();
+			if (userChoice.equalsIgnoreCase("y")) {
+				System.out.print("Enter the new Supplier Name: ");
+				String cName = scan.nextLine();
+				supplier.setSupplierCompanyName(cName);
+				userChoice = null;
+			}
+			
+			System.out.print("Change Supplier Company Contact Number (Y/N): ");
+			userChoice = scan.nextLine();
+			if (userChoice.equalsIgnoreCase("y")) {
+				System.out.print("Enter the new Contact Number: ");
+				String cNumber = scan.nextLine();
+				supplier.setSupplierCompanyName(cNumber);
+				userChoice = null;
+			}
+			
+			System.out.print("Change Supplier Company Email (Y/N): ");
+			userChoice = scan.nextLine();
+			if (userChoice.equalsIgnoreCase("y")) {
+				System.out.print("Enter the new Supplier Email: ");
+				String cEmail = scan.nextLine();
+				supplier.setSupplierCompanyName(cEmail);
+				userChoice = null;
+			}
+			System.out.print("Change Supplier Company Location (Y/N): ");
+			userChoice = scan.nextLine();
+			if (userChoice.equalsIgnoreCase("y")) {
+				System.out.print("Enter the new Supplioer Location: ");
+				String cLocation = scan.nextLine();
+				supplier.setSupplierCompanyName(cLocation);
+				userChoice = null;
+			}
+			
+			System.out.println("\nProduct ID: " + temp.getProductId() + " new Supplier Details");
+			System.out.println("Supplier Company Name: " + supplier.getSupplierCompanyName());
+			System.out.println("Supplier Company Contact Number: " + supplier.getSupplierContactNo());
+			System.out.println("Supplier Company Email: " + supplier.getSupplierEmail());
+			System.out.println("Supplier Company Location: " + supplier.getSupplierLocation());
+			
+		}
+		
 		System.out.println();
 	}
 	

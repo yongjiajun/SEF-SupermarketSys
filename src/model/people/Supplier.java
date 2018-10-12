@@ -29,5 +29,23 @@ public class Supplier implements Serializable {
 	public String getSupplierLocation() {
 		return supplierLocation;
 	}
+
+	public void setSupplierCompanyName(String supplierCompanyName) {
+		this.supplierCompanyName = supplierCompanyName;
+	}
+
+	public void setSupplierContactNo(String supplierContactNo) {
+		this.supplierContactNo = supplierContactNo;
+	}
+
+	public void setSupplierEmail(String supplierEmail) {
+		this.supplierEmail = supplierEmail;
+	}
+
+	public void setSupplierLocation(String supplierLocation) {
+		this.supplierLocation = supplierLocation;
+	}
+	
+
 	
 }

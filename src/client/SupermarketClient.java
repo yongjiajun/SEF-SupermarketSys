@@ -4,8 +4,10 @@ import model.pay.CreditCard;
 import model.people.Customer;
 import model.people.Manager;
 import model.people.SalesStaff;
+import model.people.Supplier;
 import model.people.WarehouseStaff;
 import model.system.AccountManager;
+import model.system.Product;
 import model.system.ProductManager;
 import model.system.SalesManager;
 import view.Menu;
@@ -35,6 +37,12 @@ public class SupermarketClient {
 
 		WarehouseStaff ws = new WarehouseStaff("w123", "1234", "Sephora", "Dong");
 		am.addWarehouseStaff(ws);
+		
+		Product p1 = new Product("1", "Apple", 999, 999);
+		pm.addProduct(p1);
+		
+		Supplier supplier1 = new Supplier("A", "A", "A", "A");
+		pm.getProduct("1").setSupplier(supplier1);
 
 		am.printSize();
 		pm.printSize();
