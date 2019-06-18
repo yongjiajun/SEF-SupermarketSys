@@ -1,8 +1,8 @@
 # SupermarketSupportSystem - $$$
 
-###### for Software Engineering Fundamentals Assignment, RMIT 2018
+###### for Software Engineering Fundamentals Assignment, RMIT University 2018
 
-SupermarketSupportSystem is a revolutionary self-checkout system that does what a conventional self-checkout system should do. Please consider buying our system and give us your money.
+SupermarketSupportSystem is a simple yet revolutionary self-checkout system that does what a conventional self-checkout system should do. Please consider buying our system and give us your money.
 
 ##### Group Members:
 
