@@ -4,7 +4,7 @@
 
 SupermarketSupportSystem is a simple yet revolutionary console-only self-checkout system that does what a conventional self-checkout system should do. Please consider buying our system and give us your money.
 
-### Project was built on Java and MVC approach was used.
+### Project was built entirely in Java.
 
 ##### Group Members:
 
