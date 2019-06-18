@@ -8,4 +8,4 @@ SupermarketSupportSystem is a simple yet revolutionary console-only self-checkou
 
 ##### Group Members:
 
-###### [Clinton Pham](https://github.com/rmit-s3605044-clinton-pham), [Jia Jun Yong (student account)](https://github.com/rmit-s3688090-yongjiajun/USAP-A2), [Lawrence Trinh](https://github.com/rmit-s3656432-Lawrence-Trinh), [Viviana Ngo](https://github.com/rmit-s3671230-vivianna-ngo)
+###### [Clinton Pham](https://github.com/rmit-s3605044-clinton-pham), [Jia Jun Yong (student account)](https://github.com/rmit-s3688090-yongjiajun), [Lawrence Trinh](https://github.com/rmit-s3656432-Lawrence-Trinh), [Viviana Ngo](https://github.com/rmit-s3671230-vivianna-ngo)
